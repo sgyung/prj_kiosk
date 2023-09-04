@@ -4,27 +4,27 @@ import java.sql.Date;
 
 public class InventoryVO {
 	
-	private int iNum;
-	private int iTypeCode;
+	private String iCode;
+	private String iTypeCode;
 	private String iName;
 	private int iMount;
 	private String iDelete;
 	private Date iInputDate;
 
 	//getter, setter
-	public int getiNum() {
-		return iNum;
+	public String getiCode() {
+		return iCode;
 	}
 
-	public void setiNum(int iNum) {
-		this.iNum = iNum;
+	public void setiCode(String iCode) {
+		this.iCode = iCode;
 	}
 
-	public int getiTypeCode() {
+	public String getiTypeCode() {
 		return iTypeCode;
 	}
 
-	public void setiTypeCode(int iTypeCode) {
+	public void setiTypeCode(String iTypeCode) {
 		this.iTypeCode = iTypeCode;
 	}
 
@@ -65,10 +65,16 @@ public class InventoryVO {
 		
 	}//InventoryVO
 	
-	//InventoryVO(Int, Int, String, Int, String, Date) : void
-	public InventoryVO(int iNum, int iTypeCode, String iName, int iMount, 
+	@Override
+	public String toString() {
+		return "InventoryVO [iCode=" + iCode + ", iTypeCode=" + iTypeCode + ", iName=" + iName + ", iMount=" + iMount
+				+ ", iDelete=" + iDelete + ", iInputDate=" + iInputDate + "]";
+	}
+
+	//InventoryVO(String, String, String, Int, String, Date) : void
+	public InventoryVO(String iCode, String iTypeCode, String iName, int iMount, 
 					String iDelete, Date iInputDate) {
-		this.iNum = iNum;
+		this.iCode = iCode;
 		this.iTypeCode = iTypeCode;
 		this.iName = iName;
 		this.iMount = iMount;
@@ -76,10 +82,4 @@ public class InventoryVO {
 		this.iInputDate = iInputDate;
 	}
 	
-	@Override
-	public String toString() {
-		return "InventoryVO [iNum=" + iNum + ", iTypeCode=" + iTypeCode + ", iName=" + iName + ", iMount=" + iMount
-				+ ", iDelete=" + iDelete + ", iInputDate=" + iInputDate + "]";
-	}
-
 }//class

@@ -85,9 +85,12 @@ public class PaymentVO {
 		this.totalPrice = totalPrice;
 		this.pmDate = pmDate;
 	}
+
+	@Override
+	public String toString() {
+		return "PaymentVO [pmCode=" + pmCode + ", pmTypeCode=" + pmTypeCode + ", pmStatusCode=" + pmStatusCode
+				+ ", orderPrice=" + orderPrice + ", discountPrice=" + discountPrice + ", totalPrice=" + totalPrice
+				+ ", pmDate=" + pmDate + "]";
+	}
 	
-	public static void main(String[] args) {
-
-	}//main
-
 }//class

@@ -76,8 +76,10 @@ public class InventoryVO {
 		this.iInputDate = iInputDate;
 	}
 	
-	public static void main(String[] args) {
-
-	}//main
+	@Override
+	public String toString() {
+		return "InventoryVO [iNum=" + iNum + ", iTypeCode=" + iTypeCode + ", iName=" + iName + ", iMount=" + iMount
+				+ ", iDelete=" + iDelete + ", iInputDate=" + iInputDate + "]";
+	}
 
 }//class

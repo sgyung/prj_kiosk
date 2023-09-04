@@ -106,8 +106,11 @@ public class SalesDetailVO {
 		this.pmDate = pmDate;
 	}
 
-	public static void main(String[] args) {
-
-	}//main
+	@Override
+	public String toString() {
+		return "SalesDetailVO [pdTypeCode=" + pdTypeCode + ", pdName=" + pdName + ", oTempType=" + oTempType
+				+ ", oOptionNum=" + oOptionNum + ", oSizeNum=" + oSizeNum + ", pdMount=" + pdMount + ", pdPrice="
+				+ pdPrice + ", pmType=" + pmType + ", pmDate=" + pmDate + "]";
+	}
 
 }//class

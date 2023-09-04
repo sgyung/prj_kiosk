@@ -105,9 +105,12 @@ public class OrderStatusVO {
 		this.oSizeNum = oSizeNum;
 		this.pdPrice = pdPrice;
 	}
+
+	@Override
+	public String toString() {
+		return "OrderStatusVO [oNum=" + oNum + ", oStatus=" + oStatus + ", oDate=" + oDate + ", pdName=" + pdName
+				+ ", oMount=" + oMount + ", oTempType=" + oTempType + ", oOptionNum=" + oOptionNum + ", oSizeNum="
+				+ oSizeNum + ", pdPrice=" + pdPrice + "]";
+	}
 	
-	public static void main(String[] args) {
-
-	}//main
-
 }//class

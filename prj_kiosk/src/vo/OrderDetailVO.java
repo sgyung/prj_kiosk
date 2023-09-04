@@ -107,8 +107,11 @@ public class OrderDetailVO {
 		this.oSizePrice = oSizePrice;
 	}
 
-	public static void main(String[] args) {
-
-	}//main
+	@Override
+	public String toString() {
+		return "OrderDetailVO [oDetailNum=" + oDetailNum + ", oLineNum=" + oLineNum + ", pdCode=" + pdCode + ", oMount="
+				+ oMount + ", oTempType=" + oTempType + ", oOptionNum=" + oOptionNum + ", oSizeNum=" + oSizeNum
+				+ ", oSizeName=" + oSizeName + ", oSizePrice=" + oSizePrice + "]";
+	}
 
 }//class

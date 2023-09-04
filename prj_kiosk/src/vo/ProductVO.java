@@ -86,8 +86,11 @@ public class ProductVO {
 		this.pdInputDate = pdInputDate;
 	}
 
-	public static void main(String[] args) {
-
-	}//main
+	@Override
+	public String toString() {
+		return "ProductVO [pdCode=" + pdCode + ", pdTypeCode=" + pdTypeCode + ", pdImageName=" + pdImageName
+				+ ", pdName=" + pdName + ", pdPrice=" + pdPrice + ", pdDelete=" + pdDelete + ", pdInputDate="
+				+ pdInputDate + "]";
+	}
 
 }//class

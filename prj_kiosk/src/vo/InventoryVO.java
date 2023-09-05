@@ -10,7 +10,7 @@ public class InventoryVO {
 	private int iMount;
 	private String iDelete;
 	private Date iInputDate;
-
+	
 	//getter, setter
 	public String getiCode() {
 		return iCode;

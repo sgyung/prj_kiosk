@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import evt.MainEvt;
+
 @SuppressWarnings("serial")
 public class MainView extends JFrame {
 	static public ImageIcon backImg = new ImageIcon("src/images/main_background.png");
@@ -36,7 +38,9 @@ public class MainView extends JFrame {
 		mainLogo.setBounds(150,10,600,600);
 		
 		//Event연결
-		
+		//orderBtn에 Evt를 연결
+		orderBtn.addActionListener(new MainEvt(this));
+		adminBtn.addActionListener(new MainEvt(this));
 		
 		//버튼 추가
 		add(orderBtn);
@@ -61,6 +65,10 @@ public class MainView extends JFrame {
 
 	public JButton getAdminBtn() {
 		return adminBtn;
+	}
+	
+	public static void main(String[] args) {
+		new MainView();
 	}
 	
 }//class

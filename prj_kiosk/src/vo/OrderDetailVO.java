@@ -1,117 +1,93 @@
 package vo;
 
-import java.sql.Date;
-
 public class OrderDetailVO {
 	
-	private String oDetailNum;
-	private int oLineNum;
 	private String pdCode;
-	private int oMount;
+	private String pdName;
+	private int pdPrice;
+	private int oQuantity;
 	private String oTempType;
-	private int oOptionNum;
-	private int oSizeNum;
+	private String oOptionName;
+	private int oOptionPrice;
 	private String oSizeName;
 	private int oSizePrice;
 	
 	//getter, setter
-	public String getoDetailNum() {
-		return oDetailNum;
-	}
-
-	public void setoDetailNum(String oDetailNum) {
-		this.oDetailNum = oDetailNum;
-	}
-
-	public int getoLineNum() {
-		return oLineNum;
-	}
-
-	public void setoLineNum(int oLineNum) {
-		this.oLineNum = oLineNum;
-	}
-
 	public String getPdCode() {
 		return pdCode;
 	}
-
 	public void setPdCode(String pdCode) {
 		this.pdCode = pdCode;
 	}
-
-	public int getoMount() {
-		return oMount;
+	public String getPdName() {
+		return pdName;
 	}
-
-	public void setoMount(int oMount) {
-		this.oMount = oMount;
+	public void setPdName(String pdName) {
+		this.pdName = pdName;
 	}
-
+	public int getPdPrice() {
+		return pdPrice;
+	}
+	public void setPdPrice(int pdPrice) {
+		this.pdPrice = pdPrice;
+	}
+	public int getoQuantity() {
+		return oQuantity;
+	}
+	public void setoQuantity(int oQuantity) {
+		this.oQuantity = oQuantity;
+	}
 	public String getoTempType() {
 		return oTempType;
 	}
-
 	public void setoTempType(String oTempType) {
 		this.oTempType = oTempType;
 	}
-
-	public int getoOptionNum() {
-		return oOptionNum;
+	public String getoOptionName() {
+		return oOptionName;
 	}
-
-	public void setoOptionNum(int oOptionNum) {
-		this.oOptionNum = oOptionNum;
+	public void setoOptionName(String oOptionName) {
+		this.oOptionName = oOptionName;
 	}
-
-	public int getoSizeNum() {
-		return oSizeNum;
+	public int getoOptionPrice() {
+		return oOptionPrice;
 	}
-
-	public void setoSizeNum(int oSizeNum) {
-		this.oSizeNum = oSizeNum;
+	public void setoOptionPrice(int oOptionPrice) {
+		this.oOptionPrice = oOptionPrice;
 	}
-
 	public String getoSizeName() {
 		return oSizeName;
 	}
-
 	public void setoSizeName(String oSizeName) {
 		this.oSizeName = oSizeName;
 	}
-
 	public int getoSizePrice() {
 		return oSizePrice;
 	}
-
 	public void setoSizePrice(int oSizePrice) {
 		this.oSizePrice = oSizePrice;
 	}
-
-	//OrderDetailVO() : void
-	public OrderDetailVO() {
-		
-	}//OrderDetailVO
-	
-	//OrderDetailVO(String, Int, String, Int, String, Int, Int, String, Int) : void
-	public OrderDetailVO(String oDetailNum, int oLineNum, String pdCode, 
-						int oMount, String oTempType, int oOptionNum, 
-						int oSizeNum, String oSizeName, int oSizePrice) {
-		this.oDetailNum = oDetailNum;
-		this.oLineNum = oLineNum;
+	public OrderDetailVO(String pdCode, String pdName, int pdPrice, int oQuantity, String oTempType, String oOptionName,
+			int oOptionPrice, String oSizeName, int oSizePrice) {
+		super();
 		this.pdCode = pdCode;
-		this.oMount = oMount;
+		this.pdName = pdName;
+		this.pdPrice = pdPrice;
+		this.oQuantity = oQuantity;
 		this.oTempType = oTempType;
-		this.oOptionNum = oOptionNum;
-		this.oSizeNum = oSizeNum;
+		this.oOptionName = oOptionName;
+		this.oOptionPrice = oOptionPrice;
 		this.oSizeName = oSizeName;
 		this.oSizePrice = oSizePrice;
 	}
-
+	public OrderDetailVO() {
+		super();
+	}
 	@Override
 	public String toString() {
-		return "OrderDetailVO [oDetailNum=" + oDetailNum + ", oLineNum=" + oLineNum + ", pdCode=" + pdCode + ", oMount="
-				+ oMount + ", oTempType=" + oTempType + ", oOptionNum=" + oOptionNum + ", oSizeNum=" + oSizeNum
-				+ ", oSizeName=" + oSizeName + ", oSizePrice=" + oSizePrice + "]";
+		return "OrderDetailVO [pdCode=" + pdCode + ", pdName=" + pdName + ", pdPrice=" + pdPrice + ", oQuantity="
+				+ oQuantity + ", oTempType=" + oTempType + ", oOptionName=" + oOptionName + ", oOptionPrice="
+				+ oOptionPrice + ", oSizeName=" + oSizeName + ", oSizePrice=" + oSizePrice + "]";
 	}
-
+	
 }//class

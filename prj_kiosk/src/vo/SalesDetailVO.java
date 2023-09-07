@@ -4,113 +4,109 @@ import java.sql.Date;
 
 public class SalesDetailVO {
 	
+	private String orderDetailNum;
 	private String pdTypeCode;
 	private String pdName;
+	private int pdQuantity;
 	private String oTempType;
-	private int oOptionNum;
-	private int oSizeNum;
-	private int pdMount;
-	private int pdPrice;
-	private String pmType;
+	private String oSizeName;
+	private String oOptionName;
+	private int oOptionPrice;
+	private int orderDetailPrice;
 	private Date pmDate;
 	
+	public SalesDetailVO(String orderDetailNum, String pdTypeCode, String pdName, int pdQuantity, String oTempType,
+			String oSizeNum, String oOptionName, int oOptionPrice, int orderDetailPrice, Date pmDate) {
+		super();
+		this.orderDetailNum = orderDetailNum;
+		this.pdTypeCode = pdTypeCode;
+		this.pdName = pdName;
+		this.pdQuantity = pdQuantity;
+		this.oTempType = oTempType;
+		this.oSizeName = oSizeNum;
+		this.oOptionName = oOptionName;
+		this.oOptionPrice = oOptionPrice;
+		this.orderDetailPrice = orderDetailPrice;
+		this.pmDate = pmDate;
+	}//SalesDetailVO
+	
+	
+	public SalesDetailVO() {
+		super();
+	}//SalesDetailVO
+	
+
 	//getter, setter
+	public String getOrderDetailNum() {
+		return orderDetailNum;
+	}
+	public void setOrderDetailNum(String orderDetailNum) {
+		this.orderDetailNum = orderDetailNum;
+	}
 	public String getPdTypeCode() {
 		return pdTypeCode;
 	}
-
 	public void setPdTypeCode(String pdTypeCode) {
 		this.pdTypeCode = pdTypeCode;
 	}
-
 	public String getPdName() {
 		return pdName;
 	}
-
 	public void setPdName(String pdName) {
 		this.pdName = pdName;
 	}
-
+	public int getPdQuantity() {
+		return pdQuantity;
+	}
+	public void setPdQuantity(int pdQuantity) {
+		this.pdQuantity = pdQuantity;
+	}
 	public String getoTempType() {
 		return oTempType;
 	}
-
 	public void setoTempType(String oTempType) {
 		this.oTempType = oTempType;
 	}
-
-	public int getoOptionNum() {
-		return oOptionNum;
+	public String getoSizeName() {
+		return oSizeName;
 	}
-
-	public void setoOptionNum(int oOptionNum) {
-		this.oOptionNum = oOptionNum;
+	public void setoSizeName(String oSizeName) {
+		this.oSizeName = oSizeName;
 	}
-
-	public int getoSizeNum() {
-		return oSizeNum;
+	public String getoOptionName() {
+		return oOptionName;
 	}
-
-	public void setoSizeNum(int oSizeNum) {
-		this.oSizeNum = oSizeNum;
+	public void setoOptionName(String oOptionName) {
+		this.oOptionName = oOptionName;
 	}
-
-	public int getPdMount() {
-		return pdMount;
+	public int getoOptionPrice() {
+		return oOptionPrice;
 	}
-
-	public void setPdMount(int pdMount) {
-		this.pdMount = pdMount;
+	public void setoOptionPrice(int oOptionPrice) {
+		this.oOptionPrice = oOptionPrice;
 	}
-
-	public int getPdPrice() {
-		return pdPrice;
+	public int getOrderDetailPrice() {
+		return orderDetailPrice;
 	}
-
-	public void setPdPrice(int pdPrice) {
-		this.pdPrice = pdPrice;
+	public void setOrderDetailPrice(int orderDetailPrice) {
+		this.orderDetailPrice = orderDetailPrice;
 	}
-
-	public String getPmType() {
-		return pmType;
-	}
-
-	public void setPmType(String pmType) {
-		this.pmType = pmType;
-	}
-
 	public Date getPmDate() {
 		return pmDate;
 	}
-
 	public void setPmDate(Date pmDate) {
 		this.pmDate = pmDate;
 	}
 
-	//SalesDetailVO() : void
-	public SalesDetailVO() {
-		
-	}//SalesDetailVO
-	
-	//SalesDetailVO(String, String, String, Int, Int, Int, Int, String, Date)
-	public SalesDetailVO(String pdTypeCode, String pdName, String oTempType, int oOptionNum,
-						int oSizeNum, int pdMount, int pdPrice, String pmType, Date pmDate) {
-		this.pdTypeCode = pdTypeCode;
-		this.pdName = pdName;
-		this.oTempType = oTempType;
-		this.oOptionNum = oOptionNum;
-		this.oSizeNum = oSizeNum;
-		this.pdMount = pdMount;
-		this.pdPrice = pdPrice;
-		this.pmType = pmType;
-		this.pmDate = pmDate;
-	}
 
 	@Override
 	public String toString() {
-		return "SalesDetailVO [pdTypeCode=" + pdTypeCode + ", pdName=" + pdName + ", oTempType=" + oTempType
-				+ ", oOptionNum=" + oOptionNum + ", oSizeNum=" + oSizeNum + ", pdMount=" + pdMount + ", pdPrice="
-				+ pdPrice + ", pmType=" + pmType + ", pmDate=" + pmDate + "]";
+		return "SalesDetailVO [orderDetailNum=" + orderDetailNum + ", pdTypeCode=" + pdTypeCode + ", pdName=" + pdName
+				+ ", pdQuantity=" + pdQuantity + ", oTempType=" + oTempType + ", oSizeName=" + oSizeName
+				+ ", oOptionName=" + oOptionName + ", oOptionPrice=" + oOptionPrice + ", orderDetailPrice="
+				+ orderDetailPrice + ", pmDate=" + pmDate + "]";
 	}
+
+	
 
 }//class

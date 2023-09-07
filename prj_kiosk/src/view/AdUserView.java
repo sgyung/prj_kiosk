@@ -162,7 +162,4 @@ public class AdUserView extends JPanel{
 		return userJp;
 	}
 
-	public static void main(String[] args) {
-		new AdUserView();
-	}
-}
+}//class

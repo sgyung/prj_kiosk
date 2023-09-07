@@ -87,8 +87,5 @@ public class AdOrderStatusView extends JPanel {
 	public JButton getRePrintBtn() {
 		return rePrintBtn;
 	}
-
-	public static void main(String[] args) {
-		new AdOrderStatusView();
-	}
-}
+	
+}//class

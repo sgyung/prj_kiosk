@@ -52,10 +52,12 @@ public class AdInventoryView extends JPanel {
 		inventoryInfoTm = new DefaultTableModel(null, inventoryDetail);
 		inventoryInfo = new JTable(inventoryInfoTm);
 		JScrollPane inventoryInfoJsp = new JScrollPane(inventoryInfo); 
+		
+		
+		//컴포넌트 위치설정, 추가
 		setLayout(null);
 		setVisible(true);
 		
-		//컴포넌트 위치설정, 추가
 		inventoryJp.setBounds(0,0,900,1000);
 		
 		//라벨 폰트설정
@@ -165,8 +167,5 @@ public class AdInventoryView extends JPanel {
 	public JComboBox<String> getJcbType() {
 		return jcbType;
 	}
-
-	public static void main(String[] args) {
-		new AdInventoryView();
-	}//main
-}//class
+	
+	}//class

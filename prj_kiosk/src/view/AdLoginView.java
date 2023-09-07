@@ -2,7 +2,10 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,12 +13,18 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-@SuppressWarnings("serial")
-public class AdLoginView extends JFrame {
+import evt.AdLoginEvt;
+import evt.MainEvt;
 
+@SuppressWarnings("serial")
+public class AdLoginView extends JFrame  {
+
+	//image
+	private ImageIcon adminLogoImg = new ImageIcon("src/images/ad_logo.png");
+	private  JLabel adminLogo = new JLabel(adminLogoImg);
+	
 	//Label
 	private JLabel adminJlb=new JLabel("관리자"); 
-	private JLabel imageJlb=new JLabel("이미지"); 
 	
 	//Button
 	private JButton homeBtn;
@@ -28,13 +37,19 @@ public class AdLoginView extends JFrame {
 	public AdLoginView(){
 		super("관리자 로그인");
 		
+		MainView.backImg.setDescription("dfdf");
+		
 		//Button
-		JButton homeBtn=new JButton("홈");
-		JButton loginBtn=new JButton("로그인");
+		homeBtn=new JButton("홈");
+		 loginBtn=new JButton("로그인");
 		
 		//Field
-		JTextField idField=new JTextField();
-		JPasswordField pwField=new JPasswordField();
+		idField=new JTextField();
+		 pwField=new JPasswordField();
+		
+		//홈버튼누르면 메인으로 가는 이벤트
+		AdLoginEvt adevt = new AdLoginEvt(this);
+		homeBtn.addActionListener(adevt);
 		
 		//컴포넌트 위치설정, 추가
 		
@@ -42,12 +57,13 @@ public class AdLoginView extends JFrame {
 		setSize(900,1000);
 		setVisible(true);
 		
+		
+		MainView.background.setBounds(0,0,900,1000);
+		adminLogo.setBounds(310,300,270,230);
+		
 		//라벨 폰트설정
 		adminJlb.setFont(new Font("맑은고딕",Font.BOLD,40));
 		adminJlb.setBounds(370,200,140,70);
-		
-		imageJlb.setBorder(new LineBorder(Color.red));
-        imageJlb.setBounds(330,300,230,230);		
 		
 		homeBtn.setBounds(80,720 , 100, 110);
 		loginBtn.setBounds(600,720 , 100, 110);
@@ -56,49 +72,47 @@ public class AdLoginView extends JFrame {
 		pwField.setBounds(350,780 , 200, 50);
 		
 		add(adminJlb);
-		add(imageJlb);
 		
 		add(homeBtn);
 		add(loginBtn);
 		add(idField);
 		add(pwField);
 		
+		add(adminLogo);
+		add(MainView.background);
+		
 	}//AdLoginView
 
 	//getter
-	public JButton getLoginBtn() {
-		return loginBtn;
+	public ImageIcon getAdminLogoImg() {
+		return adminLogoImg;
 	}
 
-	public void setLoginBtn(JButton loginBtn) {
-		this.loginBtn = loginBtn;
+	public JLabel getAdminLogo() {
+		return adminLogo;
+	}
+
+	public JLabel getAdminJlb() {
+		return adminJlb;
 	}
 
 	public JButton getHomeBtn() {
 		return homeBtn;
 	}
 
-	public void setHomeBtn(JButton homeBtn) {
-		this.homeBtn = homeBtn;
+	public JButton getLoginBtn() {
+		return loginBtn;
 	}
 
 	public JTextField getIdField() {
 		return idField;
 	}
 
-	public void setIdField(JTextField idField) {
-		this.idField = idField;
-	}
-
 	public JPasswordField getPwField() {
 		return pwField;
 	}
-
-	public void setPwField(JPasswordField pwField) {
-		this.pwField = pwField;
-	}
 	public static void main(String[] args) {
-		new AdLoginView();
-
+	new AdLoginView();
+		
 	}//main
 }//class

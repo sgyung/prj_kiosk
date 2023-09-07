@@ -206,9 +206,4 @@ public class AdProductView extends JPanel {
 		return jcbType;
 	}
 
-
-	public static void main(String[] args) {
-		new AdProductView();
-	}//main
-}
-//class
+}//class

@@ -55,8 +55,7 @@ public class AdLoginView extends JFrame  {
 		//컴포넌트 위치설정, 추가
 		
 		setLayout(null);
-		setSize(900,1000);
-		setVisible(true);
+	
 		
 		MainView.backImg.setDescription("dfdf");
 		MainView.background.setBounds(0,0,900,1000);
@@ -82,6 +81,8 @@ public class AdLoginView extends JFrame  {
 		add(adminLogo);
 		add(MainView.background);
 		
+		setSize(900,1000);
+		setVisible(true);
 	}//AdLoginView
 
 	//getter
@@ -91,12 +92,12 @@ public class AdLoginView extends JFrame  {
 
 	public JLabel getAdminLogo() {
 		return adminLogo;
-	}
+	} 
 
 	public JLabel getAdminJlb() {
 		return adminJlb;
-	}
-
+	} 
+ 
 	public JButton getHomeBtn() {
 		return homeBtn;
 	}

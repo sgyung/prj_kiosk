@@ -8,6 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import oracle.jdbc.proxy.annotation.Pre;
+import vo.MenuListVO;
 import vo.ProductVO;
 
 public class ProductDAO {
@@ -82,6 +86,8 @@ public class ProductDAO {
 			if(rs.next()) {
 				pVO = new ProductVO(rs.getString("product_code"),rs.getString("product_type_code"),rs.getString("image"),
 					rs.getString("product_name"),rs.getInt("product_price"), rs.getString("product_delete"),rs.getDate("product_date"));
+			} else if(!rs.next()){
+				System.out.println("없음");
 			}
 		}finally {
 			db.dbClose(rs, pstmt, con);
@@ -200,23 +206,41 @@ public class ProductDAO {
 		return rowCnt;
 	}
 	
-	
-//	public static void main(String[] args) {
-//		ProductDAO productDAO = ProductDAO.getInstance();
-//		
-//		try {
-//			List<String>list = productDAO.selectProductType();
-//			for(String product : list) {
-//				System.out.println(product);
-//			
-//			}
-//			ProductVO pVO = new ProductVO("cof_", "cof", "coffee.jpg", "카페라떼", 4000, "N", new Date(System.currentTimeMillis()));
-//			productDAO.insertProduct(pVO);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}//main
+	public List<MenuListVO> selectMenuList(String type) throws SQLException{
+		List<MenuListVO> list = new ArrayList<MenuListVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		MenuListVO mlVO = null; 
+		
+		DbConn db = DbConn.getInstance();
+		try{
+			con = db.getConnection("localhost", "scott", "tiger");
+			
+			StringBuilder selectMenuList = new StringBuilder();
+			selectMenuList
+			.append(	"select product_name, product_price, image		")
+			.append(	"from product									")
+			.append(	"where product_type_code = ?					");
+			
+			pstmt=con.prepareStatement(selectMenuList.toString());
+			
+			pstmt.setString(1, type);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				mlVO = new MenuListVO(rs.getString("product_name"),rs.getInt("product_price"),rs.getString("image"));
+				
+				list.add(mlVO);
+			}
+			
+		}finally {
+			db.dbClose(rs, pstmt, con);
+		}
+		return list;
+	}
+
 	
 	
 }

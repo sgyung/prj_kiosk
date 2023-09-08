@@ -15,6 +15,8 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import evt.OptionMenuEvt;
+
 @SuppressWarnings("serial")
 public class OptionMenuView extends JDialog{
 	
@@ -78,7 +80,7 @@ public class OptionMenuView extends JDialog{
 		 JLabel sizeLabel = new JLabel("사이즈");
 		 JLabel optionLabel = new JLabel("옵션");
 		 //TextField
-		 quantityTextField = new JTextField();
+		 quantityTextField = new JTextField("1");
 		 quantityTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		 //Separator
 		 JSeparator separator1 = new JSeparator(SwingConstants.HORIZONTAL);
@@ -136,6 +138,10 @@ public class OptionMenuView extends JDialog{
 		 
 		 cancel.setBounds(170, 630, 200, 80);
 		 selectionBtn.setBounds(420, 630, 200, 80);
+		 
+		 OptionMenuEvt omEvt = new OptionMenuEvt(menuView, this);
+		 plusBtn.addActionListener(omEvt);
+		 minusBtn.addActionListener(omEvt);
 		 
 		 setLayout(null);
 		 add(productImg);

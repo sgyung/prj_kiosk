@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class PaymentVO {
 	
-	private int pmCode;
+	private String pmCode;
 	private int pmTypeCode;
 	private String pmStatusCode;
 	private int orderPrice;
@@ -13,11 +13,11 @@ public class PaymentVO {
 	private Date pmDate;
 	
 	//getter, setter
-	public int getPmCode() {
+	public String getPmCode() {
 		return pmCode;
 	}
 
-	public void setPmCode(int pmCode) {
+	public void setPmCode(String pmCode) {
 		this.pmCode = pmCode;
 	}
 
@@ -74,8 +74,8 @@ public class PaymentVO {
 		
 	}//PaymentVO
 
-	//PaymentVO(Int, Int, String, Int, Int, Int, Data) : void
-	public PaymentVO(int pmCode, int pmTypeCode, String pmStatusCode, int orderPrice, 
+	//PaymentVO(String, Int, String, Int, Int, Int, Data) : void
+	public PaymentVO(String pmCode, int pmTypeCode, String pmStatusCode, int orderPrice, 
 					int discountPrice, int totalPrice, Date pmDate) {
 		this.pmCode = pmCode;
 		this.pmTypeCode = pmTypeCode;

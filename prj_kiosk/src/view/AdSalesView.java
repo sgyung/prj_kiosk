@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -27,46 +26,77 @@ public class AdSalesView extends JPanel {
 	private DefaultTableModel salesInfoTm ;
 	
 	//Field
-	private JTextField startJtf=new JTextField();
-	private JTextField endJtf=new JTextField();
+	private JTextField startJtf;
+	private JTextField endJtf;
 	
 	//Label
-	private JLabel salesInfoJlb=new JLabel("판매내역");
+	private JLabel salesInfoJlb;
 	
-	private JLabel startJlb=new JLabel("시작일");
-	private JLabel endJlb=new JLabel("종료일");
-	private JLabel periodJlb=new JLabel("~");
+	private JLabel startJlb;
+	private JLabel endJlb;
+	private JLabel periodJlb;
 
-	private JLabel nameJlb=new JLabel("상품종류");
-	private JLabel typeJlb=new JLabel("상품명");
+	private JLabel nameJlb;
+	private JLabel typeJlb;
 	
-	private JLabel totalJlb=new JLabel("총 매출 금액");
+	private JLabel totalJlb;
 	
 	//ComboBox
-	private DefaultComboBoxModel<String> nameType=new DefaultComboBoxModel<String>();
+	private DefaultComboBoxModel<String> nameType;
 	private JComboBox<String> jcbName;
 	
-	private DefaultComboBoxModel<String> productType=new DefaultComboBoxModel<String>();
-	private JComboBox<String> jcbType=new JComboBox<String>( productType);
+	private DefaultComboBoxModel<String> productType;
+	private JComboBox<String> jcbType;
 	
 	//Button
-	private JButton checkBtn=new JButton("조회") ; 
-	private JButton monthCheckBtn=new JButton(
-			"<HTML>월별매출<br>&nbsp;&nbsp;&nbsp;&nbsp;조회</HTML>"); 
-	private JButton dayCheckBtn=new JButton(
-			"<HTML>일일매출<br>&nbsp;&nbsp;&nbsp;&nbsp;조회</HTML>"); 
+	private JButton checkBtn ; 
+	private JButton monthCheckBtn; 
+	private JButton dayCheckBtn; 
 	
 	//Area
 	private JLabel totalLabel;
 	
 	//Panel
-	private JPanel  salePeriodJp=new JPanel();
-	private JPanel salesJp=new JPanel();
+	private JPanel  salePeriodJp;
+	private JPanel salesJp;
 	
 	public AdSalesView() {
 		
-		jcbName=new JComboBox<String>( nameType);
+		//TextField생성
+		startJtf=new JTextField();
+		endJtf=new JTextField();
+		
+		//Label생성
+		salesInfoJlb=new JLabel("판매내역");
+		
+		startJlb=new JLabel("시작일");
+		endJlb=new JLabel("종료일");
+		 periodJlb=new JLabel("~");
+
+		nameJlb=new JLabel("상품종류");
+		typeJlb=new JLabel("상품명");
+		
+		totalJlb=new JLabel("총 매출 금액");
 		totalLabel = new JLabel();
+		
+		//ComboBox생성
+		 nameType=new DefaultComboBoxModel<String>();
+		jcbName=new JComboBox<String>( nameType);
+		
+		productType=new DefaultComboBoxModel<String>();
+		jcbType=new JComboBox<String>( productType);
+		
+		//Button생성
+		checkBtn=new JButton("조회") ; 
+		monthCheckBtn=new JButton(
+				"<HTML>월별매출<br>&nbsp;&nbsp;&nbsp;&nbsp;조회</HTML>"); 
+		dayCheckBtn=new JButton(
+				"<HTML>일일매출<br>&nbsp;&nbsp;&nbsp;&nbsp;조회</HTML>"); 
+		
+		
+		salePeriodJp=new JPanel();
+		salesJp=new JPanel();
+		
 		JPanel panel = new JPanel();
 		panel.add(totalLabel);
 		panel.setBorder(new LineBorder(Color.black));

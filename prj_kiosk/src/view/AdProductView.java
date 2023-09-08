@@ -19,39 +19,67 @@ import javax.swing.table.DefaultTableModel;
 public class AdProductView extends JPanel {
 	
 	//Panel
-	private JPanel productJp=new JPanel();
+	private JPanel productJp;
 	
 	//Table
 	private JTable productInfo;
 	private DefaultTableModel productInfoTm ;
 	
 	//Button
-	private JButton deleteBtn=new JButton("삭제"); 
-	private JButton newBtn=new JButton("새상품"); 
-	private JButton changeBtn=new JButton("상품수정") ; 
-	private JButton photoBtn=new JButton("사진등록"); 
+	private JButton deleteBtn; 
+	private JButton newBtn; 
+	private JButton changeBtn ; 
+	private JButton photoBtn; 
 	
 	//Field
-	private JTextField codeJtf=new JTextField();
-	private JTextField nameJtf=new JTextField();
-	private JTextField priceJtf= new JTextField(); 
+	private JTextField codeJtf;
+	private JTextField nameJtf;
+	private JTextField priceJtf; 
 	
 	//Label
-	private JLabel productInfoJlb=new JLabel("상품관리");
+	private JLabel productInfoJlb;
 	
-	private JLabel photoJlb=new JLabel("사진");
+	private JLabel photoJlb;
 	
-	private JLabel codeJlb= new JLabel("상품코드"); 
-	private JLabel typeJlb= new JLabel("상품종류"); 
-	private JLabel nameJlb= new JLabel("상품명"); 
-	private JLabel priceJlb= new JLabel("가격"); 
+	private JLabel codeJlb; 
+	private JLabel typeJlb; 
+	private JLabel nameJlb; 
+	private JLabel priceJlb; 
 	
 	//ComboBox
-	private DefaultComboBoxModel<String> productType=new DefaultComboBoxModel<String>();
-	private JComboBox<String> jcbType=new JComboBox<String>( productType);
+	private DefaultComboBoxModel<String> productType;
+	private JComboBox<String> jcbType;
 	
 	public AdProductView() {
 		
+		//Panel생성
+		productJp=new JPanel();
+		
+		//Button생성
+		deleteBtn=new JButton("삭제"); 
+		 newBtn=new JButton("새상품"); 
+		changeBtn=new JButton("상품수정") ; 
+		 photoBtn=new JButton("사진등록"); 
+		 
+		 //TextField생성
+		codeJtf=new JTextField();
+		 nameJtf=new JTextField();
+		 priceJtf= new JTextField(); 
+			
+			//Label
+			 productInfoJlb=new JLabel("상품관리");
+			
+			 photoJlb=new JLabel("사진");
+			
+			 codeJlb= new JLabel("상품코드"); 
+			 typeJlb= new JLabel("상품종류"); 
+			 nameJlb= new JLabel("상품명"); 
+			 priceJlb= new JLabel("가격"); 
+			 
+			 //ComboBox생성
+			productType=new DefaultComboBoxModel<String>();
+			 jcbType=new JComboBox<String>( productType);
+			 
 		//String, ComboBox
 		String[]  productDetail = {"상품코드","상품종류", "상품명", "가격", "등록일", "삭제여부"};
 		productInfoTm = new DefaultTableModel(null, productDetail);

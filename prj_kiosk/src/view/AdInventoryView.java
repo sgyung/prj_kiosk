@@ -17,36 +17,59 @@ import javax.swing.table.DefaultTableModel;
 public class AdInventoryView extends JPanel {
 	
 	//Panel
-	private JPanel inventoryJp=new JPanel();
+	private JPanel inventoryJp;
 	
 	//Table
 	private JTable inventoryInfo;
 	private DefaultTableModel inventoryInfoTm ;
 	
 	//Button
-	private JButton changeBtn=new JButton("제품수정"); 
-	private JButton newBtn=new JButton("새 제품") ; 
+	private JButton changeBtn;
+	private JButton newBtn; 
 	
 	//Field
-	private JTextField codeJtf=new JTextField();
-	private JTextField nameJtf=new JTextField();
-	private JTextField priceJtf= new JTextField(); 
+	private JTextField codeJtf;
+	private JTextField nameJtf;
+	private JTextField priceJtf; 
 	
 	//Label
-	private JLabel inventoryInfoJlb=new JLabel("재고관리");
+	private JLabel inventoryInfoJlb;
 	
-	private JLabel codeJlb= new JLabel("제품코드"); 
-	private JLabel typeJlb= new JLabel("분류"); 
-	private JLabel nameJlb= new JLabel("제품명"); 
-	private JLabel priceJlb= new JLabel("수량"); 
+	private JLabel codeJlb; 
+	private JLabel typeJlb; 
+	private JLabel nameJlb; 
+	private JLabel priceJlb; 
 	
 	//ComboBox
-	private DefaultComboBoxModel<String> quantityType=new DefaultComboBoxModel<String>();
-	private JComboBox<String> jcbType=new JComboBox<String>( quantityType);
+	private DefaultComboBoxModel<String> quantityType;
+	private JComboBox<String> jcbType;
   
 	
 	public AdInventoryView() {
 		
+		//Panel생성
+		inventoryJp=new JPanel();
+		
+		//Button생성
+		changeBtn=new JButton("제품수정"); 
+		newBtn=new JButton("새 제품") ; 
+		
+		//TextField생성
+		codeJtf=new JTextField();
+		 nameJtf=new JTextField();
+		priceJtf= new JTextField(); 
+		
+		//Label생성
+		 inventoryInfoJlb=new JLabel("재고관리");
+		 codeJlb= new JLabel("제품코드"); 
+		 typeJlb= new JLabel("분류"); 
+		 nameJlb= new JLabel("제품명"); 
+		 priceJlb= new JLabel("수량"); 
+		 
+		 //ComboBox생성
+		 quantityType=new DefaultComboBoxModel<String>();
+		 jcbType=new JComboBox<String>( quantityType);
+		  
 		//String, ScrollPane
 		String[]  inventoryDetail = {"제품코드","분류", "제품명", "수량", "업데이트 날짜", "삭제여부"};
 		inventoryInfoTm = new DefaultTableModel(null, inventoryDetail);

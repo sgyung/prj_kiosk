@@ -15,32 +15,35 @@ import javax.swing.table.DefaultTableModel;
 public class AdUserView extends JPanel{
 	
 	//Panel
-	private JPanel userJp=new JPanel();
+	private JPanel userJp;
 	
 	//Table
 	private JTable userInfo;
 	private DefaultTableModel userInfoTm ;
 	
 	//Button
-	private JButton deleteBtn=new JButton("삭제"); 
-	private JButton changeBtn=new JButton("수정"); 
-	private JButton addBtn=new JButton("추가") ; 
+	private JButton deleteBtn; 
+	private JButton changeBtn; 
+	private JButton addBtn; 
 	
 	//Field
-	private JTextField numJtf=new JTextField();
-	private JTextField telJtf=new JTextField();
-	private JTextField pointJtf=new JTextField();
-	private JTextField dateJtf= new JTextField(); 
+	private JTextField numJtf;
+	private JTextField telJtf;
+	private JTextField pointJtf;
+	private JTextField dateJtf; 
 	
 	//Label
-	private JLabel userInfoJlb=new JLabel("회원관리");
+	private JLabel userInfoJlb;
 	
-	private JLabel numJlb= new JLabel("회원번호"); 
-	private JLabel telJlb= new JLabel("전화번호"); 
-	private JLabel pointJlb= new JLabel("적립금"); 
-	private JLabel dateJlb= new JLabel("가입일"); 
+	private JLabel numJlb; 
+	private JLabel telJlb; 
+	private JLabel pointJlb; 
+	private JLabel dateJlb; 
 	
 	public AdUserView() {
+		
+		//Panel생성
+		userJp=new JPanel();
 		
 		//String, Scrollpane
 		String[]  userDetail = {"회원번호","전화번호", "적립금", "가입일"};
@@ -48,6 +51,24 @@ public class AdUserView extends JPanel{
 		userInfo = new JTable(userInfoTm);
 		JScrollPane userInfoJsp = new JScrollPane(userInfo); 
 		
+		//Button생성
+		deleteBtn=new JButton("삭제"); 
+		changeBtn=new JButton("수정"); 
+		addBtn=new JButton("추가") ; 
+		
+		//Field생성
+		numJtf=new JTextField();
+		telJtf=new JTextField();
+		pointJtf=new JTextField();
+		dateJtf= new JTextField(); 
+		
+		//Label생성
+		userInfoJlb=new JLabel("회원관리");
+		
+	    numJlb= new JLabel("회원번호"); 
+		telJlb= new JLabel("전화번호"); 
+		pointJlb= new JLabel("적립금"); 
+		dateJlb= new JLabel("가입일"); 
 		//컴포넌트 위치설정 ,추가
 		setLayout(null);
 		setVisible(true);

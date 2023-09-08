@@ -15,11 +15,11 @@ import evt.AdLoginEvt;
 public class AdLoginView extends JFrame  {
 
 	//image
-	private ImageIcon adminLogoImg = new ImageIcon("src/images/ad_logo.png");
-	private  JLabel adminLogo = new JLabel(adminLogoImg);
+	private ImageIcon adminLogoImg ;
+	private  JLabel adminLogo ;
 	
 	//Label
-	private JLabel adminJlb=new JLabel("관리자"); 
+	private JLabel adminJlb; 
 	
 	//Button
 	private JButton homeBtn;
@@ -32,13 +32,20 @@ public class AdLoginView extends JFrame  {
 	public AdLoginView(){
 		super("관리자 로그인");
 		
-		MainView.backImg.setDescription("dfdf");
+		//Logo생성
+		 adminLogoImg = new ImageIcon("src/images/ad_logo.png");
+		 adminLogo = new JLabel(adminLogoImg);
+		 
+		//Label생성
+		 adminJlb=new JLabel("관리자"); 
+		 adminJlb=new JLabel("관리자"); 
 		
-		//Button
+		
+		//Button생성
 		homeBtn=new JButton("홈");
 		 loginBtn=new JButton("로그인");
 		
-		//Field
+		//Field생성
 		idField=new JTextField();
 		 pwField=new JPasswordField();
 		
@@ -51,7 +58,7 @@ public class AdLoginView extends JFrame  {
 		setSize(900,1000);
 		setVisible(true);
 		
-		
+		MainView.backImg.setDescription("dfdf");
 		MainView.background.setBounds(0,0,900,1000);
 		adminLogo.setBounds(310,300,270,230);
 		

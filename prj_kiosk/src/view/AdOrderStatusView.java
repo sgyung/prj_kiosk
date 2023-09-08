@@ -14,20 +14,30 @@ import javax.swing.table.DefaultTableModel;
 public class AdOrderStatusView extends JPanel {
 	
 	//Panel
-	private JPanel orderJp=new JPanel();
+	private JPanel orderJp;
 	
 	//Label
-	private JLabel orderInfoJlb=new JLabel("주문관리");
+	private JLabel orderInfoJlb;
 	
 	//Table
 	private JTable orderInfo;
 	private DefaultTableModel orderInfoTm ;
 	
 	//Button
-	private JButton checkBtn=new JButton("주문확인"); 
-	private JButton rePrintBtn=new JButton("재출력") ; 
+	private JButton checkBtn; 
+	private JButton rePrintBtn ; 
 	
 	public AdOrderStatusView() {
+		
+		//Panel생성
+		orderJp=new JPanel();
+		
+		//Label생성
+		orderInfoJlb=new JLabel("주문관리");
+		
+		//Button생성
+		 checkBtn=new JButton("주문확인"); 
+		rePrintBtn=new JButton("재출력") ; 
 		
 		//String, Scrollpane 설정
 		String[]  salesDetail = {"주문번호","주문내역", "가격", "주문상태", "주문일시"};

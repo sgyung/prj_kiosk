@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.DefaultComboBoxModel;
@@ -11,8 +12,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+
+import evt.AdSalesEvt;
 
 @SuppressWarnings("serial")
 public class AdSalesView extends JPanel {
@@ -32,14 +37,14 @@ public class AdSalesView extends JPanel {
 	private JLabel endJlb=new JLabel("종료일");
 	private JLabel periodJlb=new JLabel("~");
 
-	private JLabel nameJlb=new JLabel("상품명");
-	private JLabel typeJlb=new JLabel("상품종류");
+	private JLabel nameJlb=new JLabel("상품종류");
+	private JLabel typeJlb=new JLabel("상품명");
 	
 	private JLabel totalJlb=new JLabel("총 매출 금액");
 	
 	//ComboBox
 	private DefaultComboBoxModel<String> nameType=new DefaultComboBoxModel<String>();
-	private JComboBox<String> jcbName=new JComboBox<String>( nameType);
+	private JComboBox<String> jcbName;
 	
 	private DefaultComboBoxModel<String> productType=new DefaultComboBoxModel<String>();
 	private JComboBox<String> jcbType=new JComboBox<String>( productType);
@@ -52,7 +57,7 @@ public class AdSalesView extends JPanel {
 			"<HTML>일일매출<br>&nbsp;&nbsp;&nbsp;&nbsp;조회</HTML>"); 
 	
 	//Area
-	private JTextArea totalJta=new JTextArea();
+	private JLabel totalLabel;
 	
 	//Panel
 	private JPanel  salePeriodJp=new JPanel();
@@ -60,21 +65,61 @@ public class AdSalesView extends JPanel {
 	
 	public AdSalesView() {
 		
+		jcbName=new JComboBox<String>( nameType);
+		totalLabel = new JLabel();
+		JPanel panel = new JPanel();
+		panel.add(totalLabel);
+		panel.setBorder(new LineBorder(Color.black));
+		
 		//String, Scrollpane
-		String[]  salesDetail = {"종류","상품", "수량", "금액", "판매일시"};
+		String[]  salesDetail = {"종류","상품","Ice/Hot","사이즈","옵션", "수량", "금액", "판매일시"};
 		salesInfoTm = new DefaultTableModel(null, salesDetail);
 		salesInfo = new JTable(salesInfoTm);
-		JScrollPane salesInfoJsp = new JScrollPane(salesInfo); 
+		JScrollPane salesInfoJsp = new JScrollPane(salesInfo);
+		
+		String defaultOption = "상품종류를 선택해주세요";
+		productType.addElement(defaultOption);
+		jcbType.setSelectedItem(defaultOption);
 		
 		//컴포넌트 위치설정, 추가
 		setLayout(null);
 		setVisible(true);
 		
+		//Event
+		AdSalesEvt adSalesEvt = new AdSalesEvt(this);
+		checkBtn.addActionListener(adSalesEvt);
+		dayCheckBtn.addActionListener(adSalesEvt);
+		monthCheckBtn.addActionListener(adSalesEvt);
+		jcbName.addItemListener(adSalesEvt);
+		
+		//Table column 넓이 설정
+		TableColumn col1 = salesInfo.getColumnModel().getColumn(0);
+		TableColumn col2 = salesInfo.getColumnModel().getColumn(1);
+		TableColumn col3 = salesInfo.getColumnModel().getColumn(2);
+		TableColumn col4 = salesInfo.getColumnModel().getColumn(3);
+		TableColumn col5 = salesInfo.getColumnModel().getColumn(4);
+		TableColumn col6 = salesInfo.getColumnModel().getColumn(5);
+		TableColumn col7 = salesInfo.getColumnModel().getColumn(6);
+		col1.setPreferredWidth(20);
+		col2.setPreferredWidth(50);
+		col3.setPreferredWidth(20);
+		col4.setPreferredWidth(20);
+		col5.setPreferredWidth(50);
+		col6.setPreferredWidth(15);
+		col7.setPreferredWidth(30);
+
+		
 		salesJp.setBounds(0,0,900,1000);
 		salePeriodJp.setBounds(480,30,210,100);
 		
-		//라벨 폰트 설정
-		salesInfoJlb.setFont(new Font("맑은고딕",Font.BOLD,20));
+		//폰트 설정
+		Font labelFont = new Font("맑은고딕",Font.BOLD,20);
+		Font totalFont = new Font("맑은고딕",Font.BOLD,50);
+		salesInfoJlb.setFont(labelFont);
+		totalJlb.setFont(labelFont);
+		totalLabel.setFont(totalFont);
+		
+		//라벨
 		salesInfoJlb.setBounds(45,35,200,35);
 		salesInfoJsp.setBounds(10,80,450,700);
 		
@@ -84,22 +129,22 @@ public class AdSalesView extends JPanel {
 		startJtf.setBounds(20,60,70,30);
 		endJtf.setBounds(130,60,70,30);
 		
-		nameJlb.setBounds(490,200,40,30);
-		typeJlb.setBounds(490,240,50,30);
+		nameJlb.setBounds(480,160,50,30);
+		typeJlb.setBounds(480,220,50,30);
 		
-		jcbName.setBounds(550,200,130,30);
-		jcbType.setBounds(550,240,130,30);
+		jcbName.setBounds(480,190,210,30);
+		jcbType.setBounds(480,250,210,30);
 		
-		checkBtn.setBounds(490, 300, 200, 30);
+		checkBtn.setBounds(480, 300, 210, 50);
 		
 		monthCheckBtn.setBounds(490, 400, 90, 70);
 		dayCheckBtn.setBounds(600, 400, 90, 70);
 		
-		totalJlb.setBounds(490,800,170,30);
-		totalJta.setBounds(490,830,200,30);
+		totalJlb.setBounds(480,640,150,30);
+		panel.setBounds(480,680,200,100);
 		
 		//테이블 폰트설정
-		salesInfo.setFont(new Font("맑은고딕",Font.BOLD,20));
+		salesInfo.setFont(new Font("맑은고딕",Font.BOLD,12));
 		salesJp.add(salesInfoJlb);
 		salesJp.add(salesInfoJsp);
 		
@@ -127,7 +172,7 @@ public class AdSalesView extends JPanel {
 		salesJp.add(dayCheckBtn);
 		
 		salesJp.add(totalJlb);
-		salesJp.add(totalJta);
+		salesJp.add(panel);
 		
 		add(salesJp);
 		
@@ -224,10 +269,9 @@ public class AdSalesView extends JPanel {
 	}
 
 
-	public JTextArea getTotalJta() {
-		return totalJta;
+	public JLabel getTotalLabel() {
+		return totalLabel;
 	}
-
 
 	public JPanel getSalePeriodJp() {
 		return salePeriodJp;

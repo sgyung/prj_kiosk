@@ -44,7 +44,7 @@ public class MenuView extends JFrame {
 		//TabPane
 		JTabbedPane menuJtp = new JTabbedPane();
 		//menuPanel
-		cofMenu = new CoffeeMenuView();
+		cofMenu = new CoffeeMenuView(this);
 		bevMenu = new BeverageMenuView();
 		desMenu = new DesertMenuView();
 		//ScrollPane
@@ -65,8 +65,6 @@ public class MenuView extends JFrame {
 		purchaseBtn.setFont(new Font("맑은 고딕", Font.BOLD ,30));
 		
 		//Event
-		TestEvt evt = new TestEvt(this);
-		cofMenu.getBtn().addActionListener(evt);
 		
 		//Tab 위치Left
 		menuJtp.setTabPlacement(JTabbedPane.LEFT);

@@ -1,6 +1,7 @@
 package vo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class SalesDetailVO {
 	
@@ -13,10 +14,10 @@ public class SalesDetailVO {
 	private String oOptionName;
 	private int oOptionPrice;
 	private int orderDetailPrice;
-	private Date pmDate;
+	private Timestamp pmDate;
 	
 	public SalesDetailVO(String orderDetailNum, String pdTypeCode, String pdName, int pdQuantity, String oTempType,
-			String oSizeNum, String oOptionName, int oOptionPrice, int orderDetailPrice, Date pmDate) {
+			String oSizeNum, String oOptionName, int oOptionPrice, int orderDetailPrice, Timestamp pmDate) {
 		super();
 		this.orderDetailNum = orderDetailNum;
 		this.pdTypeCode = pdTypeCode;
@@ -91,10 +92,10 @@ public class SalesDetailVO {
 	public void setOrderDetailPrice(int orderDetailPrice) {
 		this.orderDetailPrice = orderDetailPrice;
 	}
-	public Date getPmDate() {
+	public Timestamp getPmDate() {
 		return pmDate;
 	}
-	public void setPmDate(Date pmDate) {
+	public void setPmDate(Timestamp pmDate) {
 		this.pmDate = pmDate;
 	}
 

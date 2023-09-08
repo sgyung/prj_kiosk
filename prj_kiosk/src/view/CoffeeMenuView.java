@@ -4,6 +4,8 @@ package view;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +17,8 @@ import javax.swing.JPanel;
 public class CoffeeMenuView extends JPanel{
 	
 	private JButton btn9;
-	
-	public CoffeeMenuView() {
-	
+
+	public CoffeeMenuView(MenuView mv) {
 		//product Info
 		btn9 = new JButton("아메리카노 그림");
 
@@ -42,6 +43,7 @@ public class CoffeeMenuView extends JPanel{
 		Font pdFont = new Font("맑은 고딕", Font.BOLD, 20);
 		name1.setFont(pdFont);
 		price1.setFont(pdFont);
+		
 		
 
 		List<JPanel> list = new ArrayList<JPanel>();

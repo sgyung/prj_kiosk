@@ -61,7 +61,7 @@ public class SalesDAO {
 				salesDetailVO.setoOptionName(rs.getString("option_name"));
 				salesDetailVO.setoOptionPrice(rs.getInt("option_price"));
 				salesDetailVO.setOrderDetailPrice(rs.getInt("order_detail_price"));
-				salesDetailVO.setPmDate(rs.getDate("payment_date"));
+				salesDetailVO.setPmDate(rs.getTimestamp("payment_date"));
 				
 				list.add(salesDetailVO);
 			}
@@ -112,7 +112,7 @@ public class SalesDAO {
 				salesDetailVO.setoOptionName(rs.getString("option_name"));
 				salesDetailVO.setoOptionPrice(rs.getInt("option_price"));
 				salesDetailVO.setOrderDetailPrice(rs.getInt("order_detail_price"));
-				salesDetailVO.setPmDate(rs.getDate("payment_date"));
+				salesDetailVO.setPmDate(rs.getTimestamp("payment_date"));
 				
 				list.add(salesDetailVO);
 			}//end while
@@ -165,7 +165,7 @@ public class SalesDAO {
 				salesDetailVO.setoOptionName(rs.getString("option_name"));
 				salesDetailVO.setoOptionPrice(rs.getInt("option_price"));
 				salesDetailVO.setOrderDetailPrice(rs.getInt("order_detail_price"));
-				salesDetailVO.setPmDate(rs.getDate("payment_date"));
+				salesDetailVO.setPmDate(rs.getTimestamp("payment_date"));
 				
 				list.add(salesDetailVO);
 			}//end while
@@ -221,7 +221,7 @@ public class SalesDAO {
 				salesDetailVO.setoOptionName(rs.getString("option_name"));
 				salesDetailVO.setoOptionPrice(rs.getInt("option_price"));
 				salesDetailVO.setOrderDetailPrice(rs.getInt("order_detail_price"));
-				salesDetailVO.setPmDate(rs.getDate("payment_date"));
+				salesDetailVO.setPmDate(rs.getTimestamp("payment_date"));
 				
 				list.add(salesDetailVO);
 			}//end while
@@ -278,7 +278,7 @@ public class SalesDAO {
 				salesDetailVO.setoOptionName(rs.getString("option_name"));
 				salesDetailVO.setoOptionPrice(rs.getInt("option_price"));
 				salesDetailVO.setOrderDetailPrice(rs.getInt("order_detail_price"));
-				salesDetailVO.setPmDate(rs.getDate("payment_date"));
+				salesDetailVO.setPmDate(rs.getTimestamp("payment_date"));
 				
 				list.add(salesDetailVO);
 			}//end while
@@ -337,7 +337,7 @@ public class SalesDAO {
 				salesDetailVO.setoOptionName(rs.getString("option_name"));
 				salesDetailVO.setoOptionPrice(rs.getInt("option_price"));
 				salesDetailVO.setOrderDetailPrice(rs.getInt("order_detail_price"));
-				salesDetailVO.setPmDate(rs.getDate("payment_date"));
+				salesDetailVO.setPmDate(rs.getTimestamp("payment_date"));
 				
 				list.add(salesDetailVO);
 			}//end while
@@ -386,7 +386,7 @@ public class SalesDAO {
 				salesDetailVO.setoOptionName(rs.getString("option_name"));
 				salesDetailVO.setoOptionPrice(rs.getInt("option_price"));
 				salesDetailVO.setOrderDetailPrice(rs.getInt("order_detail_price"));
-				salesDetailVO.setPmDate(rs.getDate("payment_date"));
+				salesDetailVO.setPmDate(rs.getTimestamp("payment_date"));
 				
 				list.add(salesDetailVO);
 			}//end while
@@ -438,7 +438,7 @@ public class SalesDAO {
 				salesDetailVO.setoOptionName(rs.getString("option_name"));
 				salesDetailVO.setoOptionPrice(rs.getInt("option_price"));
 				salesDetailVO.setOrderDetailPrice(rs.getInt("order_detail_price"));
-				salesDetailVO.setPmDate(rs.getDate("payment_date"));
+				salesDetailVO.setPmDate(rs.getTimestamp("payment_date"));
 				
 				list.add(salesDetailVO);
 			}//end while
@@ -448,65 +448,64 @@ public class SalesDAO {
 		}//end finally
 		
 		return list;
-	}
+	}//selectMonthSalesDetail
 	
-	//TEST
-	public static void main(String[] args) {
-		SalesDAO dao = SalesDAO.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	public List<String> selectProductType() throws SQLException {
+		List<String> list = new ArrayList<String>();
 		
-		String startDate = "2023-09-01";
-		String endDate = "2023-09-09";
-		String pdType = "";
-		String pdName = "";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		DbConn db = DbConn.getInstance();
+		
+		con = db.getConnection("localhost", "scott", "tiger");
+		
+		StringBuilder selectProductType = new StringBuilder();
+		selectProductType
+		.append("	select product_type_code from product_type	")
+		;
+		
+		pstmt = con.prepareStatement(selectProductType.toString());
+		
+		rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			list.add( rs.getString("product_type_code") );
+		}//end while
+		
+		return list;
+	}//selectProductType
+	
+	public List<String> selectProductName( String pdName) throws SQLException {
+		List<String> list = new ArrayList<String>();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		DbConn db = DbConn.getInstance();
+		
+		con = db.getConnection("localhost", "scott", "tiger");
+		
+		StringBuilder selectProductName = new StringBuilder();
+		selectProductName
+		.append("	select product_name from product where product_type_code = ?	")
+		;
+		
+		pstmt = con.prepareStatement(selectProductName.toString());
+		pstmt.setString(1, pdName);
+		
+		rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			list.add( rs.getString("product_name") );
+		}//end while
+		
+		return list;
 		
 		
-//		if( !startDate.isEmpty() || !endDate.isEmpty() ) {
-//			
-//		}
-		
-		try {
-			
-//			Date startUtilDate = sdf.parse(startDate);
-//			Date startUtilEnd = sdf.parse(endDate);
-			List<SalesDetailVO> list = new ArrayList<SalesDetailVO>();
-			
-			//조회조건
-//			if( ( !startDate.isEmpty() || !endDate.isEmpty() ) && !pdType.isEmpty() && !pdName.isEmpty() ) {
-//				Date startUtilDate = sdf.parse(startDate);
-//				Date startUtilEnd = sdf.parse(endDate);
-//				list = dao.selectSalesDetail(startUtilDate, startUtilEnd, pdType, pdName);
-//				System.out.println("1");
-//			} else if( ( !startDate.isEmpty() || !endDate.isEmpty() ) && !pdType.isEmpty() && pdName.isEmpty() ) {
-//				Date startUtilDate = sdf.parse(startDate);
-//				Date startUtilEnd = sdf.parse(endDate);
-//				list = dao.selectSalesDetail(startUtilDate, startUtilEnd, pdType );
-//				System.out.println("2");
-//			} else if( ( !startDate.isEmpty() || !endDate.isEmpty() ) && pdType.isEmpty() && pdName.isEmpty() ) {
-//				Date startUtilDate = sdf.parse(startDate);
-//				Date startUtilEnd = sdf.parse(endDate);
-//				list = dao.selectSalesDetail(startUtilDate, startUtilEnd );
-//				System.out.println("3");
-//			} else if( ( startDate.isEmpty() || endDate.isEmpty() ) && !pdType.isEmpty() && pdName.isEmpty() ) {
-//				list = dao.selectSalesDetail(pdType);
-//				System.out.println("4");
-//			} else if( ( startDate.isEmpty() || endDate.isEmpty() ) && !pdType.isEmpty() && !pdName.isEmpty() ) {
-//				list = dao.selectSalesDetail(pdType, pdName);
-//				System.out.println("5");
-//			}
-			
-//			list = dao.selectDaySalesDetail();
-			list = dao.selectMonthSalesDetail(9);
-			
-			for( SalesDetailVO vo : list) {
-				System.out.println(vo);
-			}
-			
-//		} catch (ParseException e1) {
-//			System.out.println("옳바른 날짜 형식이 아닙니다.");
-//			e1.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+	}//selectProductName
+	
+	
 }//class

@@ -1,9 +1,6 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -11,10 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 
 import evt.AdLoginEvt;
-import evt.MainEvt;
 
 @SuppressWarnings("serial")
 public class AdLoginView extends JFrame  {
@@ -48,8 +43,7 @@ public class AdLoginView extends JFrame  {
 		 pwField=new JPasswordField();
 		
 		//홈버튼누르면 메인으로 가는 이벤트
-		AdLoginEvt adevt = new AdLoginEvt(this);
-		homeBtn.addActionListener(adevt);
+		homeBtn.addActionListener(new AdLoginEvt(this));
 		
 		//컴포넌트 위치설정, 추가
 		

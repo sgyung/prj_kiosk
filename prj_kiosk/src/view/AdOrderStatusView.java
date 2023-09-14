@@ -10,6 +10,8 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import evt.AdOrderStatusEvt;
+
 @SuppressWarnings("serial")
 public class AdOrderStatusView extends JPanel {
 	
@@ -24,8 +26,9 @@ public class AdOrderStatusView extends JPanel {
 	private DefaultTableModel orderInfoTm ;
 	
 	//Button
-	private JButton checkBtn; 
-	private JButton rePrintBtn ; 
+	private JButton detailBtn; 
+	private JButton completeBtn; 
+	private JButton rePrintBtn; 
 	
 	public AdOrderStatusView() {
 		
@@ -36,27 +39,36 @@ public class AdOrderStatusView extends JPanel {
 		orderInfoJlb=new JLabel("주문관리");
 		
 		//Button생성
-		 checkBtn=new JButton("주문확인"); 
-		rePrintBtn=new JButton("재출력") ; 
+		detailBtn=new JButton("주문상세"); 
+		completeBtn=new JButton("제조완료"); 
+		rePrintBtn=new JButton("재출력"); 
 		
 		//String, Scrollpane 설정
-		String[]  salesDetail = {"주문번호","주문내역", "가격", "주문상태", "주문일시"};
+		String[]  salesDetail = {"주문번호", "주문상태", "주문일시"};
 		orderInfoTm = new DefaultTableModel(null, salesDetail);
 		orderInfo = new JTable(orderInfoTm);
 		JScrollPane orderInfoJsp = new JScrollPane(orderInfo); 
 		
 		//테이블 폰트설정
-		orderInfo.setFont(new Font("맑은고딕",Font.BOLD,20));
+		orderInfo.setFont(new Font("맑은고딕",Font.BOLD,16));
 		orderJp.add(orderInfoJlb);
 		orderJp.add(orderInfoJsp);
 		
 		orderJp.setBorder(new TitledBorder("주문관리"));
 		orderJp.setLayout(null);
 		
-		orderJp.add(checkBtn);
+		orderJp.add(detailBtn);
+		orderJp.add(completeBtn);
 		orderJp.add(rePrintBtn);
 		
 		add(orderJp);
+		
+		//Event
+		AdOrderStatusEvt adOrderStatusEvt = new AdOrderStatusEvt(this);
+		detailBtn.addActionListener(adOrderStatusEvt);
+		completeBtn.addActionListener(adOrderStatusEvt);
+		rePrintBtn.addActionListener(adOrderStatusEvt);
+		orderInfo.addMouseListener(adOrderStatusEvt);
 		
 		setLayout(null);
 		setVisible(true);
@@ -68,7 +80,8 @@ public class AdOrderStatusView extends JPanel {
 		orderInfoJlb.setBounds(45,35,200,35);
 		orderInfoJsp.setBounds(10,80,450,700);
 		
-		checkBtn.setBounds(510, 800, 90, 50);
+		detailBtn.setBounds(410, 800, 90, 50);
+		completeBtn.setBounds(510, 800, 90, 50);
 		rePrintBtn.setBounds(610, 800, 80, 50);
 		
 	}//AdOrderStatusView
@@ -90,8 +103,12 @@ public class AdOrderStatusView extends JPanel {
 		return orderInfoTm;
 	}
 
-	public JButton getCheckBtn() {
-		return checkBtn;
+	public JButton getDetailBtn() {
+		return detailBtn;
+	}
+
+	public JButton getCompleteBtn() {
+		return completeBtn;
 	}
 
 	public JButton getRePrintBtn() {

@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import oracle.jdbc.proxy.annotation.Pre;
 import vo.MenuListVO;
 import vo.ProductVO;
 
@@ -109,12 +108,14 @@ public class ProductDAO {
 			
 			StringBuilder selectProductType = new StringBuilder();
 			selectProductType
-			.append("select product_type_name from product_type");
+			//수정 product_type_name -> product_type_code
+			.append("select product_type_code from product_type");
 
 			rs = stmt.executeQuery(selectProductType.toString());
 			
 			while(rs.next()) {
-				productTypeList.add(rs.getString("product_type_name"));
+				//수정 product_type_name -> product_type_code
+				productTypeList.add(rs.getString("product_type_code"));
 			}
 		}finally {
 			db.dbClose(rs, stmt, con);
@@ -122,6 +123,7 @@ public class ProductDAO {
 		return productTypeList;
 	}
 	
+	//수정
 	public void insertProduct(ProductVO pVO) throws SQLException{
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -131,22 +133,34 @@ public class ProductDAO {
 		try {
 			con = db.getConnection("localhost", "scott", "tiger");
 			
+			String pdTypeCode = pVO.getPdTypeCode();
+			
 			StringBuilder insertProduct = new StringBuilder();
 			insertProduct
-			.append("insert into product(product_code, product_type_code, image, product_name, product_price, product_delete, product_date)")
-			.append("values ( ? || cof_seq.nextval,?,?,?,?,?,?) 																								");
-			
+			.append("	insert into product(product_code, product_type_code, image, product_name, product_price, product_delete, product_date)	");
+			if( pdTypeCode.equals("cof")) {
+				insertProduct.append("	values ( ? || cof_seq.nextval, ?, ?, ?, ?, ?, sysdate) 																									");
+			}//end if
+			if( pdTypeCode.equals("bev")) {
+				insertProduct.append("	values ( ? || bev_seq.nextval, ?, ?, ?, ?, ?, sysdate) 																									");
+			}//end if
+			if( pdTypeCode.equals("des")) {
+				insertProduct.append("	values ( ? || des_seq.nextval, ?, ?, ?, ?, ?, sysdate) 																									");
+			}//end if
+
 			pstmt = con.prepareStatement(insertProduct.toString());
 			
-			pstmt.setString(1, pVO.getPdCode());
-			pstmt.setString(2, pVO.getPdTypeCode());
+			StringBuilder pdCode = new StringBuilder();
+			pdCode.append("_");
+			pstmt.setString(1,pdCode.toString());
+			pstmt.setString(2, pdTypeCode);
 			pstmt.setString(3, pVO.getPdImageName());
 			pstmt.setString(4, pVO.getPdName());
 			pstmt.setInt(5, pVO.getPdPrice());
-			pstmt.setString(6, pVO.getPdDelete());
-			pstmt.setDate(7, pVO.getPdInputDate());
+			pstmt.setString(6, "N");
 			
 			pstmt.executeUpdate();
+			
 		}finally {
 			db.dbClose(null, pstmt, con);
 		}
@@ -181,6 +195,7 @@ public class ProductDAO {
 		return rowCnt;
 	}
 	
+	//delete 수정
 	public int deleteProduct(ProductVO pVO) throws SQLException{
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -192,12 +207,15 @@ public class ProductDAO {
 			
 			StringBuilder deleteProduct = new StringBuilder();
 			deleteProduct
-			.append("	delete from product			")
-			.append("	where product_code = ?		");
+			.append("	update product			")
+			.append("	set product_delete= ?	")
+			.append("	where product_code= ?	")
+			;
 			
 			pstmt = con.prepareStatement(deleteProduct.toString());
 			
-			pstmt.setString(1, pVO.getPdCode());
+			pstmt.setString(1, pVO.getPdDelete());
+			pstmt.setString(2, pVO.getPdCode());
 			
 			rowCnt = pstmt.executeUpdate();
 		}finally {
@@ -239,9 +257,39 @@ public class ProductDAO {
 			db.dbClose(rs, pstmt, con);
 		}
 		return list;
-	}
+	}//selectMenuList
 
+	public List<String> selectImages() throws SQLException{
+		List<String> list = new ArrayList<String>();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		DbConn db = DbConn.getInstance();
+		
+		try {
+			
+			con = db.getConnection("localhost", "scott", "tiger");
+			
+			String selectImage = "	select image from product	";
+			
+			pstmt = con.prepareStatement(selectImage);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				list.add(rs.getString("image"));
+				
+			}//end while
+			
+		} finally {
+			db.dbClose(rs, pstmt, con);
+		}
+		
+		return list;
+	}//selectImages
 	
-	
-}
+}//class
 

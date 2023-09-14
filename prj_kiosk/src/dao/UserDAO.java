@@ -41,7 +41,7 @@ public class UserDAO {
 		
 		StringBuilder selectAllUser= new StringBuilder();
 		selectAllUser
-		.append("	select user_phone, user_point, user_date	")
+		.append("	select user_phone, user_point, user_withdrawal, user_date	")
 		.append("	from user_info								");
 		
 		pstmt=con.prepareStatement(selectAllUser.toString());
@@ -52,6 +52,7 @@ public class UserDAO {
 			UserVO userVO = new UserVO();
 			userVO.setuTelNum(rs.getString("user_phone"));
 			userVO.setuRemainReward(rs.getInt("user_point"));
+			userVO.setuWithdrawal(rs.getString("user_withdrawal"));
 			userVO.setuSignupDate(rs.getDate("user_date"));
 			
 			list.add(userVO);
@@ -78,7 +79,7 @@ public class UserDAO {
 			
 			StringBuilder selectUser=new StringBuilder();
 			selectUser
-			.append("	select	user_phone, user_point, user_date	")
+			.append("	select	user_phone, user_point, user_withdrawal, user_date	")
 			.append("	from	user_info							")
 			.append("	where	user_phone = ? 						");
 			
@@ -92,6 +93,7 @@ public class UserDAO {
 				userVO = new UserVO();
 				userVO.setuTelNum(rs.getString("user_phone"));
 				userVO.setuRemainReward(rs.getInt("user_point"));
+				userVO.setuWithdrawal(rs.getString("user_withdrawal"));
 				userVO.setuSignupDate(rs.getDate("user_date"));
 			}//end if
 			
@@ -104,86 +106,93 @@ public class UserDAO {
 	
 	public void insertUser( UserVO userVO ) throws SQLException {
 		Connection con = null;
-		CallableStatement cstmt=null;
+		PreparedStatement pstmt=null;
 		
 		DbConn db = DbConn.getInstance();
 		
 		try {
 			con=db.getConnection("localhost", "scott", "tiger");
-		//3.
-			cstmt = con.prepareCall("{ call insert_user_info_proc(?,?,?,?,?) }");
-		//4. bind변수 값 설정
-		//in parameter
-			cstmt.setString(1, userVO.getuTelNum());
-			cstmt.setInt(2, userVO.getuRemainReward());
-			cstmt.setDate(3, userVO.getuSignupDate());
-		//out parameter
-			cstmt.registerOutParameter(4, Types.NUMERIC);
-			cstmt.registerOutParameter(5, Types.VARCHAR);
-		//5.
-			cstmt.execute();
-		//6. registerOutParameter에 할당된 값 얻기
-			int cnt = cstmt.getInt(4);
-			String msg = cstmt.getString(5);
-			System.out.println(cnt + " / " + msg);
+			
+			StringBuilder user = new StringBuilder();
+			user
+			.append("	insert into user_info( user_phone, user_point, user_withdrawal, user_date )	")
+			.append("	values( ? , ?, 'n', sysdate	)	");
+			
+			pstmt = con.prepareStatement(user.toString());
+			
+			pstmt.setString(1, userVO.getuTelNum());
+			pstmt.setInt(2, userVO.getuRemainReward());
+			
+			pstmt.executeQuery();
+
 		} finally {
-		//7.
-			db.dbClose(null, cstmt, con);
+			db.dbClose(null, pstmt, con);
 		}//end finally
 	}
 	
-	public void updateUser( UserVO userVO ) throws SQLException {
+	public int updateUser( UserVO userVO ) throws SQLException {
 		Connection con = null;
-		CallableStatement cstmt=null;
+		PreparedStatement pstmt=null;
+		int cnt = 0;
 		
 		DbConn db = DbConn.getInstance();
 		
 		try {
 			con=db.getConnection("localhost", "scott", "tiger");
+			
+			StringBuilder updateUser = new StringBuilder();
+			updateUser
+			.append("	update user_info	")
+			.append("	set user_point= ?	")
+			.append("	where user_phone= ? 	")
+			;
 
-			cstmt = con.prepareCall("{ call update_user_info_proc(?,?,?) }");
+			pstmt = con.prepareStatement(updateUser.toString());
 
-			cstmt.setString(1, userVO.getuTelNum());
-			cstmt.setInt(2, userVO.getuRemainReward());
-			cstmt.setDate(3, userVO.getuSignupDate());
+			pstmt.setInt(1, userVO.getuRemainReward());
+			pstmt.setString(2, userVO.getuTelNum());
 
-			cstmt.execute();
-
+			cnt = pstmt.executeUpdate();
+			
+			return cnt;
 		} finally {
-		//7.
-			db.dbClose(null, cstmt, con);
+			
+			db.dbClose(null, pstmt, con);
+			
 		}//end finally
 	}
 	
-	public void deleteUser( String uTelNum ) throws SQLException  {
+	public int deleteUser( String uTelNum ) throws SQLException  {
 		Connection con = null;
-		CallableStatement cstmt=null;
+		PreparedStatement pstmt=null;
+		int cnt = 0;
 		
 		DbConn db = DbConn.getInstance();
 		
 		try {
+			StringBuilder update = new StringBuilder();
+			update
+			.append("	update user_info	")
+			.append("	set user_withdrawal='y'	")
+			.append("	where user_phone= ? 	")
+			;
+			
 			con=db.getConnection("localhost", "scott", "tiger");
 
-			cstmt = con.prepareCall("{ call delete_user_info_proc(?) }");
+			pstmt = con.prepareStatement(update.toString());
 
-			cstmt.setString(1, uTelNum);
+			pstmt.setString(1, uTelNum);
 
-			cstmt.execute();
+			cnt = pstmt.executeUpdate();
+			
+			return cnt;
 
 		} finally {
 
-			db.dbClose(null, cstmt, con);
+			db.dbClose(null, pstmt, con);
+			
 		}//end finally
-	}
-	
-//	public static void main(String[] args) {
-//		UserDAO u = new UserDAO();
-//		try {
-//			//System.out.println(i.selectInventory("md_1"));
-//			System.out.println(u.selectAllUser());
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
-}
+		
+	}//deleteUser
+
+}//class

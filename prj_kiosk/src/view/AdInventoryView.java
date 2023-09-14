@@ -13,8 +13,14 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import evt.AdInventoryEvt;
+import vo.InventoryVO;
+
 @SuppressWarnings("serial")
 public class AdInventoryView extends JPanel {
+	
+	//InventoryVO
+	private InventoryVO currentInvenVO;
 	
 	//Panel
 	private JPanel inventoryJp;
@@ -30,7 +36,7 @@ public class AdInventoryView extends JPanel {
 	//Field
 	private JTextField codeJtf;
 	private JTextField nameJtf;
-	private JTextField priceJtf; 
+	private JTextField amountJtf; 
 	
 	//Label
 	private JLabel inventoryInfoJlb;
@@ -55,9 +61,10 @@ public class AdInventoryView extends JPanel {
 		newBtn=new JButton("새 제품") ; 
 		
 		//TextField생성
-		codeJtf=new JTextField();
+		codeJtf=new JTextField("자동 생성");
+		codeJtf.setEnabled(false);
 		 nameJtf=new JTextField();
-		priceJtf= new JTextField(); 
+		 amountJtf= new JTextField(); 
 		
 		//Label생성
 		 inventoryInfoJlb=new JLabel("재고관리");
@@ -71,17 +78,25 @@ public class AdInventoryView extends JPanel {
 		 jcbType=new JComboBox<String>( quantityType);
 		  
 		//String, ScrollPane
-		String[]  inventoryDetail = {"제품코드","분류", "제품명", "수량", "업데이트 날짜", "삭제여부"};
+		String[]  inventoryDetail = {"재고코드","분류", "제품명", "수량", "업데이트 날짜"};
 		inventoryInfoTm = new DefaultTableModel(null, inventoryDetail);
 		inventoryInfo = new JTable(inventoryInfoTm);
-		JScrollPane inventoryInfoJsp = new JScrollPane(inventoryInfo); 
+		JScrollPane inventoryInfoJsp = new JScrollPane(inventoryInfo);
+		//Table 수정불가
+		inventoryInfo.setDefaultEditor(Object.class, null);
 		
+		//Event
+		AdInventoryEvt evt = new AdInventoryEvt(this);
+		inventoryInfo.addMouseListener(evt);
+		changeBtn.addActionListener(evt);
+		newBtn.addActionListener(evt);
 		
 		//컴포넌트 위치설정, 추가
 		setLayout(null);
 		setVisible(true);
 		
 		inventoryJp.setBounds(0,0,900,1000);
+
 		
 		//라벨 폰트설정
 		inventoryInfoJlb.setFont(new Font("맑은고딕",Font.BOLD,20));
@@ -101,10 +116,10 @@ public class AdInventoryView extends JPanel {
 		jcbType.setBounds(550, 400,140, 30);
 		
 		nameJtf.setBounds(550, 450, 140, 30);
-		priceJtf.setBounds(550, 500, 140, 30);
+		amountJtf.setBounds(550, 500, 140, 30);
 		
 		//테이블 폰트설정
-		inventoryInfo.setFont(new Font("맑은고딕",Font.BOLD,20));
+//		inventoryInfo.setFont(new Font("맑은고딕",Font.BOLD,15));
 		inventoryJp.add(inventoryInfoJlb);
 		inventoryJp.add(inventoryInfoJsp);
 		
@@ -121,7 +136,7 @@ public class AdInventoryView extends JPanel {
 		inventoryJp.add(nameJtf);
 		
 		inventoryJp.add(priceJlb);
-		inventoryJp.add(priceJtf);
+		inventoryJp.add(amountJtf);
 		
 		inventoryJp.add(changeBtn);
 		inventoryJp.add(newBtn);
@@ -159,8 +174,8 @@ public class AdInventoryView extends JPanel {
 		return nameJtf;
 	}
 
-	public JTextField getPriceJtf() {
-		return priceJtf;
+	public JTextField getAmountJtf() {
+		return amountJtf;
 	}
 
 	public JLabel getCodeJlb() {
@@ -189,6 +204,74 @@ public class AdInventoryView extends JPanel {
 
 	public JComboBox<String> getJcbType() {
 		return jcbType;
+	}
+
+	public InventoryVO getCurrentInvenVO() {
+		return currentInvenVO;
+	}
+
+	public void setCurrentInvenVO(InventoryVO currentInvenVO) {
+		this.currentInvenVO = currentInvenVO;
+	}
+
+	public void setInventoryJp(JPanel inventoryJp) {
+		this.inventoryJp = inventoryJp;
+	}
+
+	public void setInventoryInfo(JTable inventoryInfo) {
+		this.inventoryInfo = inventoryInfo;
+	}
+
+	public void setInventoryInfoTm(DefaultTableModel inventoryInfoTm) {
+		this.inventoryInfoTm = inventoryInfoTm;
+	}
+
+	public void setChangeBtn(JButton changeBtn) {
+		this.changeBtn = changeBtn;
+	}
+
+	public void setNewBtn(JButton newBtn) {
+		this.newBtn = newBtn;
+	}
+
+	public void setCodeJtf(JTextField codeJtf) {
+		this.codeJtf = codeJtf;
+	}
+
+	public void setNameJtf(JTextField nameJtf) {
+		this.nameJtf = nameJtf;
+	}
+
+	public void setAmountJtf(JTextField amountJtf) {
+		this.amountJtf = amountJtf;
+	}
+
+	public void setInventoryInfoJlb(JLabel inventoryInfoJlb) {
+		this.inventoryInfoJlb = inventoryInfoJlb;
+	}
+
+	public void setCodeJlb(JLabel codeJlb) {
+		this.codeJlb = codeJlb;
+	}
+
+	public void setTypeJlb(JLabel typeJlb) {
+		this.typeJlb = typeJlb;
+	}
+
+	public void setNameJlb(JLabel nameJlb) {
+		this.nameJlb = nameJlb;
+	}
+
+	public void setPriceJlb(JLabel priceJlb) {
+		this.priceJlb = priceJlb;
+	}
+
+	public void setQuantityType(DefaultComboBoxModel<String> quantityType) {
+		this.quantityType = quantityType;
+	}
+
+	public void setJcbType(JComboBox<String> jcbType) {
+		this.jcbType = jcbType;
 	}
 	
 	}//class

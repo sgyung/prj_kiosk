@@ -10,10 +10,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import evt.AdminTabViewEvt;
+
 @SuppressWarnings("serial")
 public class AdminTabView extends JFrame {
 	
-  public AdminTabView() {
+	private AdProductView adPdView;
+	private JButton homeBtn;
+	
+	public AdminTabView() {
 	  
 	  //image
 	   ImageIcon adminSmallLogoImg = new ImageIcon("src/images/ad_logo_small.png");
@@ -28,10 +33,10 @@ public class AdminTabView extends JFrame {
 	  JTabbedPane adminTab =new JTabbedPane();
 	  
 	  //Button
-	  JButton homeBtn=new JButton("HOME");
+	 homeBtn=new JButton("HOME");
 	  
 	  //View 생성
-	  AdProductView adPdView=new AdProductView();
+	  adPdView=new AdProductView();
 	  AdInventoryView adIVView=new AdInventoryView();
 	  AdUserView adUSView=new AdUserView();
 	  AdOrderStatusView adOSView=new AdOrderStatusView();
@@ -44,6 +49,12 @@ public class AdminTabView extends JFrame {
 	  adminTab.add(adOSView,"매장관리");
 	  adminTab.add(adSLView,"매출관리");
 	  
+	  //Event
+	  AdminTabViewEvt adTabEvt = new AdminTabViewEvt(this);
+	  adPdView.getPhotoBtn().addActionListener(adTabEvt);
+	  homeBtn.addActionListener(adTabEvt);
+	  addWindowListener(adTabEvt);
+	  
 	  //탭폰트, 위치설정
 	  adminTab.setFont(new Font("맑은 고딕",Font.BOLD,40));
 	  adminTab.setTabPlacement(JTabbedPane.LEFT);
@@ -55,8 +66,8 @@ public class AdminTabView extends JFrame {
 	  
 	  backroundJp.setBounds(0,0,900,1000);
 	  adminSmallLogo.setBounds(15,550,150,150);
-	  adminTab.setBounds(0,0,900,1000);
-	  homeBtn.setBounds(7,750,170,200);
+	  adminTab.setBounds(0,0,900,870);
+	  homeBtn.setBounds(7,870,170,70);
 	  
 	  add(adminTab);
 	  add(homeBtn);
@@ -64,8 +75,19 @@ public class AdminTabView extends JFrame {
 	  add(backroundJp);
 	  
   }//AdminTabView
-	public static void main(String[] args) {
-       new AdminTabView();
-	}//main
+	
+	//getter
+	public AdProductView getAdPdView() {
+		return adPdView;
+	}
+	
+	public JButton getHomeBtn() {
+		return homeBtn;
+	}
 
+	public static void main(String[] args) {
+	       new AdminTabView();
+		}//main
+
+	
 }//class

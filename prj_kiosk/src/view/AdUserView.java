@@ -11,8 +11,14 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import evt.AdUserEvt;
+import vo.UserVO;
+
 @SuppressWarnings("serial")
 public class AdUserView extends JPanel{
+	
+	//UserVO
+	private UserVO currentUser;
 	
 	//Panel
 	private JPanel userJp;
@@ -46,29 +52,42 @@ public class AdUserView extends JPanel{
 		userJp=new JPanel();
 		
 		//String, Scrollpane
-		String[]  userDetail = {"회원번호","전화번호", "적립금", "가입일"};
+		String[]  userDetail = {"전화번호", "적립금", "탈퇴여부", "가입일"};
 		userInfoTm = new DefaultTableModel(null, userDetail);
 		userInfo = new JTable(userInfoTm);
+		userInfo.setDefaultEditor(Object.class, null);
 		JScrollPane userInfoJsp = new JScrollPane(userInfo); 
 		
 		//Button생성
 		deleteBtn=new JButton("삭제"); 
 		changeBtn=new JButton("수정"); 
-		addBtn=new JButton("추가") ; 
+		addBtn=new JButton("회원 추가") ; 
 		
 		//Field생성
 		numJtf=new JTextField();
+		numJtf.setEnabled(false);
 		telJtf=new JTextField();
+		telJtf.setEnabled(false);
 		pointJtf=new JTextField();
 		dateJtf= new JTextField(); 
+		dateJtf.setEnabled(false);
 		
 		//Label생성
 		userInfoJlb=new JLabel("회원관리");
 		
-	    numJlb= new JLabel("회원번호"); 
+	    numJlb= new JLabel("삭제여부"); 
 		telJlb= new JLabel("전화번호"); 
 		pointJlb= new JLabel("적립금"); 
 		dateJlb= new JLabel("가입일"); 
+		
+		//Event
+		AdUserEvt userEvt = new AdUserEvt(this);
+		userInfo.addMouseListener(userEvt);
+		addBtn.addActionListener(userEvt);
+		changeBtn.addActionListener(userEvt);
+		deleteBtn.addActionListener(userEvt);
+		
+		
 		//컴포넌트 위치설정 ,추가
 		setLayout(null);
 		setVisible(true);
@@ -95,7 +114,7 @@ public class AdUserView extends JPanel{
 		dateJtf.setBounds(550, 500, 140, 30);
 		
 		//테이블 폰트설정
-		userInfo.setFont(new Font("맑은고딕",Font.BOLD,20));
+//		userInfo.setFont(new Font("맑은고딕",Font.BOLD,20));
 		userJp.add(userInfoJlb);
 		userJp.add(userInfoJsp);
 		
@@ -182,5 +201,14 @@ public class AdUserView extends JPanel{
 	public JPanel getUserJp() {
 		return userJp;
 	}
+
+	public UserVO getCurrentUser() {
+		return currentUser;
+	}
+
+	public void setCurrentUser(UserVO currentUser) {
+		this.currentUser = currentUser;
+	}
+	
 
 }//class

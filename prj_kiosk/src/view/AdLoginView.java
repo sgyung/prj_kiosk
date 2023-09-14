@@ -114,7 +114,7 @@ public class AdLoginView extends JFrame  {
 		return pwField;
 	}
 	public static void main(String[] args) {
-	new AdLoginView();
+		new AdLoginView();
 		
 	}//main
 }//class

@@ -77,7 +77,7 @@ public class AdSalesView extends JPanel {
 		typeJlb=new JLabel("상품명");
 		
 		totalJlb=new JLabel("총 매출 금액");
-		totalLabel = new JLabel();
+		totalLabel = new JLabel("0");
 		
 		//ComboBox생성
 		 nameType=new DefaultComboBoxModel<String>();
@@ -106,6 +106,8 @@ public class AdSalesView extends JPanel {
 		salesInfoTm = new DefaultTableModel(null, salesDetail);
 		salesInfo = new JTable(salesInfoTm);
 		JScrollPane salesInfoJsp = new JScrollPane(salesInfo);
+		//Table 수정불가
+		salesInfo.setDefaultEditor(Object.class, null);
 		
 		String defaultOption = "상품종류를 선택해주세요";
 		productType.addElement(defaultOption);

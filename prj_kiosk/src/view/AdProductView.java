@@ -15,8 +15,14 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import evt.AdProductEvt;
+import vo.ProductVO;
+
 @SuppressWarnings("serial")
 public class AdProductView extends JPanel {
+	
+	//ProductVO
+	private ProductVO currentProduct;
 	
 	//Panel
 	private JPanel productJp;
@@ -62,35 +68,46 @@ public class AdProductView extends JPanel {
 		 photoBtn=new JButton("사진등록"); 
 		 
 		 //TextField생성
-		codeJtf=new JTextField();
+		codeJtf=new JTextField("자동 생성");
+		codeJtf.setEnabled(false);
 		 nameJtf=new JTextField();
 		 priceJtf= new JTextField(); 
 			
-			//Label
-			 productInfoJlb=new JLabel("상품관리");
+		//Label
+		 productInfoJlb=new JLabel("상품관리");
 			
-			 photoJlb=new JLabel("사진");
+		 photoJlb=new JLabel("사진");
 			
-			 codeJlb= new JLabel("상품코드"); 
-			 typeJlb= new JLabel("상품종류"); 
-			 nameJlb= new JLabel("상품명"); 
-			 priceJlb= new JLabel("가격"); 
+		 codeJlb= new JLabel("상품코드"); 
+		 typeJlb= new JLabel("상품종류"); 
+		 nameJlb= new JLabel("상품명"); 
+		 priceJlb= new JLabel("가격"); 
 			 
-			 //ComboBox생성
-			productType=new DefaultComboBoxModel<String>();
-			 jcbType=new JComboBox<String>( productType);
+		 //ComboBox생성
+		productType=new DefaultComboBoxModel<String>();
+		 jcbType=new JComboBox<String>( productType);
 			 
 		//String, ComboBox
 		String[]  productDetail = {"상품코드","상품종류", "상품명", "가격", "등록일", "삭제여부"};
 		productInfoTm = new DefaultTableModel(null, productDetail);
 		productInfo = new JTable(productInfoTm);
-		JScrollPane productInfoJsp = new JScrollPane(productInfo); 
+		JScrollPane productInfoJsp = new JScrollPane(productInfo);
+		//Table 수정불가
+		productInfo.setDefaultEditor(Object.class, null);
+		
+		//Event
+		AdProductEvt evt = new AdProductEvt(this);
+		productInfo.addMouseListener(evt);
+		changeBtn.addActionListener(evt);
+		deleteBtn.addActionListener(evt);
+		photoBtn.addActionListener(evt);
+		newBtn.addActionListener(evt);
 		
         //컴포넌트 위치설정, 추가
 		setLayout(null);
 		setVisible(true);
 		
-		productJp.setBounds(0,0,695,950);
+		productJp.setBounds(0,0,900, 1000);
 		
 		productInfoJlb.setBounds(45,35,200,35);
 		productInfoJsp.setBounds(10,80,450,700);
@@ -233,5 +250,15 @@ public class AdProductView extends JPanel {
 	public JComboBox<String> getJcbType() {
 		return jcbType;
 	}
+
+	public ProductVO getCurrentProduct() {
+		return currentProduct;
+	}
+
+	public void setCurrentProduct(ProductVO currentProduct) {
+		this.currentProduct = currentProduct;
+	}
+	
+	
 
 }//class

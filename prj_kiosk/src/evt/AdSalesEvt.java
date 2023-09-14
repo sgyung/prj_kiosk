@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +17,7 @@ import javax.swing.JOptionPane;
 
 import dao.SalesDAO;
 import view.AdSalesView;
+import vo.SalesConditionVO;
 import vo.SalesDetailVO;
 
 public class AdSalesEvt implements ActionListener, ItemListener{
@@ -39,12 +42,10 @@ public class AdSalesEvt implements ActionListener, ItemListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == adSaleView.getCheckBtn()) {
-			List<SalesDetailVO> list = getSalesDetail();
-			addSalesDtm(list);	
+			getSalesDetail();
 		}//end if
 		if(e.getSource() ==  adSaleView.getDayCheckBtn()) {
 			List<SalesDetailVO> list = getDailySalesDetail();
-			System.out.println(list);
 			addSalesDtm(list);
 		}//end if
 		if(e.getSource() == adSaleView.getMonthCheckBtn()) {
@@ -60,17 +61,18 @@ public class AdSalesEvt implements ActionListener, ItemListener{
 		}//end if
 		
 	}//actionPerformed
-	
-	public List<SalesDetailVO> getSalesDetail(){
+
+	public void getSalesDetail(){
 		SalesDAO dao = SalesDAO.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SalesConditionVO saleConVO = new SalesConditionVO();
 		
 		String startDate = adSaleView.getStartJtf().getText();
 		String endDate = adSaleView.getEndJtf().getText();
 		String pdName = String.valueOf(adSaleView.getJcbType().getSelectedItem());
 		String pdType = String.valueOf(adSaleView.getJcbName().getSelectedItem());
 		Date startUtilDate = null;
-		Date startUtilEnd = null;
+		Date endUtilDate = null;
 		
 		if(  pdType.equals("전체") ) {
 			pdType = "null";
@@ -80,41 +82,44 @@ public class AdSalesEvt implements ActionListener, ItemListener{
 		}//end if
 		
 		List<SalesDetailVO> list = new ArrayList<SalesDetailVO>();
-		
+	
 		//검색 조건
 		try {
-			if( ( !startDate.isEmpty() || !endDate.isEmpty() ) && !pdType.equals("null") && !pdName.equals("null") ) {
-				startUtilDate = sdf.parse(startDate);
-				startUtilEnd = sdf.parse(endDate);
-				list = dao.selectSalesDetail(startUtilDate, startUtilEnd, pdType, pdName);
+			saleConVO.setPdType(pdType);
+			saleConVO.setPdName(pdName);
 			
-			} else	if( ( !startDate.isEmpty() || !endDate.isEmpty() ) && !pdType.equals("null") &&  pdName.equals("null") ) {
+			//날짜 필드가 비어있지 않다면 Date타입으로 변환
+			//변환중 날짜 형식의 문자열이 아니라면 Exception
+			if( !startDate.isEmpty() || !endDate.isEmpty()) {
 				startUtilDate = sdf.parse(startDate);
-				startUtilEnd = sdf.parse(endDate);
-				list = dao.selectSalesDetail(startUtilDate, startUtilEnd, pdType );
+				endUtilDate = sdf.parse(endDate);
 				
-			} else if( ( !startDate.isEmpty() || !endDate.isEmpty() ) && pdType.equals("null") &&  pdName.equals("null") ) {
-				startUtilDate = sdf.parse(startDate);
-				startUtilEnd = sdf.parse(endDate);
-				list = dao.selectSalesDetail(startUtilDate, startUtilEnd );
-				
-			} else 	if( ( startDate.isEmpty() || endDate.isEmpty() ) && !pdType.equals("null") && pdName.equals("null") ) {
-				list = dao.selectSalesDetail(pdType);
-				
-			} else 	if( ( startDate.isEmpty() || endDate.isEmpty() ) && !pdType.equals("null") && !pdName.equals("null") ) {
-				list = dao.selectSalesDetail(pdType, pdName);
-				
+				if(startUtilDate.compareTo(endUtilDate) > 0  ) {
+					JOptionPane.showMessageDialog(adSaleView, "종료일은 시작일보다 더 작을 수 없습니다.");
+					return;
+				}//end if	
+			}//end if
+			
+			//모든 입력값이 입력되지 않았을 경우 천체 데이터 출력	
+			if( (saleConVO.getStartDate() == null || saleConVO.getEndDate() == null) && saleConVO.getPdName().equals("null") && saleConVO.getPdType().equals("null") ) {
+					list = dao.selectAllSalesDetail();
+					addSalesDtm(list);	
 			} else {
-				list = dao.selectAllSalesDetail();
-			}
+				saleConVO.setStartDate(startUtilDate);
+				saleConVO.setEndDate(endUtilDate);
+				System.out.println(saleConVO);
+				
+				list = dao.selectSalesDetail(saleConVO);
+				addSalesDtm(list);	
+			}//end else
 			
 		}catch(ParseException parseError) {
-			JOptionPane.showMessageDialog(adSaleView, "시작일과 종료일의 날짜 형식이 옮바르지 않습니다.\n다시 확인해주세요.");
+			JOptionPane.showMessageDialog(adSaleView, "시작일과 종료일의 날짜 형식이 올바르지 않습니다.\n다시 확인해주세요.");
 		}catch (SQLException sqlError) {
+			sqlError.printStackTrace();
 			JOptionPane.showMessageDialog(adSaleView, "데이터를 불러오는중 error");
-		}
+		}//end catch
 		
-		return list;		
 	}//getSalesDetailList
 	
 	public void addSalesDtm(List<SalesDetailVO> list) {
@@ -205,9 +210,5 @@ public class AdSalesEvt implements ActionListener, ItemListener{
 		return list;
 	}//getMonthlySalesDetail
 	
-	public void setDefaultComboBox() {
-//		adSaleView.getNameType().addElement("전체");
-//		adSaleView.getSetSelectedItem("전체");
-	}
 
 }//class

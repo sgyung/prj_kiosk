@@ -102,71 +102,78 @@ public class InventoryDAO {
 		
 		return inventoryVO;
 	}
-	
-	
-	/*
-	 * public void selectInventoryType() {
-	 * 
-	 * }
-	 */
-	
-	
+
 	public void insertInventory(InventoryVO inventoryVO) throws SQLException {
+		
 		Connection con = null;
-		CallableStatement cstmt=null;
+		PreparedStatement pstmt=null;
 		
 		DbConn db = DbConn.getInstance();
 		
 		try {
 			con=db.getConnection("localhost", "scott", "tiger");
 			
-			cstmt = con.prepareCall("{ call insert_inventory_proc(?,?,?,?,?,?,?) }");
-
-			cstmt.setString(1, inventoryVO.getiCode());
-			cstmt.setString(2, inventoryVO.getiTypeCode());
-			cstmt.setString(3, inventoryVO.getiName());
-			cstmt.setInt(4, inventoryVO.getiMount());
-			cstmt.setDate(5, inventoryVO.getiInputDate());
+			String invenType = inventoryVO.getiTypeCode();
+			String invenTypeSeq = invenType + "_seq.nextval";
 			
-			cstmt.registerOutParameter(6, Types.NUMERIC);
-			cstmt.registerOutParameter(7, Types.VARCHAR);
+			StringBuilder insert = new StringBuilder();
+			insert
+			//sqlInjection위험
+			.append("	insert into inventory(inventory_code, inventory_type_code, inventory_name, inventory_quantity, inventory_date)	")
+			.append("	values( ?||"+ invenTypeSeq +", ?, ?, ?, sysdate)	")
+			;
 			
-			cstmt.execute();
+			pstmt = con.prepareStatement(insert.toString());
 			
-			int cnt = cstmt.getInt(6);
-			String msg = cstmt.getString(7);
-			System.out.println(cnt + " / " + msg);
+			pstmt.setString(1, invenType+"_");
+			pstmt.setString(2, invenType);
+			pstmt.setString(3, inventoryVO.getiName());
+			pstmt.setInt(4, inventoryVO.getiMount());
+			
+			pstmt.executeQuery();
+			
 		} finally {
 			
-			db.dbClose(null, cstmt, con);
+			db.dbClose(null, pstmt, con);
 		}//end finally
 	}
 	
 	
-	public void updateInventory(InventoryVO inventoryVO) throws SQLException {
+	public int updateInventory(InventoryVO inventoryVO) throws SQLException {
 		Connection con = null;
-		CallableStatement cstmt=null;
+		PreparedStatement pstmt=null;
+		int rowCnt = 0;
 		
 		DbConn db = DbConn.getInstance();
 		
 		try {
 			con=db.getConnection("localhost", "scott", "tiger");
 		
-			cstmt = con.prepareCall("{ call update_inventory_proc(?,?,?,?,?) }");
+			StringBuilder update = new StringBuilder();
+			update
+			.append("	update inventory	")
+			.append("	set inventory_type_code = ?, inventory_name = ?, inventory_quantity=?	")
+			.append(	"	where inventory_code = ?	")
+			;
 			
-			cstmt.setString(1, inventoryVO.getiCode());
-			cstmt.setString(2, inventoryVO.getiTypeCode());
-			cstmt.setString(3, inventoryVO.getiName());
-			cstmt.setInt(4, inventoryVO.getiMount());
-			cstmt.setDate(5, inventoryVO.getiInputDate());
+			pstmt = con.prepareStatement(update.toString());
+			
+			pstmt.setString(1, inventoryVO.getiTypeCode());
+			pstmt.setString(2, inventoryVO.getiName());
+			pstmt.setInt(3, inventoryVO.getiMount());
+			pstmt.setString(4, inventoryVO.getiCode());
 
-			cstmt.execute();
-
+			rowCnt = pstmt.executeUpdate();
+			
+			return rowCnt;
+			
 		} finally {
 		
-			db.dbClose(null, cstmt, con);
+			db.dbClose(null, pstmt, con);
 		}//end finally
-	}
+		
+	}//updateInventory
+	
 	public void deleteInventory(String iCode) throws SQLException {
 		Connection con = null;
 		CallableStatement cstmt=null;
@@ -188,16 +195,35 @@ public class InventoryDAO {
 		}//end finally
 	}
 	
+	public List<String> selectInventoryType() throws SQLException {
+		List<String> list = new ArrayList<String>();
+		
+		Connection con = null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		DbConn db = DbConn.getInstance();
+		
+		try {
+			con = db.getConnection("localhost", "scott", "tiger");
+			
+			String selectType = "	select inventory_type_code from inventory_type	";
+			pstmt =con.prepareStatement(selectType);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				list.add(rs.getString("inventory_type_code"));
+				
+			}//end while
+			
+		} finally {
+			db.dbClose(rs, pstmt, con);
+		}//end finally
+		
+		return list;
+	}//selectInventoryType
 	
-//	public static void main(String[] args) {
-//		InventoryDAO i = new InventoryDAO();
-//		try {
-//			//System.out.println(i.selectInventory("md_1"));
-//			i.deleteInventory("food_1");
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
 	
 }

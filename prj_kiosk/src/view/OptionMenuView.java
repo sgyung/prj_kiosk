@@ -58,13 +58,14 @@ public class OptionMenuView extends JDialog{
 		 
 		 ButtonGroup sizeBtnGroup = new ButtonGroup();
 		 regularBtn = new JToggleButton("Regular");
+		 regularBtn.setSelected(true);
 		 extraBtn = new JToggleButton("Extra");
 		 sizeBtnGroup.add(regularBtn);
 		 sizeBtnGroup.add(extraBtn);
 		 
 		 addShotBtn = new JToggleButton("<HTML>샷추가<br> +500원</HTML>");
-		 addWhippingBtn = new JToggleButton("<HTML>휘핑 추가<br>+1000원</HTML>");
-		 addSyrupBtn = new JToggleButton("HOT");
+		 addWhippingBtn = new JToggleButton("<HTML>휘핑추가<br>+1000원</HTML>");
+		 addSyrupBtn = new JToggleButton("<HTML>시럽추가<br>+500원</HTML>");
 		 
 		 minusBtn = new JButton("-");
 		 plusBtn = new JButton("+");
@@ -74,7 +75,7 @@ public class OptionMenuView extends JDialog{
 		 productImg.setBorder(new LineBorder(Color.BLACK));
 		 productImg.add(productImageLabel);
 		 JLabel productNameLabel = new JLabel("상품이름");
-		 productName = new JLabel("아메리카노"); //임시 setting
+		 productName = new JLabel(); 
 		 JLabel priceLabel = new JLabel("금액");
 		 totalPriceLabel = new JLabel("10000");
 		 JLabel sizeLabel = new JLabel("사이즈");
@@ -131,17 +132,26 @@ public class OptionMenuView extends JDialog{
 		 extraBtn.setBounds(450,370,150, 50);
 		 
 		 optionLabel.setBounds(100,470,100,50);
-		 addShotBtn.setBounds(250, 470, 150, 100);
-		 addWhippingBtn.setBounds(450, 470, 150, 100);
+		 addShotBtn.setBounds(250, 470, 130, 100);
+		 addSyrupBtn.setBounds(420, 470, 130, 100);
+		 addWhippingBtn.setBounds(590, 470, 130, 100);
 		 
 		 separator3.setBounds(70, 600, 650, 100);
 		 
 		 cancel.setBounds(170, 630, 200, 80);
 		 selectionBtn.setBounds(420, 630, 200, 80);
 		 
+		 //이벤트 추가
 		 OptionMenuEvt omEvt = new OptionMenuEvt(menuView, this);
 		 plusBtn.addActionListener(omEvt);
 		 minusBtn.addActionListener(omEvt);
+		 regularBtn.addActionListener(omEvt);
+		 extraBtn.addActionListener(omEvt);
+		 addShotBtn.addActionListener(omEvt);
+		 addSyrupBtn.addActionListener(omEvt);
+		 addWhippingBtn.addActionListener(omEvt);
+		 cancel.addActionListener(omEvt);
+		 selectionBtn.addActionListener(omEvt);
 		 
 		 setLayout(null);
 		 add(productImg);
@@ -165,6 +175,7 @@ public class OptionMenuView extends JDialog{
 		 add(optionLabel);
 		 add(addShotBtn);
 		 add(addWhippingBtn);
+		 add(addSyrupBtn);
 		 
 		 add(separator3);
 		 

@@ -123,6 +123,7 @@ public class OrderStatusVO {
 		this.oDetailPrice = oDetailPrice;
 		this.totalPrice = totalPrice;
 	}
+	
 	@Override
 	public String toString() {
 		return "OrderStatusVO [oSerialNum=" + oSerialNum + ", oDetailNum=" + oDetailNum + ", oNum=" + oNum

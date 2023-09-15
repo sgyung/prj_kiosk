@@ -63,6 +63,7 @@ public class AdOrderStatusView extends JPanel {
 		
 		add(orderJp);
 		
+		
 		//Event
 		AdOrderStatusEvt adOrderStatusEvt = new AdOrderStatusEvt(this);
 		detailBtn.addActionListener(adOrderStatusEvt);

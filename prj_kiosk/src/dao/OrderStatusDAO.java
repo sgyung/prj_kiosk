@@ -124,7 +124,7 @@ public class OrderStatusDAO {
 			selectDetailStatus
 			.append("	select  	order_d.order_detail_num, pd.product_name, order_d.ice_hot, order_d.cup_size, listagg(order_o.option_name, ', ') within group(order by order_d.order_detail_num) option_name, order_d.product_quantity, pd.product_price+nvl(sum(order_o.option_price),0) order_detail_price")
 			.append("	from		order_detail order_d, product pd, order_option order_o, product_type pd_type, payment pay, order_menu order_m")
-			.append("	where		(order_m.order_serial_num = order_d.order_serial_num)and( order_m.order_serial_num = pay.order_serial_num ) and ( pay.payment_status_code = 'Y') and ( order_d.product_code = pd.product_code) and ( order_d.order_detail_num = order_o.order_detail_num(+) ) and (pd_type.product_type_code = pd.product_type_code) and od.order_num=? 		")
+			.append("	where		(order_m.order_serial_num = order_d.order_serial_num)and( order_m.order_serial_num = pay.order_serial_num ) and ( pay.payment_status_code = 'Y') and ( order_d.product_code = pd.product_code) and ( order_d.order_detail_num = order_o.order_detail_num(+) ) and (pd_type.product_type_code = pd.product_type_code) and od.order_num=? 	")
 			.append("	group by 	order_d.order_detail_num, pd.product_name, order_d.ice_hot, order_d.cup_size, pd.product_name, order_d.product_quantity, pd.product_price			");
 			
 			pstmt=con.prepareStatement(selectDetailStatus.toString());

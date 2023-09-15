@@ -61,6 +61,7 @@ public class AdOrderStatusView extends JPanel {
 		orderJp.add(completeBtn);
 		orderJp.add(rePrintBtn);
 		
+		
 		add(orderJp);
 		
 		

@@ -132,6 +132,7 @@ public class OrderStatusVO {
 				+ ", pdPrice=" + pdPrice + ", oDetailPrice=" + oDetailPrice + ", totalPrice=" + totalPrice + "]";
 	}
 	
+	
 	public OrderStatusVO() {
 		super();
 		// TODO Auto-generated constructor stub

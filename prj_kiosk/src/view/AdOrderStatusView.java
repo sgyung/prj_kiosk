@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -80,11 +81,19 @@ public class AdOrderStatusView extends JPanel {
 		//라벨폰트설정
 		orderInfoJlb.setFont(new Font("맑은고딕",Font.BOLD,20));
 		orderInfoJlb.setBounds(45,35,200,35);
-		orderInfoJsp.setBounds(10,80,450,700);
+		orderInfoJsp.setBounds(10,80,450,850);
 		
-		detailBtn.setBounds(410, 800, 90, 50);
-		completeBtn.setBounds(510, 800, 90, 50);
-		rePrintBtn.setBounds(610, 800, 80, 50);
+		detailBtn.setBackground(new Color(255,195,14));
+		detailBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		detailBtn.setBounds(470, 800, 100, 50);
+		
+		completeBtn.setBackground(new Color(255,195,14));
+		completeBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		completeBtn.setBounds(580, 800, 100, 50);
+		
+		rePrintBtn.setBackground(new Color(255,195,14));
+		rePrintBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		rePrintBtn.setBounds(580, 870, 100, 50);
 		
 	}//AdOrderStatusView
 

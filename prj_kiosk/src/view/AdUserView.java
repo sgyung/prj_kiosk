@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JButton;
@@ -95,18 +96,32 @@ public class AdUserView extends JPanel{
 		userJp.setBounds(0,0,900,1000);
 		
 		//라벨 폰트설정
-		userInfoJlb.setFont(new Font("맑은고딕",Font.BOLD,20));
 		userInfoJlb.setBounds(45,35,200,35);
-		userInfoJsp.setBounds(10,80,450,700);
+		userInfoJsp.setBounds(10,80,450,850);
 		
-		deleteBtn.setBounds(430,800,60,50);
-		changeBtn.setBounds(500, 800, 90, 50);
-		addBtn.setBounds(600, 800, 90, 50);
+		deleteBtn.setBackground(new Color(255,195,14));
+		deleteBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		deleteBtn.setBounds(470, 800, 100, 50);
 		
-		numJlb.setBounds(490, 350, 50, 30);
-		telJlb.setBounds(490, 400, 50, 30);
-		pointJlb.setBounds(490, 450, 50, 30);
-		dateJlb.setBounds(490, 500, 50, 30);
+		changeBtn.setBackground(new Color(255,195,14));
+		changeBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		changeBtn.setBounds(580, 800, 100, 50);
+		
+		addBtn.setBackground(new Color(255,195,14));
+		addBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		addBtn.setBounds(580, 870, 100, 50);
+		
+		numJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		numJlb.setBounds(470, 350, 70, 30);
+		
+		telJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		telJlb.setBounds(470, 400, 70, 30);
+		
+		pointJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		pointJlb.setBounds(470, 450, 70, 30);
+		
+		dateJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		dateJlb.setBounds(470, 500, 70, 30);
 		
 		numJtf.setBounds(550, 350, 140, 30);
 		telJtf.setBounds(550, 400,140, 30);
@@ -114,6 +129,7 @@ public class AdUserView extends JPanel{
 		dateJtf.setBounds(550, 500, 140, 30);
 		
 		//테이블 폰트설정
+		userInfoJlb.setFont(new Font("맑은고딕",Font.BOLD,20));
 //		userInfo.setFont(new Font("맑은고딕",Font.BOLD,20));
 		userJp.add(userInfoJlb);
 		userJp.add(userInfoJsp);

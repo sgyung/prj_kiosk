@@ -66,11 +66,14 @@ public class AdminTabView extends JFrame {
 	  
 	  backroundJp.setBounds(0,0,900,1000);
 	  adminSmallLogo.setBounds(15,550,150,150);
-	  adminTab.setBounds(0,0,900,870);
+	  adminTab.setBounds(0,0,900,950);
+	  
+	  homeBtn.setBackground(new Color(255,255,255));//버튼색 설정 (흰색)
+	  homeBtn.setFont(new Font("맑은 고딕",Font.BOLD,20));
 	  homeBtn.setBounds(7,870,170,70);
 	  
-	  add(adminTab);
 	  add(homeBtn);
+	  add(adminTab);
 	  add(adminSmallLogo);
 	  add(backroundJp);
 	  

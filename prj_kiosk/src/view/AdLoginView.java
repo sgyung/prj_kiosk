@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
@@ -19,7 +20,8 @@ public class AdLoginView extends JFrame  {
 	private  JLabel adminLogo ;
 	
 	//Label
-	private JLabel adminJlb; 
+	private JLabel idJlb; 
+	private JLabel pwJlb; 
 	
 	//Button
 	private JButton homeBtn;
@@ -37,41 +39,53 @@ public class AdLoginView extends JFrame  {
 		 adminLogo = new JLabel(adminLogoImg);
 		 
 		//Label생성
-		 adminJlb=new JLabel("관리자"); 
-		 adminJlb=new JLabel("관리자"); 
-		
+		idJlb=new JLabel("I D");
+		pwJlb=new JLabel("PW");
 		
 		//Button생성
-		homeBtn=new JButton("홈");
-		 loginBtn=new JButton("로그인");
+		homeBtn=new JButton("HOME");
+		 loginBtn=new JButton("LogIn");
 		
 		//Field생성
 		idField=new JTextField();
-		 pwField=new JPasswordField();
+		pwField=new JPasswordField();
 		
 		//홈버튼누르면 메인으로 가는 이벤트
 		homeBtn.addActionListener(new AdLoginEvt(this));
 		
+		//로그인 이벤트 : 성공 - 관리자 탭실행 , 실패 - 로그인실패 알림
+		loginBtn.addActionListener(new AdLoginEvt(this));
+		idField.addActionListener(new AdLoginEvt(this));
+		pwField.addActionListener(new AdLoginEvt(this));
+				
 		//컴포넌트 위치설정, 추가
 		
 		setLayout(null);
 	
-		
 		MainView.backImg.setDescription("dfdf");
 		MainView.background.setBounds(0,0,900,1000);
 		adminLogo.setBounds(310,300,270,230);
 		
-		//라벨 폰트설정
-		adminJlb.setFont(new Font("맑은고딕",Font.BOLD,40));
-		adminJlb.setBounds(370,200,140,70);
+		//라벨 폰트설정		
+		idJlb.setFont(new Font("맑은고딕",Font.BOLD,30));
+		idJlb.setBounds(320,720,50,50);
 		
-		homeBtn.setBounds(80,720 , 100, 110);
+		pwJlb.setFont(new Font("맑은고딕",Font.BOLD,30));
+		pwJlb.setBounds(310,770,50,50);
+		
+		homeBtn.setBackground(new Color(255,195,14));//버튼색 설정 (노란색)
+		homeBtn.setFont(new Font("맑은고딕",Font.BOLD,20));
+		homeBtn.setBounds(50,800 , 100, 110);
+		
+		loginBtn.setBackground(new Color(255,195,14));
+		loginBtn.setFont(new Font("맑은고딕",Font.BOLD,20));
 		loginBtn.setBounds(600,720 , 100, 110);
 		
-		idField.setBounds(350,720 , 200, 50);
-		pwField.setBounds(350,780 , 200, 50);
+		idField.setBounds(370,720 , 200, 50);
+		pwField.setBounds(370,780 , 200, 50);
 		
-		add(adminJlb);
+		add(idJlb);
+		add(pwJlb);
 		
 		add(homeBtn);
 		add(loginBtn);
@@ -94,10 +108,14 @@ public class AdLoginView extends JFrame  {
 		return adminLogo;
 	} 
 
-	public JLabel getAdminJlb() {
-		return adminJlb;
-	} 
- 
+	public JLabel getIdJlb() {
+		return idJlb;
+	}
+
+	public JLabel getPwJlb() {
+		return pwJlb;
+	}
+
 	public JButton getHomeBtn() {
 		return homeBtn;
 	}

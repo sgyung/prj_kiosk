@@ -109,19 +109,36 @@ public class AdProductView extends JPanel {
 		
 		productJp.setBounds(0,0,900, 1000);
 		
+		productInfoJlb.setFont(new Font("맑은 고딕",Font.BOLD,20));
 		productInfoJlb.setBounds(45,35,200,35);
-		productInfoJsp.setBounds(10,80,450,700);
+		productInfoJsp.setBounds(10,80,450,850);
 		
+		photoBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		photoBtn.setBounds(490, 300, 200, 30);
 		
-		deleteBtn.setBounds(430,800,60,50);
-		changeBtn.setBounds(500, 800, 90, 50);
-		newBtn.setBounds(600, 800, 90, 50);
+		deleteBtn.setBackground(new Color(255,195,14));
+		deleteBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		deleteBtn.setBounds(580, 870, 100, 50);
 		
-		codeJlb.setBounds(490, 350, 50, 30);
-		typeJlb.setBounds(490, 400, 50, 30);
-		nameJlb.setBounds(490, 450, 50, 30);
-		priceJlb.setBounds(490, 500, 50, 30);
+		changeBtn.setBackground(new Color(255,195,14));
+		changeBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		changeBtn.setBounds(470, 800, 100, 50);
+		
+		newBtn.setBackground(new Color(255,195,14));
+		newBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		newBtn.setBounds(580, 800, 100, 50);
+		
+		codeJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		codeJlb.setBounds(470, 350, 70, 30);
+		
+		typeJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		typeJlb.setBounds(470, 400, 70, 30);
+		
+		nameJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		nameJlb.setBounds(470, 450, 70, 30);
+		
+		priceJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		priceJlb.setBounds(470, 500, 70, 30);
 		
 		photoJlb.setBorder(new LineBorder(Color.red));
 		photoJlb.setBounds(490, 100, 200, 200);
@@ -134,7 +151,6 @@ public class AdProductView extends JPanel {
 		productJp.setBorder(new TitledBorder("상품관리"));
 		productJp.setLayout(null);
 		
-		productInfoJlb.setFont(new Font("맑은고딕",Font.BOLD,20));
 		productJp.add(productInfoJlb);
 		productJp.add(productInfoJsp);
 		

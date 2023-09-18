@@ -1,9 +1,11 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
+import vo.AdminVO;
 
 public class AdminDAO {
 	private static AdminDAO adminDAO;
@@ -19,34 +21,37 @@ public class AdminDAO {
 		return adminDAO;
 	}
 	
-	public String selectAdmin(String id, String pass) throws SQLException {
+	public AdminVO selectAdmin(String id, String pass) throws SQLException {
 		Connection con = null;
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String adminId = "";
+		AdminVO aVO = null;
 		
 		DbConn db = DbConn.getInstance();
 		try {
 			con = db.getConnection("localhost.", "scott", "tiger");
 			
-			stmt = con.createStatement();
 			
 			StringBuilder selectAdmin = new StringBuilder();
 			selectAdmin
-			.append("select id, pass from admin where id = '")
-			.append(id)
-			.append("' and pass = '")
-			.append(pass)
-			.append("'");
+			.append("select admin_num, admin_pw from admin where admin_num = ? ")
+			.append(" and admin_pw = ?");
 			
-			rs = stmt.executeQuery(selectAdmin.toString());
+			pstmt = con.prepareStatement(selectAdmin.toString());
+			
+			pstmt.setString(1, id);
+			pstmt.setString(2, pass);
+			
+			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				adminId = rs.getString("id");			
+				aVO = new AdminVO();
+				aVO.setAdminNum(rs.getString("admin_num"));
+				aVO.setAdminPW(rs.getString("admin_pw"));
 			}
 		}finally {
-			db.dbClose(rs, stmt, con);
+			db.dbClose(rs, pstmt, con);
 		}
-		return adminId;
+		return aVO;
 	}
 }

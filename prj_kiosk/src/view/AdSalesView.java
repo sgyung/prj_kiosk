@@ -89,9 +89,9 @@ public class AdSalesView extends JPanel {
 		//Button생성
 		checkBtn=new JButton("조회") ; 
 		monthCheckBtn=new JButton(
-				"<HTML>월별매출<br>&nbsp;&nbsp;&nbsp;&nbsp;조회</HTML>"); 
+				"<HTML>월별매출<br>&nbsp;&nbsp;조회</HTML>"); 
 		dayCheckBtn=new JButton(
-				"<HTML>일일매출<br>&nbsp;&nbsp;&nbsp;&nbsp;조회</HTML>"); 
+				"<HTML>일일매출<br>&nbsp;&nbsp;조회</HTML>"); 
 		
 		
 		salePeriodJp=new JPanel();
@@ -142,6 +142,8 @@ public class AdSalesView extends JPanel {
 
 		
 		salesJp.setBounds(0,0,900,1000);
+		
+		salePeriodJp.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		salePeriodJp.setBounds(480,30,210,100);
 		
 		//폰트 설정
@@ -153,25 +155,40 @@ public class AdSalesView extends JPanel {
 		
 		//라벨
 		salesInfoJlb.setBounds(45,35,200,35);
-		salesInfoJsp.setBounds(10,80,450,700);
+		salesInfoJsp.setBounds(10,80,450,850);
 		
+		startJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		startJlb.setBounds(20,30,70,30);
+		
+		endJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		endJlb.setBounds(130,30,70,30);
+		
 		periodJlb.setBounds(105,60,20,20);
 		startJtf.setBounds(20,60,70,30);
 		endJtf.setBounds(130,60,70,30);
 		
-		nameJlb.setBounds(480,160,50,30);
-		typeJlb.setBounds(480,220,50,30);
+		nameJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		nameJlb.setBounds(480,160,70,30);
 		
+		typeJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		typeJlb.setBounds(480,220,70,30);
+		
+		jcbName.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		jcbName.setBounds(480,190,210,30);
+		
+		jcbType.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		jcbType.setBounds(480,250,210,30);
 		
+		checkBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		checkBtn.setBounds(480, 300, 210, 50);
 		
+		monthCheckBtn.setFont(new Font("맑은 고딕",Font.BOLD,13));
 		monthCheckBtn.setBounds(490, 400, 90, 70);
+		
+		dayCheckBtn.setFont(new Font("맑은 고딕",Font.BOLD,13));
 		dayCheckBtn.setBounds(600, 400, 90, 70);
 		
+		totalJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		totalJlb.setBounds(480,640,150,30);
 		panel.setBounds(480,680,200,100);
 		
@@ -313,9 +330,5 @@ public class AdSalesView extends JPanel {
 	public JPanel getSalesJp() {
 		return salesJp;
 	}
-
-
-	public static void main(String[] args) {
-		new AdSalesView();
-	}//main
+	
 }//class

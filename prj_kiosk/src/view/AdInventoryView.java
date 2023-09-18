@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.DefaultComboBoxModel;
@@ -101,15 +102,27 @@ public class AdInventoryView extends JPanel {
 		//라벨 폰트설정
 		inventoryInfoJlb.setFont(new Font("맑은고딕",Font.BOLD,20));
 		inventoryInfoJlb.setBounds(45,35,200,35);
-		inventoryInfoJsp.setBounds(10,80,450,700);
+		inventoryInfoJsp.setBounds(10,80,450,850);
 		
-		changeBtn.setBounds(510, 800, 90, 50);
-		newBtn.setBounds(610, 800, 80, 50);
+		changeBtn.setBackground(new Color(255,195,14));
+		changeBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		changeBtn.setBounds(470, 800, 100, 50);
 		
-		codeJlb.setBounds(490, 350, 50, 30);
-		typeJlb.setBounds(490, 400, 50, 30);
-		nameJlb.setBounds(490, 450, 50, 30);
-		priceJlb.setBounds(490, 500, 50, 30);
+		newBtn.setBackground(new Color(255,195,14));
+		newBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		newBtn.setBounds(580, 800, 100, 50);
+		
+		codeJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		codeJlb.setBounds(470, 350, 70, 30);
+		
+		typeJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		typeJlb.setBounds(470, 400, 70, 30);
+		
+		nameJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		nameJlb.setBounds(470, 450, 70, 30);
+		
+		priceJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
+		priceJlb.setBounds(470, 500, 70, 30);
 		
 		codeJtf.setBounds(550, 350, 140, 30);
 		
@@ -119,7 +132,6 @@ public class AdInventoryView extends JPanel {
 		amountJtf.setBounds(550, 500, 140, 30);
 		
 		//테이블 폰트설정
-//		inventoryInfo.setFont(new Font("맑은고딕",Font.BOLD,15));
 		inventoryJp.add(inventoryInfoJlb);
 		inventoryJp.add(inventoryInfoJsp);
 		

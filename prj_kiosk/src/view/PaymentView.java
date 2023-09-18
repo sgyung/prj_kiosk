@@ -17,13 +17,23 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import evt.PaymentEvt;
+import vo.PaymentVO;
+import vo.UserVO;
+
 @SuppressWarnings("serial")
 public class PaymentView extends JFrame {
+	
+	//UserVO 추가
+	private UserVO currentUserVO;
+	private PaymentVO currentPayVO;
 	
 	private JToggleButton cashBtn;
 	private JToggleButton cardBtn;
 	private JButton searchUserBtn;
 	private JButton usePointBtn;
+	//취소 버튼 추가
+	private JButton cancelPointBtn; 
 	private JTextField usePointTextField;
 	private JLabel useAvailablePointLabel;
 	
@@ -47,6 +57,7 @@ public class PaymentView extends JFrame {
 		payBtnGroup.add(cardBtn);
 		searchUserBtn = new JButton("적립/가입");
 		usePointBtn = new JButton("사용");
+		cancelPointBtn = new JButton("취소");
 		
 		beforeBtn = new JButton("이전");
 		beforeBtn.setBackground(new Color( 255,195,14 ));
@@ -62,12 +73,11 @@ public class PaymentView extends JFrame {
 		useAvailablePointLabel = new JLabel("사용가능 적립금 임시");//임시데이터
 		
 		JLabel orderPriceLabel = new JLabel("주문금액");
-		orderPrice = new JLabel("10,000");//임시데이터
+		orderPrice = new JLabel();
 		JLabel discountLabel = new JLabel("할인금액");
-		discount = new JLabel("100");//임시데이터
+		discount = new JLabel();
 		JLabel purchasePriceLabel = new JLabel("결제금액");
-		purchasePrice = new JLabel("9,900");//임시데이터
-		
+		purchasePrice = new JLabel();		
 		
 		//TextField
 		usePointTextField = new JTextField();
@@ -106,6 +116,12 @@ public class PaymentView extends JFrame {
 		JPanel discountPanel = new JPanel();
 		JPanel purchasePricelPanel = new JPanel();
 		
+		//Event
+		PaymentEvt evt = new PaymentEvt(this);
+		searchUserBtn.addActionListener(evt);
+		usePointBtn.addActionListener(evt);
+		cancelPointBtn.addActionListener(evt);
+		
 		PricePanel.setBorder(line);
 		PricePanel.add(orderPrice);
 		discountPanel.setBorder(line);
@@ -124,6 +140,7 @@ public class PaymentView extends JFrame {
 		usePointLabel.setBounds(50, 600, 150, 100);
 		usePointTextField.setBounds(50, 670, 250, 30 );
 		usePointBtn.setBounds(310, 670, 90, 30);
+		cancelPointBtn.setBounds(310, 705, 90, 30);
 		useAvailablePointLabel.setBounds(50, 570, 200, 300);
 		
 		separator.setBounds(420, 50, 50, 750);
@@ -149,6 +166,7 @@ public class PaymentView extends JFrame {
 		add(usePointLabel);
 		add(usePointTextField);
 		add(usePointBtn);
+		add(cancelPointBtn);
 		add(useAvailablePointLabel);
 		
 		add(separator);
@@ -173,6 +191,79 @@ public class PaymentView extends JFrame {
 	//임시
 	public static void main(String[] args) {
 		new PaymentView();
+	}
+
+	public JToggleButton getCashBtn() {
+		return cashBtn;
+	}
+
+	public JToggleButton getCardBtn() {
+		return cardBtn;
+	}
+
+	public JButton getSearchUserBtn() {
+		return searchUserBtn;
+	}
+
+	public JButton getUsePointBtn() {
+		return usePointBtn;
+	}
+
+	public JTextField getUsePointTextField() {
+		return usePointTextField;
+	}
+
+	public JLabel getUseAvailablePointLabel() {
+		return useAvailablePointLabel;
+	}
+
+	public DefaultTableModel getOrderDetaildtm() {
+		return orderDetaildtm;
+	}
+
+	public JTable getOrderDetail() {
+		return orderDetail;
+	}
+
+	public JLabel getOrderPrice() {
+		return orderPrice;
+	}
+
+	public JLabel getDiscount() {
+		return discount;
+	}
+
+	public JLabel getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public JButton getBeforeBtn() {
+		return beforeBtn;
+	}
+
+	public JButton getPaymentBtn() {
+		return paymentBtn;
+	}
+
+
+	public UserVO getCurrentUserVO() {
+		return currentUserVO;
+	}
+
+	public void setCurrentUserVO(UserVO currentUserVO) {
+		this.currentUserVO = currentUserVO;
+	}
+
+	public void setPaymentBtn(JButton paymentBtn) {
+		this.paymentBtn = paymentBtn;
+	}
+
+	public PaymentVO getCurrentPayVO() {
+		return currentPayVO;
+	}
+
+	public JButton getCancelPointBtn() {
+		return cancelPointBtn;
 	}
 	
 }//class

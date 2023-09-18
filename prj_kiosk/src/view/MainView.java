@@ -66,9 +66,6 @@ public class MainView extends JFrame {
    public JButton getAdminBtn() {
       return adminBtn;
    }
-   
-   public static void main(String[] args) {
-      new MainView();
-   }
+
    
 }//class

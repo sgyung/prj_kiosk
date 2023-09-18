@@ -8,9 +8,29 @@ public class OrderDetailVO {
 	private int oQuantity;
 	private String oTempType;
 	private String oOptionName;
+	private String oKnifeOption; // 0916 수정
 	private int oOptionPrice;
 	private String oSizeName;
 	private int oSizePrice;
+	
+	public OrderDetailVO() {
+		super();
+	}
+	
+	public OrderDetailVO(String pdCode, String pdName, int pdPrice, int oQuantity, String oTempType, String oOptionName,
+			String oKnifeOption, int oOptionPrice, String oSizeName, int oSizePrice) {
+		super();
+		this.pdCode = pdCode;
+		this.pdName = pdName;
+		this.pdPrice = pdPrice;
+		this.oQuantity = oQuantity;
+		this.oTempType = oTempType;
+		this.oOptionName = oOptionName;
+		this.oKnifeOption = oKnifeOption;
+		this.oOptionPrice = oOptionPrice;
+		this.oSizeName = oSizeName;
+		this.oSizePrice = oSizePrice;
+	}
 	
 	//getter, setter
 	public String getPdCode() {
@@ -67,27 +87,22 @@ public class OrderDetailVO {
 	public void setoSizePrice(int oSizePrice) {
 		this.oSizePrice = oSizePrice;
 	}
-	public OrderDetailVO(String pdCode, String pdName, int pdPrice, int oQuantity, String oTempType, String oOptionName,
-			int oOptionPrice, String oSizeName, int oSizePrice) {
-		super();
-		this.pdCode = pdCode;
-		this.pdName = pdName;
-		this.pdPrice = pdPrice;
-		this.oQuantity = oQuantity;
-		this.oTempType = oTempType;
-		this.oOptionName = oOptionName;
-		this.oOptionPrice = oOptionPrice;
-		this.oSizeName = oSizeName;
-		this.oSizePrice = oSizePrice;
+	
+	public String getoKnifeOption() {
+		return oKnifeOption;
 	}
-	public OrderDetailVO() {
-		super();
+	
+	public void setoKnifeOption(String oKnifeOption) {
+		this.oKnifeOption = oKnifeOption;
 	}
+
 	@Override
 	public String toString() {
 		return "OrderDetailVO [pdCode=" + pdCode + ", pdName=" + pdName + ", pdPrice=" + pdPrice + ", oQuantity="
-				+ oQuantity + ", oTempType=" + oTempType + ", oOptionName=" + oOptionName + ", oOptionPrice="
-				+ oOptionPrice + ", oSizeName=" + oSizeName + ", oSizePrice=" + oSizePrice + "]";
+				+ oQuantity + ", oTempType=" + oTempType + ", oOptionName=" + oOptionName + ", oKnifeOption="
+				+ oKnifeOption + ", oOptionPrice=" + oOptionPrice + ", oSizeName=" + oSizeName + ", oSizePrice="
+				+ oSizePrice + "]";
 	}
+	
 	
 }//class

@@ -49,6 +49,9 @@ public class PaymentView extends JFrame {
 	
 	
 	public PaymentView() {
+		// currentPayVO
+		currentPayVO = new PaymentVO();
+		
 		//Button
 		cashBtn = new JToggleButton("현금");
 		cardBtn = new JToggleButton("카드");

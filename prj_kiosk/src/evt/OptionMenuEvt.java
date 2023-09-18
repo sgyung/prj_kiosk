@@ -268,10 +268,12 @@ public class OptionMenuEvt extends WindowAdapter implements ActionListener {
 			}else {
 				rowData[3] = "";
 			}
-			if(!list.get(i).getoOptionName().isEmpty()) {
+			if(list.get(i).getoOptionName() != null && list.get(i).getoKnifeOption() == null) {
 				rowData[4] = list.get(i).getoOptionName();
-			}else if(!list.get(i).getoKnifeOption().isEmpty()) {
+			}else if(list.get(i).getoOptionName() == null && list.get(i).getoKnifeOption() != null) {
 				rowData[4] = list.get(i).getoKnifeOption();
+			}else if(list.get(i).getoOptionName() == null && list.get(i).getoKnifeOption() == null){
+				rowData[4] = "";
 			}
 			if("R".equals(list.get(i).getoSizeName())) {
 				rowData[5] = "Regular";

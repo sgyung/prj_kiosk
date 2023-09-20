@@ -45,7 +45,6 @@ public class OptionMenuEvt extends WindowAdapter implements ActionListener {
 			setTotal();
 		}else if(ae.getSource() == optionMenuView.getAddShotBtn()) {
 			setTotal();
-			System.out.println(optionMenuView.getAddShotBtn().getText());
 		}else if(ae.getSource() == optionMenuView.getAddSyrupBtn()) {
 			setTotal();
 		}else if(ae.getSource() == optionMenuView.getAddWhippingBtn()) {
@@ -55,8 +54,7 @@ public class OptionMenuEvt extends WindowAdapter implements ActionListener {
 		}else if(ae.getSource() == optionMenuView.getSelectionBtn()) {
 			completeSelect();
 			optionMenuView.dispose();
-		}
-			
+		}				
 	}
 	
 	// 개수 증가 버튼 메소드
@@ -128,10 +126,24 @@ public class OptionMenuEvt extends WindowAdapter implements ActionListener {
 	public void setMenu() {
 		if(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase().equals("cof")) {
 			optionMenuView.getProductName().setText(new String(menuView.getCofMenu().getCofNameLabel().getText())); 
+			optionMenuView.getAddKnifeBtn().setVisible(false);
+			optionMenuView.getNoKnifeBtn().setVisible(false);
 		} else if (menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase().equals("bev")) {
 			optionMenuView.getProductName().setText(new String(menuView.getBevMenu().getBevNameLabel().getText()));
+			optionMenuView.getAddKnifeBtn().setVisible(false);
+			optionMenuView.getNoKnifeBtn().setVisible(false);
 		} else if (menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase().equals("des")) {
 			optionMenuView.getProductName().setText(new String(menuView.getDesMenu().getDesNameLabel().getText()));
+			optionMenuView.getIceBtn().setVisible(false);
+			optionMenuView.getHotBtn().setVisible(false);
+			optionMenuView.getSeparator1().setVisible(false);
+			optionMenuView.getSizeLabel().setVisible(false);
+			optionMenuView.getRegularBtn().setVisible(false);
+			optionMenuView.getExtraBtn().setVisible(false);
+			optionMenuView.getAddShotBtn().setVisible(false);
+			optionMenuView.getAddSyrupBtn().setVisible(false);
+			optionMenuView.getAddWhippingBtn().setVisible(false);
+			optionMenuView.getOptionLabel().setBounds(100,420,100,50);
 		}
 	
 	}
@@ -144,6 +156,8 @@ public class OptionMenuEvt extends WindowAdapter implements ActionListener {
 		String addSyrup = "";
 		String addWhipping = "";
 		String tempOptionName = "";
+		String addKnife = "";
+		String noKnife = "";
 		int shotPrice = 500;
 		int syrupPrice = 500;
 		int whippingPrice = 1000;
@@ -186,20 +200,37 @@ public class OptionMenuEvt extends WindowAdapter implements ActionListener {
 			oVO.setOptionName(addWhipping);
 			oVO.setOptionPrice(whippingPrice);
 		}
+		if(optionMenuView.getAddKnifeBtn().isSelected()) {
+			startIndex = optionMenuView.getAddKnifeBtn().getText().indexOf("<HTML>") + "<HTML>".length();
+			endIndex = optionMenuView.getAddKnifeBtn().getText().indexOf("</HTML>");
+			if(startIndex != -1 && endIndex != -1) {
+				addKnife = optionMenuView.getAddKnifeBtn().getText().substring(startIndex, endIndex);
+			}
+			odVO.setoKnifeOption(addKnife);
+		}
+		if(optionMenuView.getNoKnifeBtn().isSelected()) {
+			startIndex = optionMenuView.getNoKnifeBtn().getText().indexOf("<HTML>") + "<HTML>".length();
+			endIndex = optionMenuView.getNoKnifeBtn().getText().indexOf("</HTML>");
+			if(startIndex != -1 && endIndex != -1) {
+				noKnife = optionMenuView.getNoKnifeBtn().getText().substring(startIndex, endIndex);
+			}
+			odVO.setoKnifeOption(noKnife);
+		}
 		
-		tempOptionName = addShot + " " + addSyrup + " " + addWhipping;
-		if(tempOptionName.startsWith(" ") || tempOptionName.endsWith(" ")) {
-			tempOptionName = tempOptionName.trim();
-			tempOptionName = tempOptionName.replaceAll(" ", ",");
+		if(addShot != null || addSyrup != null || addWhipping != null) {
+			tempOptionName = addShot + " " + addSyrup + " " + addWhipping;
+			if(tempOptionName.startsWith(" ") || tempOptionName.endsWith(" ")) {
+				tempOptionName = tempOptionName.trim();
+				tempOptionName = tempOptionName.replaceAll(" ", ",");
+			}
+			if(!(tempOptionName.startsWith(" ") && tempOptionName.endsWith(" ")) && !tempOptionName.contains("  ")) {
+				tempOptionName = tempOptionName.replaceAll(" ", ",");
+			}
+			if(tempOptionName.contains("  ")) {
+				tempOptionName = tempOptionName.replaceAll("\\s+", ",");
+			}			
+			odVO.setoOptionName(tempOptionName);
 		}
-		if(!(tempOptionName.startsWith(" ") && tempOptionName.endsWith(" ")) && !tempOptionName.contains("  ")) {
-			tempOptionName = tempOptionName.replaceAll(" ", ",");
-		}
-		if(tempOptionName.contains("  ")) {
-			tempOptionName = tempOptionName.replaceAll("\\s+", ",");
-		}
-		
-		odVO.setoOptionName(tempOptionName);
 		
 		if(optionMenuView.getRegularBtn().isSelected()) {
 			odVO.setoSizeName("R");
@@ -212,12 +243,8 @@ public class OptionMenuEvt extends WindowAdapter implements ActionListener {
 		odVO.setPdPrice(totalPrice);
 		
 		List<OrderDetailVO> list = menuView.menuSelectedList;
-
-		list.add(odVO);
 		
-		for(int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i).toString());
-		}
+		list.add(odVO);
 		setMenuTable();	
 	}
 	
@@ -234,24 +261,35 @@ public class OptionMenuEvt extends WindowAdapter implements ActionListener {
 			rowData[0] = String.valueOf(i+1);
 			rowData[1] = list.get(i).getPdName();
 			rowData[2] = String.valueOf(list.get(i).getoQuantity());
-			if(list.get(i).getPdName().equals("I")) {
+			if("I".equals(list.get(i).getoTempType())) {
 				rowData[3] = "ice";
-			}else if(list.get(i).getPdName().equals("H")) {
+			}else if("H".equals(list.get(i).getoTempType())) {
 				rowData[3] = "hot";
+			}else {
+				rowData[3] = "";
 			}
-			rowData[4] = list.get(i).getoOptionName();
-			if(list.get(i).getoSizeName().equals("R")) {
+			if(list.get(i).getoOptionName() != null && list.get(i).getoKnifeOption() == null) {
+				rowData[4] = list.get(i).getoOptionName();
+			}else if(list.get(i).getoOptionName() == null && list.get(i).getoKnifeOption() != null) {
+				rowData[4] = list.get(i).getoKnifeOption();
+			}else if(list.get(i).getoOptionName() == null && list.get(i).getoKnifeOption() == null){
+				rowData[4] = "";
+			}
+			if("R".equals(list.get(i).getoSizeName())) {
 				rowData[5] = "Regular";
-			}else if(list.get(i).getoSizeName().equals("E")) {
+			}else if("E".equals(list.get(i).getoSizeName())) {
 				rowData[5] = "Extra";
+			}else {
+				rowData[5] = "";
 			}
 			rowData[6] = String.valueOf(list.get(i).getPdPrice());	
 			
 			orderTotalPrice += list.get(i).getPdPrice();
 			
 			menuView.getOrderDetaildtm().addRow(rowData);
+			
+			System.out.println(list.toString());
 		}
-		
 		menuView.getTotalPriceLabel().setText(String.valueOf(orderTotalPrice));
 		
 	}

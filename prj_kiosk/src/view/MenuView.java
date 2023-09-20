@@ -77,10 +77,7 @@ public class MenuView extends JFrame {
 		MenuEvt me = new MenuEvt(this);
 		menuJtp.addChangeListener(me);
 		cancelBtn.addActionListener(me);
-		
-//		OptionMenuView omv = new OptionMenuView(this); 
-//		OptionMenuEvt ome = new OptionMenuEvt(this, omv);
-		
+		purchaseBtn.addActionListener(me);
 		
 		
 		//Tab 위치Left

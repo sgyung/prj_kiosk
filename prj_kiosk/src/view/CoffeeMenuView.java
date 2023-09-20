@@ -42,7 +42,7 @@ public class CoffeeMenuView extends JPanel{
 
 		Panel.setLayout(new GridLayout(1, 3, 100, 100));
 		
-		MenuEvt me = new MenuEvt(mv);
+//		MenuEvt me = new MenuEvt(mv);
 		
 		
 		add(Panel);

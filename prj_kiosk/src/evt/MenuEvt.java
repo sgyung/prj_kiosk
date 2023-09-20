@@ -26,23 +26,19 @@ import javax.swing.event.ChangeListener;
 import dao.ProductDAO;
 import view.MenuView;
 import view.OptionMenuView;
+import view.PaymentView;
 import vo.MenuListVO;
 import vo.OrderDetailVO;
 
 public class MenuEvt extends WindowAdapter implements ActionListener, ChangeListener, MouseListener {
 	private MenuView menuView;
 	private List<JPanel> menuAllList;
-//	private JButton menuBtn;
-//	private JLabel menuNameLabel;
-//	private JLabel menuPriceLabel;
-//	private JPanel menuPanel;
 	private List<MenuListVO> menuList; 
-//	private List<JButton> menuButtonList;
-//	private List<JLabel> menuNameList;
 	
 	public MenuEvt(MenuView menuView) {
 		this.menuView = menuView;
-//		setMenuList();
+
+
 	}
 
 	@Override
@@ -50,9 +46,9 @@ public class MenuEvt extends WindowAdapter implements ActionListener, ChangeList
 		selectMenu(ae);
 		if(ae.getSource() == menuView.getCancelBtn()) {
 			cancelSelectMenu();
-			for(int i = 0; i < menuView.menuSelectedList.size(); i++) {
-				System.out.println(menuView.menuSelectedList.get(i).toString());
-			}
+		}else if (ae.getSource() == menuView.getPurchaseBtn()) {
+			new PaymentView();
+			
 		}
 	}
 	
@@ -109,7 +105,6 @@ public class MenuEvt extends WindowAdapter implements ActionListener, ChangeList
 			menuView.getCofMenu().getPanel().removeAll();
 			menuView.getBevMenu().getPanel().removeAll();
 			menuView.getDesMenu().getPanel().removeAll();
-//			menuAllList.clear();
 			
 			if(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase().equals("cof")) {
 				setCofPanel();
@@ -220,13 +215,54 @@ public class MenuEvt extends WindowAdapter implements ActionListener, ChangeList
 	
 	public void cancelSelectMenu() {
 		List<OrderDetailVO> list = menuView.menuSelectedList;
+		int orderTotalPrice = 0;
 		int selectedRow = menuView.getOrderDetail().getSelectedRow();
 		
 		if(selectedRow != -1) {
 			menuView.getOrderDetaildtm().removeRow(selectedRow);
 			list.remove(selectedRow);
+
+			menuView.getOrderDetaildtm().setRowCount(0);
+			String[] rowData = null;
+			
+			for(int i = 0; i < list.size(); i++) {
+				rowData = new String[7];
+				
+				rowData[0] = String.valueOf(i+1);
+				rowData[1] = list.get(i).getPdName();
+				rowData[2] = String.valueOf(list.get(i).getoQuantity());
+				if("I".equals(list.get(i).getoTempType())) {
+					rowData[3] = "ice";
+				}else if("H".equals(list.get(i).getoTempType())) {
+					rowData[3] = "hot";
+				}else {
+					rowData[3] = "";
+				}
+				if(list.get(i).getoOptionName() != null) {
+					rowData[4] = list.get(i).getoOptionName();
+				}else if(list.get(i).getoKnifeOption() != null) {
+					rowData[4] = list.get(i).getoKnifeOption();
+				}
+				if("R".equals(list.get(i).getoSizeName())) {
+					rowData[5] = "Regular";
+				}else if("E".equals(list.get(i).getoSizeName())) {
+					rowData[5] = "Extra";
+				}else {
+					rowData[5] = "";
+				}
+				rowData[6] = String.valueOf(list.get(i).getPdPrice());	
+				
+				orderTotalPrice += list.get(i).getPdPrice();
+				
+				menuView.getOrderDetaildtm().addRow(rowData);
+			}
+			
+			menuView.getTotalPriceLabel().setText(String.valueOf(orderTotalPrice));
 		}
 	}
+	
+	
+	
 
 	@Override
 	public void mousePressed(MouseEvent e) {

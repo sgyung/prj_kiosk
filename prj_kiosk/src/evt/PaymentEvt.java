@@ -266,7 +266,7 @@ public class PaymentEvt extends WindowAdapter implements ActionListener{
 	      paymentView.getOrderPrice().setText(String.valueOf(orderPrice));
 	      
 	      paymentView.getCurrentPayVO().setOrderPrice(orderPrice);
-	   	
+	      setPrice();
 	      
 	   }//end setOrederDetailList
 	   

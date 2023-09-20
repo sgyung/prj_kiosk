@@ -38,6 +38,17 @@ public class OptionMenuView extends JDialog{
 	private JLabel totalPriceLabel;
 	private JTextField quantityTextField;
 	
+	// 수정사항
+	private JLabel sizeLabel;
+	private JLabel optionLabel;
+	private JSeparator separator1;
+	private JSeparator separator2;
+	private JSeparator separator3;
+	private JToggleButton addKnifeBtn;
+	private JToggleButton noKnifeBtn;
+	
+	
+	
 	 public OptionMenuView(MenuView menuView) {
 		 super(menuView, "option", true);
 //		 this.menuView = menuView;
@@ -58,7 +69,7 @@ public class OptionMenuView extends JDialog{
 		 
 		 ButtonGroup sizeBtnGroup = new ButtonGroup();
 		 regularBtn = new JToggleButton("Regular");
-		 regularBtn.setSelected(true);
+//		 regularBtn.setSelected(true);
 		 extraBtn = new JToggleButton("Extra");
 		 sizeBtnGroup.add(regularBtn);
 		 sizeBtnGroup.add(extraBtn);
@@ -67,6 +78,14 @@ public class OptionMenuView extends JDialog{
 		 addWhippingBtn = new JToggleButton("<HTML>휘핑추가<br>+1000원</HTML>");
 		 addSyrupBtn = new JToggleButton("<HTML>시럽추가<br>+500원</HTML>");
 		 
+		 // Dessert 옵션 유무 Button
+		 ButtonGroup knifeBtnGroup = new ButtonGroup();// 0916 수정
+		 addKnifeBtn = new JToggleButton("<HTML>나이프 O</HTML>");// 0916수정
+		 noKnifeBtn = new JToggleButton("<HTML>나이프 X</HTML>");// 0916수정
+		 knifeBtnGroup.add(addKnifeBtn);// 0916 수정
+		 knifeBtnGroup.add(noKnifeBtn);// 0916 수정
+		 
+		
 		 minusBtn = new JButton("-");
 		 plusBtn = new JButton("+");
 		 //Label
@@ -78,15 +97,15 @@ public class OptionMenuView extends JDialog{
 		 productName = new JLabel(); 
 		 JLabel priceLabel = new JLabel("금액");
 		 totalPriceLabel = new JLabel("10000");
-		 JLabel sizeLabel = new JLabel("사이즈");
-		 JLabel optionLabel = new JLabel("옵션");
+		 sizeLabel = new JLabel("사이즈");// 0916 수정
+		 optionLabel = new JLabel("옵션");// 0916 수정
 		 //TextField
 		 quantityTextField = new JTextField("1");
 		 quantityTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		 //Separator
-		 JSeparator separator1 = new JSeparator(SwingConstants.HORIZONTAL);
-		 JSeparator separator2 = new JSeparator(SwingConstants.HORIZONTAL);
-		 JSeparator separator3 = new JSeparator(SwingConstants.HORIZONTAL);
+		 separator1 = new JSeparator(SwingConstants.HORIZONTAL);// 0916 수정
+		 separator2 = new JSeparator(SwingConstants.HORIZONTAL);// 0916 수정
+		 separator3 = new JSeparator(SwingConstants.HORIZONTAL);// 0916 수정
 		 
 		 //Font
 		 Font largeFont = new Font("맑은 고딕", Font.BOLD, 30);
@@ -106,6 +125,8 @@ public class OptionMenuView extends JDialog{
 		 addShotBtn.setFont(smallFont);
 		 addWhippingBtn.setFont(smallFont);
 		 addSyrupBtn.setFont(smallFont);
+		 addKnifeBtn.setFont(smallFont);// 0916 수정
+		 noKnifeBtn.setFont(smallFont);// 0916 수정
 		 selectionBtn.setFont(smallFont);
 		 cancel.setFont(smallFont);
 		 
@@ -135,6 +156,8 @@ public class OptionMenuView extends JDialog{
 		 addShotBtn.setBounds(250, 470, 130, 100);
 		 addSyrupBtn.setBounds(420, 470, 130, 100);
 		 addWhippingBtn.setBounds(590, 470, 130, 100);
+		 addKnifeBtn.setBounds(250,400,150,100);
+		 noKnifeBtn.setBounds(500,400,150,100);
 		 
 		 separator3.setBounds(70, 600, 650, 100);
 		 
@@ -176,6 +199,8 @@ public class OptionMenuView extends JDialog{
 		 add(addShotBtn);
 		 add(addWhippingBtn);
 		 add(addSyrupBtn);
+		 add(addKnifeBtn);
+		 add(noKnifeBtn);
 		 
 		 add(separator3);
 		 
@@ -249,5 +274,42 @@ public class OptionMenuView extends JDialog{
 	public JTextField getQuantityTextField() {
 		return quantityTextField;
 	}
+	
+	// 수정 사항
+
+	public JLabel getSizeLabel() {
+		return sizeLabel;
+	}
+
+
+	public JLabel getOptionLabel() {
+		return optionLabel;
+	}
+
+
+	public JSeparator getSeparator1() {
+		return separator1;
+	}
+
+
+	public JSeparator getSeparator2() {
+		return separator2;
+	}
+
+
+	public JSeparator getSeparator3() {
+		return separator3;
+	}
+
+
+	public JToggleButton getAddKnifeBtn() {
+		return addKnifeBtn;
+	}
+
+
+	public JToggleButton getNoKnifeBtn() {
+		return noKnifeBtn;
+	}
+	
 	 
 }//class

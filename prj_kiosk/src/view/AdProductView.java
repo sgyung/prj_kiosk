@@ -29,7 +29,7 @@ public class AdProductView extends JPanel {
 	
 	//Table
 	private JTable productInfo;
-	private DefaultTableModel productInfoTm ;
+	private DefaultTableModel productInfoDtm ;
 	
 	//Button
 	private JButton deleteBtn; 
@@ -89,8 +89,8 @@ public class AdProductView extends JPanel {
 			 
 		//String, ComboBox
 		String[]  productDetail = {"상품코드","상품종류", "상품명", "가격", "등록일", "삭제여부"};
-		productInfoTm = new DefaultTableModel(null, productDetail);
-		productInfo = new JTable(productInfoTm);
+		productInfoDtm = new DefaultTableModel(null, productDetail);
+		productInfo = new JTable(productInfoDtm);
 		JScrollPane productInfoJsp = new JScrollPane(productInfo);
 		//Table 수정불가
 		productInfo.setDefaultEditor(Object.class, null);
@@ -188,8 +188,8 @@ public class AdProductView extends JPanel {
 	}
 
 
-	public DefaultTableModel getProductInfoTm() {
-		return productInfoTm;
+	public DefaultTableModel getProductInfoDtm() {
+		return productInfoDtm;
 	}
 
 

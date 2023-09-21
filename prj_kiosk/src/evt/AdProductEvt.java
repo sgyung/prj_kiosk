@@ -60,7 +60,7 @@ public class AdProductEvt extends MouseAdapter implements ActionListener {
 	
 	
 	public void setProductInfo() {
-		adPdView.getProductInfoTm().setRowCount(0);
+		adPdView.getProductInfoDtm().setRowCount(0);
 		
 		List<ProductVO> list = new ArrayList<ProductVO>();
 		String[] rows = new String[6]; 
@@ -78,7 +78,7 @@ public class AdProductEvt extends MouseAdapter implements ActionListener {
 				rows[4] = String.valueOf(vo.getPdInputDate());
 				rows[5] = vo.getPdDelete();
 				
-				adPdView.getProductInfoTm().addRow(rows);
+				adPdView.getProductInfoDtm().addRow(rows);
 			}//end for	
 			
 		} catch (SQLException e) {
@@ -111,7 +111,7 @@ public class AdProductEvt extends MouseAdapter implements ActionListener {
 	public void selectionProduct(){
 		int row = adPdView.getProductInfo().getSelectedRow();
 		
-		String productCode = String.valueOf(adPdView.getProductInfoTm().getValueAt(row, 0));
+		String productCode = String.valueOf(adPdView.getProductInfoDtm().getValueAt(row, 0));
 		
 		ProductDAO dao = ProductDAO.getInstance();
 		

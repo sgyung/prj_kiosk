@@ -37,7 +37,7 @@ public class UserDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-		con = db.getConnection("localhost", "scott", "tiger");
+		con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 		
 		StringBuilder selectAllUser= new StringBuilder();
 		selectAllUser
@@ -75,7 +75,7 @@ public class UserDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con=db.getConnection("localhost", "scott", "tiger");
+			con=db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			StringBuilder selectUser=new StringBuilder();
 			selectUser
@@ -111,7 +111,7 @@ public class UserDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con=db.getConnection("localhost", "scott", "tiger");
+			con=db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			StringBuilder user = new StringBuilder();
 			user
@@ -138,7 +138,7 @@ public class UserDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con=db.getConnection("localhost", "scott", "tiger");
+			con=db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			StringBuilder updateUser = new StringBuilder();
 			updateUser
@@ -177,7 +177,7 @@ public class UserDAO {
 			.append("	where user_phone= ? 	")
 			;
 			
-			con=db.getConnection("localhost", "scott", "tiger");
+			con=db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 
 			pstmt = con.prepareStatement(update.toString());
 			pstmt.setString(1, uTelNum);
@@ -202,7 +202,7 @@ public class UserDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con=db.getConnection("localhost", "scott", "tiger");
+			con=db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			StringBuilder deleteCancel = new StringBuilder();
 			deleteCancel

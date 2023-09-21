@@ -41,7 +41,7 @@ public class PaymentDAO {
 		int cnt6=0; //payment
 		
 		DbConn db = DbConn.getInstance();
-		con = db.getConnection("localhost", "scott", "tiger");
+		con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 		con.setAutoCommit(false);
 		
 		PreparedStatement pstmt = null;

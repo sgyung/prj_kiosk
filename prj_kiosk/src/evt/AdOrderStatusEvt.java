@@ -1,15 +1,18 @@
 package evt;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import dao.OrderStatusDAO;
 import view.AdOrderStatusView;
@@ -27,25 +30,22 @@ public class AdOrderStatusEvt implements ActionListener,MouseListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == adOrderStatusView.getDetailBtn()) {
-			System.out.println(1);
-			showOrder(selectdetailOrder()); 
+			showOrder(getOrderNum()); 
 		}
 		if(e.getSource() == adOrderStatusView.getCompleteBtn()) {
-			completeOrder(selectOrder());
-		}
-		if(e.getSource() == adOrderStatusView.getRePrintBtn()) {
-			reloadOrder();
+			completeOrder(getOrderNum());
+			setOrderList();
 		}
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 			if(e.getSource() == adOrderStatusView.getOrderInfo()) {
-					selectOrder();
+				getOrderNum();
 			}
 	}
 	
-	//전체 
+	//전체 OrderList 출력
 	public void setOrderList() {
 		OrderStatusDAO dao = OrderStatusDAO.getInstance();
 		
@@ -58,7 +58,7 @@ public class AdOrderStatusEvt implements ActionListener,MouseListener {
 			
 			 
 			for(OrderStatusVO orderStatusVO : list) {
-				rowData = new String[5];
+				rowData = new String[3];
 				rowData[0] = orderStatusVO.getoNum();
 				rowData[1] = orderStatusVO.getoStatus();
 				rowData[2] = ( String.valueOf(orderStatusVO.getoDate()) );
@@ -73,48 +73,18 @@ public class AdOrderStatusEvt implements ActionListener,MouseListener {
 				
 	}
 	
-	
-	public void reloadOrder() {
-		setOrderList();
-	}
-	
-	//테이블에서 선택한 열의 oNum의 ..
-	public OrderStatusVO selectOrder() {
-		OrderStatusDAO dao = OrderStatusDAO.getInstance();
-		OrderStatusVO vo = null;
+	//테이블에서 선택한 열의 oNum의 해당하는 주문번호얻기 
+	public String getOrderNum() {
 		int row = adOrderStatusView.getOrderInfo().getSelectedRow();
 		String oNum = (String) adOrderStatusView.getOrderInfo().getValueAt(row, 0);
 		
-		try {
-			vo = dao.selectOrderStatus(oNum);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return vo;
+		return oNum;
 	}
 	
-	public OrderStatusVO selectdetailOrder() {
-		OrderStatusDAO dao = OrderStatusDAO.getInstance();
-		OrderStatusVO vo = null; 
-		int row = adOrderStatusView.getOrderInfo().getSelectedRow();
-		String oNum = (String) adOrderStatusView.getOrderInfo().getValueAt(row, 0);
-		
-		try {
-			vo = dao.selectDetailStatus(oNum);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return vo;//detail한 내용들이 들어가있음.
-		
-	}
-	
-	
-	public void completeOrder( OrderStatusVO orderStatusVO ) {
+	public void completeOrder( String oNum ) {
 		OrderStatusDAO dao = OrderStatusDAO.getInstance();
 		try {
-			dao.updateOrderStatus(orderStatusVO);
+			dao.updateOrderStatus(oNum);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,23 +93,62 @@ public class AdOrderStatusEvt implements ActionListener,MouseListener {
 		
 	}
 	
-	public void showOrder( OrderStatusVO orderStatusVO) {
-		StringBuilder detailOrder = new StringBuilder();
-		detailOrder.append("상품명\t"+orderStatusVO.getPdName()+"\n")
-		.append("HOT/ICE\t"+orderStatusVO.getoTempType()+"\n")
-		.append("옵션\t"+orderStatusVO.getOpName()+"\n")
-		.append("크기\t"+orderStatusVO.getoSize()+"\n")
-		.append("가격\t"+orderStatusVO.getTotalPrice()+"\n")
-		;
-		
-		JTextArea jta = new JTextArea(detailOrder.toString(), 10, 30);
-		JScrollPane jsp = new JScrollPane( jta );
-		
-		JOptionPane.showMessageDialog(null, jsp);
-		
+	//셀을 클릭하면 해당하는 주문번호의 디테일 주문을 Frame 에 Table 에 출력
+	public void showOrder( String oNum ) {
+		OrderStatusDAO dao = new OrderStatusDAO();
+		List<OrderStatusVO> list = new ArrayList<OrderStatusVO>();
+		try {
+			list = dao.selectDetailStatus(oNum);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        // JFrame 생성
+        JFrame frame = new JFrame("상세내역");
+        frame.setSize(600, 200);
+
+        // JTable , DefaultTableModel 생성
+        String[] columnName = {"제품명", "ICE/HOT", "사이즈", "옵션", "수량", "가격"};
+        DefaultTableModel tableModel = new DefaultTableModel(null, columnName);
+        JTable table = new JTable(tableModel);
+        
+        table.getColumnModel().getColumn(1).setPreferredWidth(30);
+        table.getColumnModel().getColumn(2).setPreferredWidth(30);
+        table.getColumnModel().getColumn(4).setPreferredWidth(30);
+
+        String[] rowData = null;
+        // vo로 list 만들기
+        for (OrderStatusVO vo : list) {
+        	rowData = new String[6];
+        	rowData[0]=vo.getPdName();
+        	rowData[1]=vo.getoTempType();
+        	rowData[2]=vo.getoSize();
+        	rowData[3]=vo.getOpName();
+        	rowData[4]=( String.valueOf( vo.getoMount() ) );
+        	rowData[5]=( String.valueOf( vo.getoDetailPrice() ) );
+        	
+            tableModel.addRow(rowData);
+        }
+        
+        // 주문량이 많을 수 있으니 JScrollPane 생성 후 테이블 삽입
+        JScrollPane scrollPane = new JScrollPane(table);
+        
+        // JScrollPane을 frame에 삽입
+        frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+
+        frame.setLocation(150,300);
+        
+        frame.setVisible(true);
+        
 	}
 	
 
+	
+	
+	
+	
+	
 
 	@Override
 	public void mousePressed(MouseEvent e) {

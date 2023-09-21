@@ -35,7 +35,7 @@ public class InventoryDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-		con = db.getConnection("localhost", "scott", "tiger");
+		con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 		
 		StringBuilder selectAllInventory= new StringBuilder();
 		selectAllInventory
@@ -73,7 +73,7 @@ public class InventoryDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con=db.getConnection("localhost", "scott", "tiger");
+			con=db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			StringBuilder selectInventory=new StringBuilder();
 			selectInventory
@@ -111,7 +111,7 @@ public class InventoryDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con=db.getConnection("localhost", "scott", "tiger");
+			con=db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			String invenType = inventoryVO.getiTypeCode();
 			String invenTypeSeq = invenType + "_seq.nextval";
@@ -147,7 +147,7 @@ public class InventoryDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con=db.getConnection("localhost", "scott", "tiger");
+			con=db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 		
 			StringBuilder update = new StringBuilder();
 			update
@@ -181,7 +181,7 @@ public class InventoryDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con=db.getConnection("localhost", "scott", "tiger");
+			con=db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			cstmt = con.prepareCall("{ call delete_inventory_proc(?) }");
 
@@ -205,7 +205,7 @@ public class InventoryDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con = db.getConnection("localhost", "scott", "tiger");
+			con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			String selectType = "	select inventory_type_code from inventory_type	";
 			pstmt =con.prepareStatement(selectType);
@@ -224,6 +224,5 @@ public class InventoryDAO {
 		
 		return list;
 	}//selectInventoryType
-	
 	
 }

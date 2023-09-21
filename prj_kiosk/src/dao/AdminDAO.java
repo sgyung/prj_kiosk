@@ -29,7 +29,7 @@ public class AdminDAO {
 		
 		DbConn db = DbConn.getInstance();
 		try {
-			con = db.getConnection("localhost.", "scott", "tiger");
+			con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			
 			StringBuilder selectAdmin = new StringBuilder();

@@ -39,7 +39,7 @@ public class ProductDAO {
 		
 		DbConn db = DbConn.getInstance();
 		try {
-			con = db.getConnection("localhost", "scott", "tiger");
+			con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			stmt = con.createStatement();
 			
@@ -69,7 +69,7 @@ public class ProductDAO {
 		
 		DbConn db = DbConn.getInstance();
 		try {
-			con = db.getConnection("localhost", "scott", "tiger");
+			con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 
 			StringBuilder selectProduct = new StringBuilder();
 			selectProduct
@@ -104,7 +104,7 @@ public class ProductDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con = db.getConnection("localhost", "scott", "tiger");
+			con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			stmt = con.createStatement();
 			
 			StringBuilder selectProductType = new StringBuilder();
@@ -132,7 +132,7 @@ public class ProductDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con = db.getConnection("localhost", "scott", "tiger");
+			con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			String pdTypeCode = pVO.getPdTypeCode();
 			
@@ -177,7 +177,7 @@ public class ProductDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con = db.getConnection("localhost", "scott", "tiger");
+			con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			StringBuilder updateProduct = new StringBuilder();
 			updateProduct
@@ -206,7 +206,7 @@ public class ProductDAO {
 		
 		DbConn db = DbConn.getInstance();
 		try {
-			con = db.getConnection("localhost", "scott", "tiger");
+			con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			StringBuilder deleteProduct = new StringBuilder();
 			deleteProduct
@@ -236,7 +236,7 @@ public class ProductDAO {
 		
 		DbConn db = DbConn.getInstance();
 		try{
-			con = db.getConnection("localhost", "scott", "tiger");
+			con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			StringBuilder selectMenuList = new StringBuilder();
 			selectMenuList
@@ -273,7 +273,7 @@ public class ProductDAO {
 		
 		try {
 			
-			con = db.getConnection("localhost", "scott", "tiger");
+			con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			String selectImage = "	select image from product	";
 			
@@ -306,7 +306,7 @@ public class ProductDAO {
 			
 			try {
 				
-				con = db.getConnection("localhost", "scott", "tiger");
+				con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 				
 				StringBuilder selectDeleteCheck = new StringBuilder();
 				selectDeleteCheck
@@ -345,7 +345,7 @@ public class ProductDAO {
 			DbConn db = DbConn.getInstance();
 			
 			try {
-				con = db.getConnection("localhost", "scott", "tiger");
+				con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 				
 				StringBuilder useInventory = new StringBuilder();
 				useInventory

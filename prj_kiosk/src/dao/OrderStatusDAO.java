@@ -34,13 +34,14 @@ public class OrderStatusDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-		con = db.getConnection("localhost", "scott", "tiger");
+		con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 		
 		StringBuilder selectAllOrderStatus= new StringBuilder();
 		selectAllOrderStatus
-		.append("	select  	order_num, order_status, order_time	")
-		.append("	from		order_menu								")
-		.append("	order by 	order_num			");
+		.append("	select  	order_num, order_status, order_time			")
+		.append("	from		order_menu									")
+		.append("   --where       order_time = to_char(sysdate,'YYYY-MM-DD')  ")
+		;
 		
 		
 		pstmt=con.prepareStatement(selectAllOrderStatus.toString());
@@ -63,7 +64,7 @@ public class OrderStatusDAO {
 		return list;
 	}
 	
-	public OrderStatusVO selectOrderStatus(String oNum ) throws SQLException {
+	public OrderStatusVO selectOrderStatus( String oNum ) throws SQLException {
 		OrderStatusVO orderStatusVO = null;
 		
 		Connection con = null;
@@ -73,14 +74,14 @@ public class OrderStatusDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con=db.getConnection("localhost", "scott", "tiger");
+			con=db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			StringBuilder selectOrderStatus=new StringBuilder();
 			selectOrderStatus
-			.append("	select  	o_m.order_num,o_m.order_status,o_m.order_time,pd.product_name,o_d.cup_size,o_d.ice_hot,o_o.option_name,o_d.product_quantity,pd.product_price,pm.purchase_price	")
-			.append("	from		product pd,order_detail o_d,order_option o_o,order_menu o_m,payment pm								")
-			.append("	where		(o_m.order_serial_num = pm.order_serial_num) and (o_m.order_serial_num = o_d.order_serial_num) and (o_d.order_detail_num = o_o.order_detail_num(+)) and (o_d.product_code = pd.product_code) and o_m.order_num = ? 		")
-			.append("	order by 	o_m.order_num			");
+			.append("	select  	order_num, order_status, order_time	")
+			.append("	from		order_menu							")
+			.append("	where		order_num = ?						")
+			;
 			
 			pstmt=con.prepareStatement(selectOrderStatus.toString());
 			
@@ -88,18 +89,11 @@ public class OrderStatusDAO {
 			
 			rs=pstmt.executeQuery();
 			
-			if( rs.next() ) { 
+			while( rs.next() ) { 
 				orderStatusVO = new OrderStatusVO();
 				orderStatusVO.setoNum(rs.getString("order_num"));
 				orderStatusVO.setoStatus(rs.getString("order_status"));
 				orderStatusVO.setoDate(rs.getDate("order_time"));
-				orderStatusVO.setPdName(rs.getString("product_name"));
-				orderStatusVO.setoSize(rs.getString("cup_size"));
-				orderStatusVO.setoTempType(rs.getString("ice_hot"));
-				orderStatusVO.setOpName(rs.getString("option_name"));
-				orderStatusVO.setoMount(rs.getInt("product_quantity"));
-				orderStatusVO.setPdPrice(rs.getInt("product_price"));
-				orderStatusVO.setTotalPrice(rs.getInt("purchase_price"));
 			}//end if
 			
 		} finally {
@@ -108,8 +102,8 @@ public class OrderStatusDAO {
 		return orderStatusVO;
 	}
 	
-	public OrderStatusVO selectDetailStatus( String oNum ) throws SQLException {
-		OrderStatusVO orderStatusVO = null;
+	public List<OrderStatusVO> selectDetailStatus( String oNum ) throws SQLException {
+		List<OrderStatusVO> list = new ArrayList<OrderStatusVO>();
 		
 		Connection con = null;
 		PreparedStatement pstmt=null;
@@ -118,14 +112,15 @@ public class OrderStatusDAO {
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con=db.getConnection("localhost", "scott", "tiger");
+			con=db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 			
 			StringBuilder selectDetailStatus=new StringBuilder();
 			selectDetailStatus
-			.append("	select  	order_d.order_detail_num, pd.product_name, order_d.ice_hot, order_d.cup_size, listagg(order_o.option_name, ', ') within group(order by order_d.order_detail_num) option_name, order_d.product_quantity, pd.product_price+nvl(sum(order_o.option_price),0) order_detail_price")
+			.append("	select  	order_d.order_detail_num, pd.product_name, order_d.ice_hot, order_d.cup_size, listagg(order_o.option_name, ', ') within group(order by order_d.order_detail_num) option_name, order_d.product_quantity, (pd.product_price+nvl(sum(order_o.option_price),0))*order_d.product_quantity order_detail_price")
 			.append("	from		order_detail order_d, product pd, order_option order_o, product_type pd_type, payment pay, order_menu order_m")
-			.append("	where		(order_m.order_serial_num = order_d.order_serial_num)and( order_m.order_serial_num = pay.order_serial_num ) and ( pay.payment_status_code = 'Y') and ( order_d.product_code = pd.product_code) and ( order_d.order_detail_num = order_o.order_detail_num(+) ) and (pd_type.product_type_code = pd.product_type_code) and od.order_num=? 	")
-			.append("	group by 	order_d.order_detail_num, pd.product_name, order_d.ice_hot, order_d.cup_size, pd.product_name, order_d.product_quantity, pd.product_price			");
+			.append("	where		(order_m.order_serial_num = order_d.order_serial_num)and( order_m.order_serial_num = pay.order_serial_num ) and ( pay.payment_status_code = 'Y') and ( order_d.product_code = pd.product_code) and ( order_d.order_detail_num = order_o.order_detail_num(+) ) and (pd_type.product_type_code = pd.product_type_code) and order_m.order_num=? 	")
+			.append("	group by 	order_d.order_detail_num, pd.product_name, order_d.ice_hot, order_d.cup_size, pd.product_name, order_d.product_quantity, pd.product_price			")
+			;
 			
 			pstmt=con.prepareStatement(selectDetailStatus.toString());
 			
@@ -133,8 +128,8 @@ public class OrderStatusDAO {
 			
 			rs=pstmt.executeQuery();
 			
-			if( rs.next() ) { 
-				orderStatusVO = new OrderStatusVO();
+			while( rs.next() ) { 
+				OrderStatusVO orderStatusVO = new OrderStatusVO();
 				orderStatusVO.setoDetailNum(rs.getString("order_detail_num"));
 				orderStatusVO.setPdName(rs.getString("product_name"));
 				orderStatusVO.setoTempType(rs.getString("ice_hot"));
@@ -142,22 +137,24 @@ public class OrderStatusDAO {
 				orderStatusVO.setOpName(rs.getString("option_name"));
 				orderStatusVO.setoMount(rs.getInt("product_quantity"));
 				orderStatusVO.setoDetailPrice(rs.getInt("order_detail_price"));
+				
+				list.add(orderStatusVO);
 			}//end if
 			
 		} finally {
 			db.dbClose(rs, pstmt, con);
 		}
-		return orderStatusVO;
+		return list;
 	}
 	
-	public void updateOrderStatus( OrderStatusVO orderStatusVO ) throws SQLException {
+	public void updateOrderStatus( String oNum ) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt=null;
 		
 		DbConn db = DbConn.getInstance();
 		
 		try {
-			con=db.getConnection("localhost", "scott", "tiger");
+			con=db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 		
 			StringBuilder updateStatus = new StringBuilder();
 			updateStatus
@@ -168,7 +165,7 @@ public class OrderStatusDAO {
 			
 			pstmt=con.prepareStatement(updateStatus.toString());
 			
-			pstmt.setString(1, orderStatusVO.getoNum());
+			pstmt.setString(1, oNum);
 
 			pstmt.execute();
 
@@ -181,9 +178,9 @@ public class OrderStatusDAO {
 	public static void main(String[] args) {
 	OrderStatusDAO o = new OrderStatusDAO();
 	try {
-		System.out.println(o.selectAllOrderStatus());
+//		System.out.println(o.selectAllOrderStatus());
 		System.out.println(o.selectOrderStatus("3"));
-		System.out.println(o.selectDetailStatus("3"));
+//		System.out.println(o.selectDetailStatus("3"));
 		
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block

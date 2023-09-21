@@ -173,14 +173,13 @@ public class UserDAO {
 			StringBuilder update = new StringBuilder();
 			update
 			.append("	update user_info	")
-			.append("	set user_withdrawal='y'	")
+			.append("	set user_withdrawal='Y', user_point=0	")
 			.append("	where user_phone= ? 	")
 			;
 			
 			con=db.getConnection("localhost", "scott", "tiger");
 
 			pstmt = con.prepareStatement(update.toString());
-
 			pstmt.setString(1, uTelNum);
 
 			cnt = pstmt.executeUpdate();
@@ -194,5 +193,36 @@ public class UserDAO {
 		}//end finally
 		
 	}//deleteUser
+	
+	public int deleteCancelUser(UserVO user ) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt=null;
+		int cnt = 0;
+		
+		DbConn db = DbConn.getInstance();
+		
+		try {
+			con=db.getConnection("localhost", "scott", "tiger");
+			
+			StringBuilder deleteCancel = new StringBuilder();
+			deleteCancel
+			.append("	update user_info	")
+			.append("	set user_withdrawal='N', user_point=0	")
+			.append("	where user_phone= ? 	")
+			;
+			
+			pstmt = con.prepareStatement(deleteCancel.toString());
+			
+			pstmt.setString(1, user.getuTelNum());
+			
+			cnt = pstmt.executeUpdate();
+			
+			return cnt;
+		} finally {
+			db.dbClose(null, pstmt, con);
+		}//end finally
+		
+	}//deleteCancelUser
+
 
 }//class

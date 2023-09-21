@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class BeverageMenuView extends JPanel{
 	private List<JButton> menuButtonList;
 	private List<JLabel> menuNameList;
 	private List<JLabel> menuPriceList;
+	private List<String> pdCodeList;
 	
 	public BeverageMenuView(MenuView mv) {
 		Panel = new JPanel();
@@ -35,9 +37,11 @@ public class BeverageMenuView extends JPanel{
 		menuButtonList = new ArrayList<JButton>();
 		menuNameList = new ArrayList<JLabel>();
 		menuPriceList = new ArrayList<JLabel>();
+		pdCodeList = new ArrayList<String>();
 		
 
 		Panel.setLayout(new GridLayout(1, 3, 100, 100));
+		Panel.setBackground(Color.white);
 		
 //		MenuEvt me = new MenuEvt(mv);
 		
@@ -83,6 +87,11 @@ public class BeverageMenuView extends JPanel{
 
 		public List<JLabel> getMenuPriceList() {
 			return menuPriceList;
+		}
+
+
+		public List<String> getPdCodeList() {
+			return pdCodeList;
 		}
 		
 

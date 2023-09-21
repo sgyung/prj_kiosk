@@ -3,6 +3,7 @@ package evt;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -12,6 +13,7 @@ import javax.swing.JOptionPane;
 
 import dao.PaymentDAO;
 import dao.UserDAO;
+import view.MainView;
 import view.MenuView;
 import view.PaymentView;
 import vo.OrderDetailVO;
@@ -21,16 +23,23 @@ import vo.UserVO;
 public class PaymentEvt extends WindowAdapter implements ActionListener{
 	
 	private PaymentView paymentView;
+	private MenuView menuView;
 	private int orderPrice;
 	private int discountPrice;
 	   
 	   
-	   public PaymentEvt(PaymentView paymentView) {
+	   public PaymentEvt(PaymentView paymentView, MenuView menuView) {
 	      this.paymentView = paymentView;
+	      this.menuView = menuView;
 	      setOrederDetailList();
 	   }//PaymentEvt
 	   
 	   @Override
+	public void windowClosing(WindowEvent e) {
+		   paymentView.dispose();
+	}//windowClosing
+
+	@Override
 	   public void actionPerformed(ActionEvent e) {
 	      if(e.getSource() == paymentView.getSearchUserBtn()) {
 	    	  checkUser();
@@ -40,6 +49,17 @@ public class PaymentEvt extends WindowAdapter implements ActionListener{
 	      }//end if
 	      if(e.getSource() == paymentView.getCancelPointBtn()) {
 	    	  cancelPoint();
+	      }//end if
+	      if(e.getSource() == paymentView.getBeforeBtn()) {
+	    	  paymentView.dispose();
+	      }//end if
+	      if(e.getSource() == paymentView.getPaymentBtn()) {
+	    	  setPayMethod();
+	    	  if( !isPay() ) {
+	    		  JOptionPane.showMessageDialog(paymentView, "결제방법을 선택해주세요.");
+	    		  return;
+	    	  }//end if
+	    	  payment();	    	  
 	      }//end if
 	      
 	   }//actionPerformed
@@ -79,13 +99,20 @@ public class PaymentEvt extends WindowAdapter implements ActionListener{
 				   }//end if
 				   return;
 			   }//end if
+			   //입력한 회원정보가 삭제된 상태일때
+			   if( vo.getuWithdrawal().equals("Y")) {
+				   int flag = JOptionPane.showConfirmDialog(paymentView,   "일치하는 회원정보가 없습니다\n회원가입 하시겠습니까?", "가입확인", JOptionPane.OK_CANCEL_OPTION);
+				   
+				   if( flag == 0 ) {
+					   reJoinUser(inputTel);
+					   setUser();
+					   return;
+				   }//end if
+			   }//end if
 			   //선택된 회원정보가 있으면 포인트/현재사용자 세팅
 			   if( vo != null ) {
-				   
 				   paymentView.setCurrentUserVO(vo);
-				   
 				   setUser();
-				   
 			   }//end if
 			   
 		   } catch (SQLException e) {
@@ -128,6 +155,25 @@ public class PaymentEvt extends WindowAdapter implements ActionListener{
 			}//end catch
 		  	   
 	   }//joinUser
+	   
+	   public void reJoinUser(String tel) {
+		   UserVO vo = new UserVO();
+		   vo.setuTelNum(tel);
+		   vo.setuRemainReward(0);
+		   
+		   UserDAO dao = UserDAO.getInstance();
+		   
+		   try {
+			   dao.deleteCancelUser(vo);
+			   
+			   paymentView.setCurrentUserVO(vo);
+			   
+			   JOptionPane.showMessageDialog(paymentView, "가입되었습니다.");
+		   } catch (SQLException e) {
+			   JOptionPane.showMessageDialog(paymentView, "회원가입 실패");
+		   }//end catch
+		   
+	   }//reJoinUser
 	   
 	   //포인트 사용
 	   public void usePoint() {
@@ -284,12 +330,58 @@ public class PaymentEvt extends WindowAdapter implements ActionListener{
 	   }//setPrice
 	
 	   public void setPayMethod() {
+		   PaymentVO currentPay = paymentView.getCurrentPayVO();
 		      
 	      if(paymentView.getCardBtn().isSelected()) {
-	         paymentView.getCurrentPayVO().setPmTypeCode(0);
+	    	  currentPay.setPmTypeCode(0);
+	    	  currentPay.setPmCode("카드");
 	      }else if(paymentView.getCashBtn().isSelected()) {
-	         paymentView.getCurrentPayVO().setPmTypeCode(1);
-	      }
-	   }//end setPayMethod
-	
+	    	  currentPay.setPmTypeCode(1);
+	    	  currentPay.setPmCode("현금");
+	      }//end if
+	      
+	      currentPay.setOrderPrice(Integer.parseInt(paymentView.getOrderPrice().getText()));
+	      currentPay.setDiscountPrice(Integer.parseInt(paymentView.getDiscount().getText()));
+	      currentPay.setTotalPrice(Integer.parseInt(paymentView.getPurchasePrice().getText()));
+	      
+	   }//setPayMethod
+	   
+	   //결제
+	   public void payment(){
+		   String msg = "";
+		   
+		   PaymentDAO dao = PaymentDAO.getInstance();
+		   
+		   List<OrderDetailVO> list = MenuView.menuSelectedList;
+		   
+		   try {
+			   msg = dao.useTransaction(list, paymentView.getCurrentPayVO(), paymentView.getCurrentUserVO());
+		   } catch (SQLException e) {
+			   e.printStackTrace();
+		   }
+			
+		   JOptionPane.showMessageDialog(paymentView, msg, "결제", JOptionPane.INFORMATION_MESSAGE);
+		   
+		   //결제완료시 paymentView, menuView 종료 후 mainView열기
+		   paymentView.dispose();
+		   menuView.dispose();
+		   new MainView();
+		   
+	   }//payment
+	   
+	   //결제방법 선택유무
+	   public boolean isPay() {
+		   
+		   boolean flag = false;
+		   
+		   if( paymentView.getCurrentPayVO().getPmCode() == null ) {
+			   flag = false;
+		   } else {
+			   flag = true;
+		   }//end if
+		   
+		   return flag;
+		   
+	   }//isPay
+	   
 }//class

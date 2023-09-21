@@ -182,7 +182,7 @@ public class OrderStatusDAO {
 	OrderStatusDAO o = new OrderStatusDAO();
 	try {
 		System.out.println(o.selectAllOrderStatus());
-//		System.out.println(o.selectOrderStatus("3"));
+		System.out.println(o.selectOrderStatus("3"));
 		System.out.println(o.selectDetailStatus("3"));
 		
 	} catch (SQLException e) {

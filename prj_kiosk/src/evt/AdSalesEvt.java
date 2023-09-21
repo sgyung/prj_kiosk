@@ -94,6 +94,9 @@ public class AdSalesEvt implements ActionListener, ItemListener{
 				startUtilDate = sdf.parse(startDate);
 				endUtilDate = sdf.parse(endDate);
 				
+				saleConVO.setStartDate(startUtilDate);
+				saleConVO.setEndDate(endUtilDate);
+				
 				if(startUtilDate.compareTo(endUtilDate) > 0  ) {
 					JOptionPane.showMessageDialog(adSaleView, "종료일은 시작일보다 더 작을 수 없습니다.");
 					return;
@@ -107,14 +110,13 @@ public class AdSalesEvt implements ActionListener, ItemListener{
 			} else {
 				saleConVO.setStartDate(startUtilDate);
 				saleConVO.setEndDate(endUtilDate);
-				System.out.println(saleConVO);
 				
 				list = dao.selectSalesDetail(saleConVO);
 				addSalesDtm(list);	
 			}//end else
 			
 		}catch(ParseException parseError) {
-			JOptionPane.showMessageDialog(adSaleView, "시작일과 종료일의 날짜 형식이 올바르지 않습니다.\n다시 확인해주세요.");
+			JOptionPane.showMessageDialog(adSaleView, "시작일과 종료일의 날짜 형식이 올바르지 않습니다.\n예 : 2023-01-01");
 		}catch (SQLException sqlError) {
 			sqlError.printStackTrace();
 			JOptionPane.showMessageDialog(adSaleView, "데이터를 불러오는중 error");
@@ -140,9 +142,6 @@ public class AdSalesEvt implements ActionListener, ItemListener{
 			totalSalesAmount += list.get(i).getOrderDetailPrice();
 			
 			adSaleView.getSalesInfoTm().addRow(rows);
-			
-			//Table row 높이 설정
-			adSaleView.getSalesInfo().setRowHeight(i, 50);
 			
 			
 		}//end for

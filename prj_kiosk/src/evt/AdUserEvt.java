@@ -36,7 +36,6 @@ public class AdUserEvt extends MouseAdapter implements ActionListener{
 		if(e.getSource() == adUserView.getDeleteBtn()) {
 			int confirm = JOptionPane.showConfirmDialog(adUserView, "정말 삭제하시겠습니까?", "확인" ,JOptionPane.OK_CANCEL_OPTION);
 			
-			System.out.println(confirm);
 			if( confirm == 0 ) {
 				removeUser();
 				return;
@@ -62,7 +61,6 @@ public class AdUserEvt extends MouseAdapter implements ActionListener{
 				rows[0] = vo.getuTelNum();
 				rows[1] = String.valueOf(vo.getuRemainReward());
 				rows[2] = vo.getuWithdrawal();
-				System.out.println(vo.getuWithdrawal());
  				rows[3] = String.valueOf(vo.getuSignupDate());
  				
  				adUserView.getUserInfoTm().addRow(rows);

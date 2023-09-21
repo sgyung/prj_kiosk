@@ -243,8 +243,8 @@ public class AdProductEvt extends MouseAdapter implements ActionListener {
 				vo.setPdName(adPdView.getNameJtf().getText());
 				vo.setPdPrice(Integer.parseInt(adPdView.getPriceJtf().getText()));
 				
-				dao.insertProduct(vo);
 				uploadImg(imgPath);
+				dao.insertProduct(vo);
 				JOptionPane.showMessageDialog(adPdView, "상품을 추가하였습니다.");
 				resetData();
 				setProductInfo();

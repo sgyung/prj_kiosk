@@ -47,8 +47,12 @@ public class PaymentView extends JFrame {
 	private JButton beforeBtn;
 	private JButton paymentBtn;
 	
+	private MenuView menuView;
 	
-	public PaymentView() {
+	
+	public PaymentView(MenuView menuView) {
+		
+		this.menuView = menuView;
 		// currentPayVO
 		currentPayVO = new PaymentVO();
 		
@@ -73,7 +77,7 @@ public class PaymentView extends JFrame {
 		JLabel payMethodLabel = new JLabel("결제방법");
 		JLabel searchUserLabel = new JLabel("회원조회");
 		JLabel usePointLabel = new JLabel("적립금 사용");
-		useAvailablePointLabel = new JLabel("사용가능 적립금 임시");//임시데이터
+		useAvailablePointLabel = new JLabel("적립금");
 		
 		JLabel orderPriceLabel = new JLabel("주문금액");
 		orderPrice = new JLabel();
@@ -120,10 +124,12 @@ public class PaymentView extends JFrame {
 		JPanel purchasePricelPanel = new JPanel();
 		
 		//Event
-		PaymentEvt evt = new PaymentEvt(this);
+		PaymentEvt evt = new PaymentEvt(this, menuView);
 		searchUserBtn.addActionListener(evt);
 		usePointBtn.addActionListener(evt);
 		cancelPointBtn.addActionListener(evt);
+		beforeBtn.addActionListener(evt);
+		paymentBtn.addActionListener(evt);
 		
 		PricePanel.setBorder(line);
 		PricePanel.add(orderPrice);
@@ -190,11 +196,6 @@ public class PaymentView extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}//PaymentView
-	
-	//임시
-	public static void main(String[] args) {
-		new PaymentView();
-	}
 
 	public JToggleButton getCashBtn() {
 		return cashBtn;

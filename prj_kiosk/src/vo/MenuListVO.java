@@ -1,6 +1,7 @@
 package vo;
 
 public class MenuListVO {
+	private String pdCode;
 	private String pdName;
 	private int pdPrice;
 	private String imgName;
@@ -9,7 +10,8 @@ public class MenuListVO {
 		
 	}
 	
-	public MenuListVO(String pdName, int pdPrice, String imgName) {
+	public MenuListVO(String pdCode, String pdName, int pdPrice, String imgName) {
+		this.pdCode = pdCode;
 		this.pdName = pdName;
 		this.pdPrice = pdPrice;
 		this.imgName = imgName;
@@ -38,12 +40,19 @@ public class MenuListVO {
 	public void setImgName(String imgName) {
 		this.imgName = imgName;
 	}
+	
+	public String getPdCode() {
+		return pdCode;
+	}
+
+	public void setPdCode(String pdCode) {
+		this.pdCode = pdCode;
+	}
 
 	@Override
 	public String toString() {
-		return "MenuListVO [pdName=" + pdName + ", pdPrice=" + pdPrice + ", imgName=" + imgName + "]";
+		return "MenuListVO [pdCode=" + pdCode + ", pdName=" + pdName + ", pdPrice=" + pdPrice + ", imgName=" + imgName
+				+ "]";
 	}
-	
-	
 	
 }

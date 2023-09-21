@@ -29,6 +29,7 @@ public class MainEvt extends WindowAdapter implements ActionListener{
 			//orderBtn하는 일 추가
 			JOptionPane.showMessageDialog(mainView, "주문 창으로 이동합니다.");
 			new MenuView();
+			mainView.dispose();
 		}//end if
 		if(ae.getSource() == mainView.getAdminBtn()) {//버튼 클릭 시
 			//adminBtn 하는 일 추가

@@ -22,6 +22,8 @@ import vo.OrderDetailVO;
 public class MenuView extends JFrame {
 	public static List<OrderDetailVO> menuSelectedList;  
 	
+	private String currentProduct;
+	
 	private JButton purchaseBtn;
 	private JButton cancelBtn;
 	private JButton beforeBtn;
@@ -73,11 +75,17 @@ public class MenuView extends JFrame {
 		totalPriceLabel.setFont(new Font("맑은 고딕", Font.BOLD ,30));
 		purchaseBtn.setFont(new Font("맑은 고딕", Font.BOLD ,30));
 		
+		// JPanel 배경색 설정
+		cofMenu.setBackground(Color.white);
+		bevMenu.setBackground(Color.white);
+		desMenu.setBackground(Color.white);
+      
 		//Event
 		MenuEvt me = new MenuEvt(this);
 		menuJtp.addChangeListener(me);
 		cancelBtn.addActionListener(me);
 		purchaseBtn.addActionListener(me);
+		beforeBtn.addActionListener(me);
 		
 		
 		//Tab 위치Left
@@ -87,7 +95,7 @@ public class MenuView extends JFrame {
 		//Tab에 JPanel 추가
 		menuJtp.addTab("Coffee",cofMenuJsp);
 		menuJtp.addTab("Beverage", bevMenuJsp);
-		menuJtp.addTab("Desert", desMenuJsp);
+		menuJtp.addTab("Dessert", desMenuJsp);
 		
 		
 		//컴포넌트 위치설정, 추가
@@ -168,5 +176,15 @@ public class MenuView extends JFrame {
 	public JTabbedPane getMenuJtp() {
 		return menuJtp;
 	}
+
+	public String getCurrentProduct() {
+		return currentProduct;
+	}
+
+	public void setCurrentProduct(String currentProduct) {
+		this.currentProduct = currentProduct;
+	}
+	
+	
 	
 }// class

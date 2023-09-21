@@ -83,6 +83,9 @@ public class SalesDAO {
 		String pdType  = vo.getPdType();
 		String pdName = vo.getPdName();
 		
+		
+		System.out.println(end);
+		System.out.println(start);
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -110,6 +113,9 @@ public class SalesDAO {
 				java.sql.Date sqlStartDate = new java.sql.Date( start.getTime() );
 				java.sql.Date sqlEndDate = new java.sql.Date( end.getTime() );
 				
+				System.out.println(sqlStartDate);
+				System.out.println(sqlEndDate);
+				
 				pstmt = con.prepareStatement(selectSalesDetail.toString());
 				
 				pstmt.setDate(1, sqlStartDate);
@@ -126,11 +132,16 @@ public class SalesDAO {
 				java.sql.Date sqlStartDate = new java.sql.Date( start.getTime() );
 				java.sql.Date sqlEndDate = new java.sql.Date( end.getTime() );
 				
+				System.out.println(sqlStartDate);
+				System.out.println(sqlEndDate);
+				
 				pstmt = con.prepareStatement(selectSalesDetail.toString());
 				
 				pstmt.setDate(1, sqlStartDate);
 				pstmt.setDate(2, sqlEndDate);
 				pstmt.setString(3, pdType);
+				
+				
 				
 			} else if ( ( vo.getStartDate() !=null  || vo.getEndDate() != null ) && vo.getPdType().equals("null") && vo.getPdName().equals("null")  ) {
 				selectSalesDetail
@@ -140,6 +151,8 @@ public class SalesDAO {
 				
 				java.sql.Date sqlStartDate = new java.sql.Date( start.getTime() );
 				java.sql.Date sqlEndDate = new java.sql.Date( end.getTime() );
+				System.out.println(sqlStartDate);
+				System.out.println(sqlEndDate);
 				
 				pstmt = con.prepareStatement(selectSalesDetail.toString());
 				

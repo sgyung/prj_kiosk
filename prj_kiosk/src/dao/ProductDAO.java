@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import vo.MenuListVO;
 import vo.ProductVO;
+import vo.UseInventoryVO;
 
 public class ProductDAO {
 
@@ -151,7 +152,8 @@ public class ProductDAO {
 			pstmt = con.prepareStatement(insertProduct.toString());
 			
 			StringBuilder pdCode = new StringBuilder();
-			pdCode.append("_");
+			pdCode.append(pdTypeCode).append("_");
+			
 			pstmt.setString(1,pdCode.toString());
 			pstmt.setString(2, pdTypeCode);
 			pstmt.setString(3, pVO.getPdImageName());
@@ -164,7 +166,8 @@ public class ProductDAO {
 		}finally {
 			db.dbClose(null, pstmt, con);
 		}
-	}
+	}//insertProduct
+	
 	
 	public int updateProduct(ProductVO pVO) throws SQLException{
 		Connection con = null;
@@ -237,7 +240,7 @@ public class ProductDAO {
 			
 			StringBuilder selectMenuList = new StringBuilder();
 			selectMenuList
-			.append(	"select product_name, product_price, image		")
+			.append(	"select product_code, product_name, product_price, image		")
 			.append(	"from product									")
 			.append(	"where product_type_code = ?					");
 			
@@ -248,7 +251,7 @@ public class ProductDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				mlVO = new MenuListVO(rs.getString("product_name"),rs.getInt("product_price"),rs.getString("image"));
+				mlVO = new MenuListVO(rs.getString("product_code") ,rs.getString("product_name"),rs.getInt("product_price"),rs.getString("image"));
 				
 				list.add(mlVO);
 			}
@@ -290,6 +293,85 @@ public class ProductDAO {
 		
 		return list;
 	}//selectImages
+	
+	// selectDeleteCheck
+		public List<String> selectDeleteCheck(String productType) throws SQLException{
+			List<String> list = new ArrayList<String>();
+			
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			DbConn db = DbConn.getInstance();
+			
+			try {
+				
+				con = db.getConnection("localhost", "scott", "tiger");
+				
+				StringBuilder selectDeleteCheck = new StringBuilder();
+				selectDeleteCheck
+				.append("	select product_delete		")
+				.append("	from product				")
+				.append("	where product_type_code = ? ");
+				
+				
+				pstmt = con.prepareStatement(selectDeleteCheck.toString());
+				
+				pstmt.setString(1, productType);
+					
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					
+					list.add(rs.getString("product_delete"));
+					
+				}//end while
+				
+			} finally {
+				db.dbClose(rs, pstmt, con);
+			}
+			
+			return list;
+		}// selectDeleteCheck
+		
+		public List<UseInventoryVO> selectUseInventory(String pdCode) throws SQLException{
+			List<UseInventoryVO> list = new ArrayList<UseInventoryVO>();
+			
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			
+			DbConn db = DbConn.getInstance();
+			
+			try {
+				con = db.getConnection("localhost", "scott", "tiger");
+				
+				StringBuilder useInventory = new StringBuilder();
+				useInventory
+				.append("	select prod.product_name, prod.product_code, inv.inventory_code, inv.inventory_name, uinv.use_quantity, inv.inventory_quantity		")
+				.append("	from product prod, use_inventory uinv, inventory inv																				")
+				.append("	where( prod.product_code = uinv.product_code) and (inv.inventory_code = uinv.inventory_code) and substr(prod.product_code,1,3) = ?	");
+				
+				pstmt = con.prepareStatement(useInventory.toString());
+				
+				pstmt.setString(1, pdCode);
+				
+				rs = pstmt.executeQuery();
+				
+				UseInventoryVO uiVO = null;
+				while(rs.next()) {
+					uiVO = new UseInventoryVO(rs.getString("product_name"), rs.getString("product_code"), rs.getString("inventory_code"),
+							rs.getString("inventory_name"), rs.getInt("use_quantity"), rs.getInt("inventory_quantity"));
+					
+					list.add(uiVO);
+				}
+				
+			}finally {
+				db.dbClose(rs, pstmt, con);
+			}
+			return list;
+		}
 	
 }//class
 

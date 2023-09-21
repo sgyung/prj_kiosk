@@ -64,12 +64,13 @@ public class OptionMenuView extends JDialog{
 		 ButtonGroup iceHotBtnGroup = new ButtonGroup();
 		 iceBtn = new JToggleButton("ICE");
 		 hotBtn = new JToggleButton("HOT");
+		 iceBtn.setSelected(true);
 		 iceHotBtnGroup.add(iceBtn);
 		 iceHotBtnGroup.add(hotBtn);
 		 
 		 ButtonGroup sizeBtnGroup = new ButtonGroup();
 		 regularBtn = new JToggleButton("Regular");
-//		 regularBtn.setSelected(true);
+		 regularBtn.setSelected(true);
 		 extraBtn = new JToggleButton("Extra");
 		 sizeBtnGroup.add(regularBtn);
 		 sizeBtnGroup.add(extraBtn);
@@ -82,6 +83,7 @@ public class OptionMenuView extends JDialog{
 		 ButtonGroup knifeBtnGroup = new ButtonGroup();// 0916 수정
 		 addKnifeBtn = new JToggleButton("<HTML>나이프 O</HTML>");// 0916수정
 		 noKnifeBtn = new JToggleButton("<HTML>나이프 X</HTML>");// 0916수정
+		 addKnifeBtn.setSelected(true);
 		 knifeBtnGroup.add(addKnifeBtn);// 0916 수정
 		 knifeBtnGroup.add(noKnifeBtn);// 0916 수정
 		 

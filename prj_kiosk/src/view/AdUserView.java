@@ -26,7 +26,7 @@ public class AdUserView extends JPanel{
 	
 	//Table
 	private JTable userInfo;
-	private DefaultTableModel userInfoTm ;
+	private DefaultTableModel userInfoDtm ;
 	
 	//Button
 	private JButton deleteBtn; 
@@ -54,8 +54,8 @@ public class AdUserView extends JPanel{
 		
 		//String, Scrollpane
 		String[]  userDetail = {"전화번호", "적립금", "탈퇴여부", "가입일"};
-		userInfoTm = new DefaultTableModel(null, userDetail);
-		userInfo = new JTable(userInfoTm);
+		userInfoDtm = new DefaultTableModel(null, userDetail);
+		userInfo = new JTable(userInfoDtm);
 		userInfo.setDefaultEditor(Object.class, null);
 		JScrollPane userInfoJsp = new JScrollPane(userInfo); 
 		
@@ -167,7 +167,7 @@ public class AdUserView extends JPanel{
 	}
 
 	public DefaultTableModel getUserInfoTm() {
-		return userInfoTm;
+		return userInfoDtm;
 	}
 
 	public JButton getDeleteBtn() {

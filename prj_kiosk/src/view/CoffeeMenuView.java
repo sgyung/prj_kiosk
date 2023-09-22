@@ -43,7 +43,7 @@ public class CoffeeMenuView extends JPanel{
 		pdCodeList = new ArrayList<String>();
 		
 
-		Panel.setLayout(new GridLayout(1, 3, 100, 100));
+		Panel.setLayout(new GridLayout(0, 3, 100, 100));
 		Panel.setBackground(Color.white);
 		
 //		MenuEvt me = new MenuEvt(mv);

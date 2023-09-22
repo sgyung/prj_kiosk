@@ -83,7 +83,7 @@ public class OptionMenuView extends JDialog{
 		 ButtonGroup knifeBtnGroup = new ButtonGroup();// 0916 수정
 		 addKnifeBtn = new JToggleButton("<HTML>나이프 O</HTML>");// 0916수정
 		 noKnifeBtn = new JToggleButton("<HTML>나이프 X</HTML>");// 0916수정
-		 addKnifeBtn.setSelected(true);
+//		 addKnifeBtn.setSelected(true);
 		 knifeBtnGroup.add(addKnifeBtn);// 0916 수정
 		 knifeBtnGroup.add(noKnifeBtn);// 0916 수정
 		 
@@ -92,8 +92,9 @@ public class OptionMenuView extends JDialog{
 		 plusBtn = new JButton("+");
 		 //Label
 		 JPanel productImg = new JPanel();
-		 productImageLabel = new JLabel("img");
-		 productImg.setBorder(new LineBorder(Color.BLACK));
+		 productImageLabel = new JLabel();
+		 productImg.setBorder(new LineBorder(Color.white));
+		 productImg.setBackground(Color.white);
 		 productImg.add(productImageLabel);
 		 JLabel productNameLabel = new JLabel("상품이름");
 		 productName = new JLabel(); 
@@ -135,7 +136,7 @@ public class OptionMenuView extends JDialog{
 		 //컴포넌트 위치설정, 추가
 		 background.setBounds(0,0,800,800);
 		 
-		 productImg.setBounds(100,50, 200,200);
+		 productImg.setBounds(140,80, 100,140);
 		 productNameLabel.setBounds(350, 50, 200, 50);
 		 productName.setBounds(350,100,200,50);
 		 

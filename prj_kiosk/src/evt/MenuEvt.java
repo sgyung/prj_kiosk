@@ -178,12 +178,18 @@ public class MenuEvt extends WindowAdapter implements ActionListener, ChangeList
          uiList = pDAO.selectUseInventory(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase());
          for(int i = 0; i < menuList.size(); i++) {
             System.out.println(menuList.get(i).toString());
-            if("N".equals(producutList.get(i)) && ("cof_" + (i+1)).equals(uiList.get(i).getPdCode())) {
+            System.out.println(i);
+            System.out.println(producutList.get(i));
+            System.out.println(uiList.get(i).getPdCode());
+            if("N".equals(producutList.get(i)) /*&& ("cof_" + (i+1)).equals(uiList.get(i).getPdCode())*/ ) {
                   for(int j = 0; j < uiList.size(); j++) {
+                	  System.out.println(uiList.get(j).toString());
                      if(menuList.get(i).getPdName().toString().equals(uiList.get(j).getPdName()) && uiList.get(j).getiName().contains("원두")) {
                         cofTotalQuantity = uiList.get(j).getTotalQuantity();
+                        System.out.println(cofTotalQuantity);
                      }else if(menuList.get(i).getPdName().toString().equals(uiList.get(j).getPdName()) && uiList.get(j).getiName().contains("우유")) {
                         milkTotalQuantity = uiList.get(j).getTotalQuantity();
+                        System.out.println(milkTotalQuantity);
                         flag = true;
                      }
                   }
@@ -223,7 +229,7 @@ public class MenuEvt extends WindowAdapter implements ActionListener, ChangeList
                      btn.setEnabled(false);
                      btn.setBorderPainted(false);
                      btn.setFocusPainted(false);
-                       btn.setContentAreaFilled(false);
+                     btn.setContentAreaFilled(false);
                      menuView.getCofMenu().getMenuButtonList().add(btn);
                      menuView.getCofMenu().getMenuNameList().add(name);
                      menuView.getCofMenu().getMenuPriceList().add(price);
@@ -262,9 +268,11 @@ public class MenuEvt extends WindowAdapter implements ActionListener, ChangeList
          producutList = pDAO.selectDeleteCheck(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase());
          uiList = pDAO.selectUseInventory(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase());
          for(int i = 0; i < menuList.size(); i++) {
-            if("N".equals(producutList.get(i)) && ("bev_" + (i+1)).equals(uiList.get(i).getPdCode())) {
+            if("N".equals(producutList.get(i))/* && ("bev_" + (i+1)).equals(uiList.get(i).getPdCode())*/) {
                   for(int j = 0; j < uiList.size(); j++) {
-                     if(menuList.get(i).getPdName().toString().equals(uiList.get(j).getPdName()) && uiList.get(j).getiName().contains("시럽")) {
+                     if(menuList.get(i).getPdName().toString().equals(uiList.get(j).getPdName()) && (uiList.get(j).getiName().contains("시럽"))||
+                    		 uiList.get(j).getiName().contains("펄") || uiList.get(j).getiName().contains("파우더") || uiList.get(j).getiName().contains("사이다")
+                    		 || uiList.get(j).getiName().contains("주스")) {
                         syrupTotalQuantity = uiList.get(j).getTotalQuantity();
                      }else if(menuList.get(i).getPdName().toString().equals(uiList.get(j).getPdName()) && uiList.get(j).getiName().contains("우유")) {
                         milkTotalQuantity = uiList.get(j).getTotalQuantity();
@@ -342,8 +350,14 @@ public class MenuEvt extends WindowAdapter implements ActionListener, ChangeList
          producutList = pDAO.selectDeleteCheck(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase());
          uiList = pDAO.selectUseInventory(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase());
          for(int i = 0; i < menuList.size(); i++) {
-            if("N".equals(producutList.get(i)) && ("des_" + (i+1)).equals(uiList.get(i).getPdCode()) &&
-                  menuList.get(i).getPdName().toString().equals(uiList.get(i).getiName())) {
+        	 System.out.println(menuList.get(i).toString());
+             System.out.println(i);
+             System.out.println(menuList.size());
+             System.out.println(producutList.get(i));
+             System.out.println(uiList.get(i).getPdCode());
+            if("N".equals(producutList.get(i)) /*&& ("des_" + (i+1)).equals(uiList.get(i).getPdCode()) &&
+                  menuList.get(i).getPdName().toString().equals(uiList.get(i).getiName())*/) {
+            	System.out.println(uiList.get(i).toString());
                   cakeTotalQuantity = uiList.get(i).getTotalQuantity();
                   if(cakeTotalQuantity > 0) {
                      btn = new JButton(new ImageIcon(imgPath + menuList.get(i).getImgName().toString()));

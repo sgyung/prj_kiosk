@@ -36,11 +36,11 @@ public class OrderStatusDAO {
 		try {
 		con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
 		
-		StringBuilder selectAllOrderStatus= new StringBuilder();
+		StringBuilder selectAllOrderStatus= new StringBuilder();	
 		selectAllOrderStatus
 		.append("	select  	order_num, order_status, order_time			")
 		.append("	from		order_menu									")
-		.append("   --where       order_time = to_char(sysdate,'YYYY-MM-DD')  ")
+		.append("   where       order_time = to_char(sysdate,'YYYY-MM-DD')  ")
 		;
 		
 		
@@ -64,43 +64,43 @@ public class OrderStatusDAO {
 		return list;
 	}
 	
-	public OrderStatusVO selectOrderStatus( String oNum ) throws SQLException {
-		OrderStatusVO orderStatusVO = null;
-		
-		Connection con = null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		
-		DbConn db = DbConn.getInstance();
-		
-		try {
-			con=db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
-			
-			StringBuilder selectOrderStatus=new StringBuilder();
-			selectOrderStatus
-			.append("	select  	order_num, order_status, order_time	")
-			.append("	from		order_menu							")
-			.append("	where		order_num = ?						")
-			;
-			
-			pstmt=con.prepareStatement(selectOrderStatus.toString());
-			
-			pstmt.setString(1, oNum);
-			
-			rs=pstmt.executeQuery();
-			
-			while( rs.next() ) { 
-				orderStatusVO = new OrderStatusVO();
-				orderStatusVO.setoNum(rs.getString("order_num"));
-				orderStatusVO.setoStatus(rs.getString("order_status"));
-				orderStatusVO.setoDate(rs.getDate("order_time"));
-			}//end if
-			
-		} finally {
-			db.dbClose(rs, pstmt, con);
-		}
-		return orderStatusVO;
-	}
+//	public OrderStatusVO selectOrderStatus( String oNum ) throws SQLException {
+//		OrderStatusVO orderStatusVO = null;
+//		
+//		Connection con = null;
+//		PreparedStatement pstmt=null;
+//		ResultSet rs=null;
+//		
+//		DbConn db = DbConn.getInstance();
+//		
+//		try {
+//			con=db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
+//			
+//			StringBuilder selectOrderStatus=new StringBuilder();
+//			selectOrderStatus
+//			.append("	select  	order_num, order_status, order_time	")
+//			.append("	from		order_menu							")
+//			.append("	where		order_num = ?						")
+//			;
+//			
+//			pstmt=con.prepareStatement(selectOrderStatus.toString());
+//			
+//			pstmt.setString(1, oNum);
+//			
+//			rs=pstmt.executeQuery();
+//			
+//			while( rs.next() ) { 
+//				orderStatusVO = new OrderStatusVO();
+//				orderStatusVO.setoNum(rs.getString("order_num"));
+//				orderStatusVO.setoStatus(rs.getString("order_status"));
+//				orderStatusVO.setoDate(rs.getDate("order_time"));
+//			}//end if
+//			
+//		} finally {
+//			db.dbClose(rs, pstmt, con);
+//		}
+//		return orderStatusVO;
+//	}
 	
 	public List<OrderStatusVO> selectDetailStatus( String oNum ) throws SQLException {
 		List<OrderStatusVO> list = new ArrayList<OrderStatusVO>();
@@ -175,18 +175,18 @@ public class OrderStatusDAO {
 		}//end finally
 	}
 	
-	public static void main(String[] args) {
-	OrderStatusDAO o = new OrderStatusDAO();
-	try {
-//		System.out.println(o.selectAllOrderStatus());
-		System.out.println(o.selectOrderStatus("3"));
-//		System.out.println(o.selectDetailStatus("3"));
-		
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-}
+//	public static void main(String[] args) {
+//	OrderStatusDAO o = new OrderStatusDAO();
+//	try {
+////		System.out.println(o.selectAllOrderStatus());
+//		System.out.println(o.selectOrderStatus("3"));
+////		System.out.println(o.selectDetailStatus("3"));
+//		
+//	} catch (SQLException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
+//}
 	
 	
 }

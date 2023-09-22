@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import vo.OrderDetailVO;
@@ -31,6 +30,7 @@ public class PaymentDAO {
 	}//getInstance
 	
 	
+	@SuppressWarnings("resource")
 	public int insertPaymentTransaction(List<OrderDetailVO> orderList, PaymentVO payVO, UserVO userVO ) throws SQLException{
 		int result = 0;
 		int cnt1=0; //order_menu

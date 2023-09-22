@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -245,7 +243,7 @@ public class SalesDAO {
 	
 	
 	//selectMonthSalesDetail
-	public List<SalesDetailVO> selectMonthSalesDetail( int month ) throws SQLException{
+	public List<SalesDetailVO> selectMonthSalesDetail( int month, int year) throws SQLException{
 		List<SalesDetailVO> list = new ArrayList<SalesDetailVO>();
 		
 		Connection con = null;
@@ -262,13 +260,14 @@ public class SalesDAO {
 			selectSalesDetail
 			.append("	select order_d.order_detail_num, pd.product_type_code, pd.product_name, order_d.product_quantity, order_d.ice_hot, order_d.cup_size, nvl(sum(order_o.option_price),0) option_price, listagg(order_o.option_name, ', ') within group(order by order_d.order_detail_num) option_name, pd.product_price+nvl(sum(order_o.option_price),0) order_detail_price, pay.payment_date	")
 			.append("	from order_detail order_d, product pd, order_option order_o, product_type pd_type, payment pay, order_menu order_m		")
-			.append("	where (order_m.order_serial_num = order_d.order_serial_num)and( order_m.order_serial_num = pay.order_serial_num ) and ( pay.payment_status_code = 'Y') and ( order_d.product_code = pd.product_code) and ( order_d.order_detail_num = order_o.order_detail_num(+) ) and (pd_type.product_type_code = pd.product_type_code)	and ( TO_CHAR(pay.payment_date, 'MM') = ? )	")
+			.append("	where (order_m.order_serial_num = order_d.order_serial_num)and( order_m.order_serial_num = pay.order_serial_num ) and ( pay.payment_status_code = 'Y') and ( order_d.product_code = pd.product_code) and ( order_d.order_detail_num = order_o.order_detail_num(+) ) and (pd_type.product_type_code = pd.product_type_code)	and ( TO_CHAR(pay.payment_date, 'MM') = ? ) and ( TO_CHAR(pay.payment_date, 'yyyy') = ? )	")
 			.append("	group by order_d.order_detail_num, pd.product_type_code, pd.product_name, order_d.product_quantity, order_d.ice_hot, order_d.cup_size, pd.product_name, pd.product_price, pay.payment_date	")
 			;
 			
 			pstmt = con.prepareStatement(selectSalesDetail.toString());
 			
 			pstmt.setInt(1, month);
+			pstmt.setInt(2, year);
 			
 			rs = pstmt.executeQuery();
 			
@@ -357,18 +356,36 @@ public class SalesDAO {
 		
 		return list;
 		
-		
 	}//selectProductName
 	
-	
-	public static void main(String[] args) {
-		SalesDAO dao = new SalesDAO(); 
+	public List<String> selectSalesYear() throws SQLException {
+		List<String> yearArr = new ArrayList<String>();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		DbConn db = DbConn.getInstance();
 		try {
-			System.out.println(dao.selectMonthSalesDetail(9));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+			con = db.getConnection("192.168.10.133", "prj2_kiosk", "kiosk1234");
+			
+			String selectYear = "	select DISTINCT to_char( payment_date, 'yyyy' ) year from payment		";
+			
+			pstmt = con.prepareStatement(selectYear);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				yearArr.add(rs.getString("year"));
+			}
+			
+			return yearArr;
+			
+		} finally {
+			
+		}//end finally
+		
+	}//selectSalesYear
+
 	
 }//class

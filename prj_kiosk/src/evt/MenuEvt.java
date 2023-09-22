@@ -2,21 +2,14 @@ package evt;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.Attributes.Name;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,8 +22,6 @@ import javax.swing.event.ChangeListener;
 
 import dao.ProductDAO;
 import view.MainView;
-import view.BeverageMenuView;
-import view.CoffeeMenuView;
 import view.MenuView;
 import view.OptionMenuView;
 import view.PaymentView;
@@ -39,7 +30,7 @@ import vo.OrderDetailVO;
 import vo.UseInventoryVO;
 
 public class MenuEvt extends WindowAdapter implements ActionListener, ChangeListener, MouseListener {
-   public final static String imgPath = "C:/Users/USER/git/prj_kiosk/prj_kiosk/src/images/products/";
+   public final static String imgPath = "C:\\kiosk\\images\\products\\";
    
    private MenuView menuView;
    private List<JPanel> menuAllList;
@@ -350,14 +341,9 @@ public class MenuEvt extends WindowAdapter implements ActionListener, ChangeList
          producutList = pDAO.selectDeleteCheck(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase());
          uiList = pDAO.selectUseInventory(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase());
          for(int i = 0; i < menuList.size(); i++) {
-        	 System.out.println(menuList.get(i).toString());
-             System.out.println(i);
-             System.out.println(menuList.size());
-             System.out.println(producutList.get(i));
-             System.out.println(uiList.get(i).getPdCode());
+       
             if("N".equals(producutList.get(i)) /*&& ("des_" + (i+1)).equals(uiList.get(i).getPdCode()) &&
                   menuList.get(i).getPdName().toString().equals(uiList.get(i).getiName())*/) {
-            	System.out.println(uiList.get(i).toString());
                   cakeTotalQuantity = uiList.get(i).getTotalQuantity();
                   if(cakeTotalQuantity > 0) {
                      btn = new JButton(new ImageIcon(imgPath + menuList.get(i).getImgName().toString()));
@@ -413,7 +399,8 @@ public class MenuEvt extends WindowAdapter implements ActionListener, ChangeList
    }
    
    public void cancelSelectMenu() {
-      List<OrderDetailVO> list = menuView.menuSelectedList;
+      @SuppressWarnings("static-access")
+	List<OrderDetailVO> list = menuView.menuSelectedList;
       int orderTotalPrice = 0;
       int selectedRow = menuView.getOrderDetail().getSelectedRow();
       
@@ -437,9 +424,9 @@ public class MenuEvt extends WindowAdapter implements ActionListener, ChangeList
             }else {
                rowData[3] = "";
             }
-            if(list.get(i).getoOptionName() != null) {
+            if(list.get(i).getoOptionName() != null && list.get(i).getoKnifeOption() == null ) {
                rowData[4] = list.get(i).getoOptionName();
-            }else if(list.get(i).getoKnifeOption() != null) {
+            }else if(list.get(i).getoOptionName().isEmpty() && list.get(i).getoKnifeOption() != null) {
                rowData[4] = list.get(i).getoKnifeOption();
             }
             if("R".equals(list.get(i).getoSizeName())) {

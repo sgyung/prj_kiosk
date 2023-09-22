@@ -12,8 +12,8 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 
-import view.AdLoginView;
 import view.AdminTabView;
+import view.MainView;
 
 public class AdminTabViewEvt extends WindowAdapter implements ActionListener {
 
@@ -29,8 +29,8 @@ public class AdminTabViewEvt extends WindowAdapter implements ActionListener {
 			selectionImage();
 		}//end if
 		if( e.getSource() == adTabView.getHomeBtn()) {
-			adTabView.setVisible(false);
-			new AdLoginView();
+			adTabView.dispose();
+			new MainView();
 		}//end if
 	}//actionPerformed
 	

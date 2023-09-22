@@ -35,6 +35,7 @@ public class MainEvt extends WindowAdapter implements ActionListener{
 			//adminBtn 하는 일 추가
 			JOptionPane.showMessageDialog(mainView, "관리자 로그인 창으로 이동합니다.");
 			new AdLoginView();
+			mainView.dispose();
 		}//end if
 	}//actionPerformed
 	

@@ -46,7 +46,8 @@ public class AdLoginEvt extends WindowAdapter implements ActionListener {
 	            JOptionPane.showMessageDialog(null,"아이디와 패스워드를 모두 입력해주세요");//아이디나 패스워드가 비었을때
 	        } else if (aVO != null && id.equals(aVO.getAdminNum()) && pass.equals(aVO.getAdminPW())) {
 	        	JOptionPane.showMessageDialog(null, "안녕하세요 관리자님");
-	            adv.setVisible(false); // 관리자 로그인 화면 종료
+	        	adv.dispose();
+	            //adv.setVisible(false); // 관리자 로그인 화면 종료
 	            new AdminTabView(); // 메인 화면 띄우기
 	        } else if (aVO == null) {
 	            JOptionPane.showMessageDialog(null, "아이디 또는 패스워드를 확인해주세요");//아이디와 패스워드가 다를때

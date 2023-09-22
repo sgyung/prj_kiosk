@@ -59,6 +59,7 @@ public class PaymentEvt extends WindowAdapter implements ActionListener{
 	    		  JOptionPane.showMessageDialog(paymentView, "결제방법을 선택해주세요.");
 	    		  return;
 	    	  }//end if
+    		  setUserPoint();
 	    	  payment();	    	  
 	      }//end if
 	      
@@ -210,10 +211,11 @@ public class PaymentEvt extends WindowAdapter implements ActionListener{
 			   }//end if
 			   
 			   //VO에 세팅
-			   int currentPoint = currentUser.getuRemainReward();
+			   @SuppressWarnings("unused")
+			int currentPoint = currentUser.getuRemainReward();
 			   
 			   //currentUserVO에 setting
-			   currentUser.setuRemainReward(currentPoint - point);
+			   //currentUser.setuRemainReward(currentPoint - point);
 			   //currentPayVO에 setting
 			   paymentView.getCurrentPayVO().setDiscountPrice(point);
 			   
@@ -248,18 +250,20 @@ public class PaymentEvt extends WindowAdapter implements ActionListener{
 			   return;
 		   }//end if
 		   
-		   int flag = JOptionPane.showConfirmDialog(paymentView, "포인트 사용을 취소하시겠습니까?");
+		   int flag = JOptionPane.showConfirmDialog(paymentView, "포인트 사용을 취소하시겠습니까?" ,"취소", JOptionPane.OK_CANCEL_OPTION);
 		   
 		   if( flag == 0 ) {
 			   PaymentVO currentPay = paymentView.getCurrentPayVO();
 			   UserVO currentUser = paymentView.getCurrentUserVO();
 			   
-			   int discoundPrice = currentPay.getDiscountPrice();
+			   @SuppressWarnings("unused")
+			int discoundPrice = currentPay.getDiscountPrice();
 			   
 			   //CurrentPayVO setting
 			   currentPay.setDiscountPrice(0);
 			   //CurrentUserVO setting
-			   currentUser.setuRemainReward(currentUser.getuRemainReward() + discoundPrice);
+			   currentUser.setuRemainReward(currentUser.getuRemainReward() );
+//			   + discoundPrice
 			   setPrice();
 			   
 			   paymentView.getUsePointTextField().setText("");
@@ -294,7 +298,13 @@ public class PaymentEvt extends WindowAdapter implements ActionListener{
 	         }else {
 	            rowData[3] = "";
 	         }
-	         rowData[4] = list.get(i).getoOptionName();
+	         if(!list.get(i).getoOptionName().isEmpty() && list.get(i).getoKnifeOption() == null) {
+	        	 rowData[4] = list.get(i).getoOptionName();
+	         }else if(list.get(i).getoOptionName().isEmpty() && list.get(i).getoKnifeOption() != null) {
+	        	 rowData[4] = list.get(i).getoKnifeOption();
+	         }else if(list.get(i).getoOptionName().isEmpty() && list.get(i).getoKnifeOption() == null) {
+	        	 rowData[4] = "";
+	         }
 	         if("R".equals(list.get(i).getoSizeName())) {
 	            rowData[5] = "Regular";
 	         }else if("E".equals(list.get(i).getoSizeName())) {
@@ -368,6 +378,15 @@ public class PaymentEvt extends WindowAdapter implements ActionListener{
 		   new MainView();
 		   
 	   }//payment
+	   
+	   public void setUserPoint() {
+	      //사용자 기존포인트 - 사용포인트 세팅
+		   if( paymentView.getCurrentUserVO() != null ) {
+			   int point =paymentView.getCurrentUserVO().getuRemainReward() - Integer.valueOf(paymentView.getDiscount().getText());
+			   paymentView.getCurrentUserVO().setuRemainReward(point);
+			   return;
+		   }//end if
+	   }//setUserPoint
 	   
 	   //결제방법 선택유무
 	   public boolean isPay() {

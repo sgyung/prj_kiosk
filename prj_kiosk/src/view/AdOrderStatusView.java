@@ -29,7 +29,7 @@ public class AdOrderStatusView extends JPanel {
 	//Button
 	private JButton detailBtn; 
 	private JButton completeBtn; 
-	private JButton rePrintBtn; 
+//	private JButton rePrintBtn; 
 	
 	public AdOrderStatusView() {
 		
@@ -42,7 +42,7 @@ public class AdOrderStatusView extends JPanel {
 		//Button생성
 		detailBtn=new JButton("주문상세"); 
 		completeBtn=new JButton("제조완료"); 
-		rePrintBtn=new JButton("재출력"); 
+//		rePrintBtn=new JButton("재출력"); 
 		
 		//String, Scrollpane 설정
 		String[]  salesDetail = {"주문번호", "주문상태", "주문일시"};
@@ -60,7 +60,7 @@ public class AdOrderStatusView extends JPanel {
 		
 		orderJp.add(detailBtn);
 		orderJp.add(completeBtn);
-		orderJp.add(rePrintBtn);
+//		orderJp.add(rePrintBtn);
 		
 		
 		add(orderJp);
@@ -70,7 +70,7 @@ public class AdOrderStatusView extends JPanel {
 		AdOrderStatusEvt adOrderStatusEvt = new AdOrderStatusEvt(this);
 		detailBtn.addActionListener(adOrderStatusEvt);
 		completeBtn.addActionListener(adOrderStatusEvt);
-		rePrintBtn.addActionListener(adOrderStatusEvt);
+//		rePrintBtn.addActionListener(adOrderStatusEvt);
 		orderInfo.addMouseListener(adOrderStatusEvt);
 		
 		setLayout(null);
@@ -91,9 +91,9 @@ public class AdOrderStatusView extends JPanel {
 		completeBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		completeBtn.setBounds(580, 800, 100, 50);
 		
-		rePrintBtn.setBackground(new Color(255,195,14));
-		rePrintBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
-		rePrintBtn.setBounds(580, 870, 100, 50);
+//		rePrintBtn.setBackground(new Color(255,195,14));
+//		rePrintBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
+//		rePrintBtn.setBounds(580, 870, 100, 50);
 		
 	}//AdOrderStatusView
 
@@ -122,8 +122,8 @@ public class AdOrderStatusView extends JPanel {
 		return completeBtn;
 	}
 
-	public JButton getRePrintBtn() {
-		return rePrintBtn;
-	}
+//	public JButton getRePrintBtn() {
+//		return rePrintBtn;
+//	}
 	
 }//class

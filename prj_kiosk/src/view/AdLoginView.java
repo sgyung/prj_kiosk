@@ -35,7 +35,7 @@ public class AdLoginView extends JFrame  {
 		super("관리자 로그인");
 		
 		//Logo생성
-		 adminLogoImg = new ImageIcon("src/images/ad_logo.png");
+		 adminLogoImg = new ImageIcon("C:\\kiosk\\images\\ad_logo.png");
 		 adminLogo = new JLabel(adminLogoImg);
 		 
 		//Label생성
@@ -95,7 +95,7 @@ public class AdLoginView extends JFrame  {
 		add(adminLogo);
 		add(MainView.background);
 		
-		setSize(900,1000);
+		setBounds(500, 0, 900, 1000);
 		setVisible(true);
 	}//AdLoginView
 
@@ -131,8 +131,5 @@ public class AdLoginView extends JFrame  {
 	public JPasswordField getPwField() {
 		return pwField;
 	}
-	public static void main(String[] args) {
-		new AdLoginView();
-		
-	}//main
+
 }//class

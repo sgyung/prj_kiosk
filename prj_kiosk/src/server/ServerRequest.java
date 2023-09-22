@@ -1,12 +1,10 @@
 package server;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -17,6 +15,9 @@ import java.util.List;
 import dao.ProductDAO;
 
 public class ServerRequest {
+	//이미지 경로
+	public static final String PATH = "C:\\kiosk\\images\\products";
+	
 	public ServerRequest() {
 		
 	}
@@ -31,9 +32,13 @@ public class ServerRequest {
 			serverList = dao.selectImages();
 			clientList = clientImages();
 			
+			System.out.println("serverList : " + serverList.toString());
+			System.out.println("clientList : " + clientList.toString());
 			//server와 client 이미지 비교 후 일치하는 이미지 삭제
 			List<String> filteredImgList = new ArrayList<String>(serverList);
 			filteredImgList.removeAll(clientList);
+			
+			System.out.println(filteredImgList.toString());
 			
 			String[] imgArr = new String[filteredImgList.size()];
 			for( int i = 0; i<filteredImgList.size(); i++) {
@@ -50,7 +55,7 @@ public class ServerRequest {
 			
 			//server로 이미지 리스트 전송
 			try {
-				requestImages(imgArr);
+				requestImages(imgArr, filteredImgList);
 			} catch (ClassNotFoundException e) {
 				System.out.println("ClassNotFoundException");
 				e.printStackTrace();
@@ -69,8 +74,7 @@ public class ServerRequest {
 		List<String> list = new ArrayList<String>();
 		
 		//images 폴더 경로 추후에 수정
-		File imgFolder = new File("C:\\Users\\user\\git\\prj_kiosk\\prj_kiosk\\src\\images\\products");
-		
+		File imgFolder = new File("C:\\kiosk\\images\\products");
 		if( imgFolder.exists() && imgFolder.isDirectory() ) {
 			File[] imgFiles = imgFolder.listFiles();
 			
@@ -84,9 +88,11 @@ public class ServerRequest {
 		return list;
 	}//clientImages
 	
-	public void requestImages(String[] imgArr) throws IOException, ClassNotFoundException {
+	@SuppressWarnings("unchecked")
+	public void requestImages(String[] imgArr, List<String> filteredImgList) throws IOException, ClassNotFoundException {
 		
 		String ip = "192.168.10.132";
+//		String ip = "192.168.10.133";
 		Socket client = null;
 		DataOutputStream dos = null;
 		ObjectOutputStream oos = null;
@@ -108,15 +114,24 @@ public class ServerRequest {
 			
 			oos.writeObject(imgArr);
 
-			//서버 요청 후 이미지 파일 받기
-			String downloadPath = "C:\\Users\\user\\git\\prj_kiosk\\prj_kiosk\\src\\images\\products\\";
+			//서버 요청 후 이미지 파일 받
+			String downloadPath = "C:\\kiosk\\images\\products\\";
 			
-			List<File> receivedImgList = new ArrayList<File>();
-			receivedImgList =	(List<File>) ois.readObject();
+//			List<File> receivedImgList = new ArrayList<File>();
+//			receivedImgList =	(List<File>) ois.readObject();
 			
-			for(File file : receivedImgList) {
-				saveFile(file, downloadPath);		
-			}
+			List<byte[]> receivedImgList = new ArrayList<byte[]>();
+			receivedImgList =	(List<byte[]>) ois.readObject();
+//			File imgFile = (File) ois.readObject();
+//			saveFile(imgFile, downloadPath);		
+			System.out.println( "receive : " + receivedImgList.size());
+			System.out.println( "filter : " + filteredImgList.size());
+			if( receivedImgList.size() == filteredImgList.size()) {
+				for(int i =0; i<receivedImgList.size(); i++) {
+					saveFile(receivedImgList.get(i), downloadPath, filteredImgList.get(i));		
+				}//end for
+				return;
+			}//end if
 			
 		} finally {
 			if( dos != null ) { dos.close(); }
@@ -127,32 +142,34 @@ public class ServerRequest {
 		
 	}//requestImages
 	
-	public void saveFile(File file, String savePath) throws IOException {
-		File saveDirectory = new File(savePath);
+	public void saveFile(byte[] file, String savePath, String imgName) throws IOException {
+//		File saveDirectory = new File(savePath);
 		
-		System.out.println("savePath : " + savePath);
-		System.out.println("fileName : " + file.getName());
+		
+		
+//		System.out.println("savePath : " + savePath);
+//		System.out.println("fileName : " + file.getName().toLowerCase());
 		
 		FileInputStream fis = null;
 		FileOutputStream fos = null;
 		
-		if ( !saveDirectory.exists() ) {
-			saveDirectory.mkdir();
-		}//end if
-		
+//		if ( !saveDirectory.exists() ) {
+//			saveDirectory.mkdir();
+//		}//end if
 		try {
-		File outputFile = new File(saveDirectory, file.getName());
-		
-		fis = new FileInputStream(file);
-		fos = new FileOutputStream(outputFile);
-		
-		byte[] buffer = new byte[1024];
-		int bytesRead;
-		
-		while( (bytesRead = fis.read(buffer)) != -1 ) {
-			fos.write(buffer, 0, bytesRead);
-		}//end while
-		
+//			File outputFile = new File(saveDirectory, file.getName().toLowerCase());
+//			fis = new FileInputStream(file);
+			fos = new FileOutputStream(savePath + imgName);
+			fos.write(file);
+//		
+//		byte[] buffer = new byte[1024];
+//		int bytesRead;
+//		
+//		while( (bytesRead = fis.read(buffer)) != -1 ) {
+//			fos.write(buffer, 0, bytesRead);
+//		}//end while
+//		
+//		fos.flush();
 		} finally {
 			if( fis != null ) { fis.close(); }
 			if( fos != null ) { fos.close(); }

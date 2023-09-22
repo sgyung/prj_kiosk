@@ -3,7 +3,6 @@ package view;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import evt.MenuEvt;
-import vo.MenuListVO;
 
 @SuppressWarnings("serial")
 public class CoffeeMenuView extends JPanel{

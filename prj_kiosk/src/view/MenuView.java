@@ -14,8 +14,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import evt.MenuEvt;
-import evt.OptionMenuEvt;
-import vo.MenuListVO;
 import vo.OrderDetailVO;
 
 @SuppressWarnings("serial")
@@ -52,6 +50,7 @@ public class MenuView extends JFrame {
 		cancelBtn.setBackground(new Color( 47,47,47));
 		cancelBtn.setForeground(Color.white);
 		beforeBtn = new JButton("이전");
+		beforeBtn.setBackground(new Color( 255,195,14 ));
 		//TabPane
 		menuJtp = new JTabbedPane(); // 수정
 		//menuPanel
@@ -69,11 +68,13 @@ public class MenuView extends JFrame {
 		JScrollPane orderDetailJsp = new JScrollPane(orderDetail); 
 
 		//Font
+		Font size30 = new Font("맑은 고딕", Font.BOLD ,30);
 		menuJtp.setFont(new Font("맑은 고딕", Font.BOLD ,35));
 		orderDetailLabel.setFont(new Font("맑은 고딕", Font.BOLD ,20));
-		priceLabel.setFont(new Font("맑은 고딕", Font.BOLD ,30));
-		totalPriceLabel.setFont(new Font("맑은 고딕", Font.BOLD ,30));
-		purchaseBtn.setFont(new Font("맑은 고딕", Font.BOLD ,30));
+		priceLabel.setFont(size30);
+		totalPriceLabel.setFont(size30);
+		purchaseBtn.setFont(size30);
+		beforeBtn.setFont(size30);
 		
 		// JPanel 배경색 설정
 		cofMenu.setBackground(Color.white);

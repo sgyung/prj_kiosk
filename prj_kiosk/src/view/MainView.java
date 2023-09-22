@@ -12,7 +12,8 @@ import evt.MainEvt;
 
 @SuppressWarnings("serial")
 public class MainView extends JFrame {
-   static public ImageIcon backImg = new ImageIcon("src/images/main_background.png");
+	
+   static public ImageIcon backImg = new ImageIcon("C:\\kiosk\\images\\main_background.png");
    static public JLabel background = new JLabel(backImg);
    
    private JButton orderBtn;
@@ -21,6 +22,8 @@ public class MainView extends JFrame {
    public MainView() {
       super("main");
       backImg.setDescription("dfdf");
+      
+
       
       orderBtn = new JButton("주 문 하 기");
       adminBtn = new JButton("관리자");
@@ -32,7 +35,7 @@ public class MainView extends JFrame {
       orderBtn.setFont(new Font("맑은 고딕", Font.BOLD, 50));
       adminBtn.setFont(new Font("맑은 고딕", Font.BOLD, 20));
       
-      ImageIcon mainLogoImg = new ImageIcon("src/images/logo.png");
+      ImageIcon mainLogoImg = new ImageIcon("C:\\kiosk\\images\\logo.png");
       JLabel mainLogo = new JLabel(mainLogoImg);
       background.setBounds(0,0, 900, 1000);
       mainLogo.setBounds(150,10,600,600);

@@ -4,9 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,8 +48,31 @@ public class AdSalesEvt implements ActionListener, ItemListener{
 			addSalesDtm(list);
 		}//end if
 		if(e.getSource() == adSaleView.getMonthCheckBtn()) {
+			String years = getSalesYear();
+			StringBuilder yearSelectionMsg = new StringBuilder();
+			yearSelectionMsg.append("원하는 년을 입력해주세요.\n").append(years);
+			String year = JOptionPane.showInputDialog(yearSelectionMsg);
+			
+			String[] yearArr = years.split("/");
+			int cnt = 0;
+			for( String y : yearArr) {
+				if( year.equals(y.trim())) {
+					cnt++;
+				}//end if
+			}//end for
+			if( cnt == 0) {
+				JOptionPane.showMessageDialog(adSaleView, "아래의 년중에 입력해주세요.\n" + years);
+				return;
+			}
+			
+			if(  year == null || year.isEmpty() ) {
+				return;
+			}//end if
 			String month = JOptionPane.showInputDialog("원하는 월을 입력해 주세요.");
-			List<SalesDetailVO> list = getMonthSalesDetail(Integer.parseInt(month));
+			if( month == null || month.isEmpty()  ) {
+				return;
+			}//end if
+			List<SalesDetailVO> list = getMonthSalesDetail(Integer.parseInt(month), Integer.parseInt(year) );
 			
 			if( list.isEmpty() ) {
 				JOptionPane.showMessageDialog(adSaleView, "해당하는 월의 데이터가 없습니다.");
@@ -145,7 +167,8 @@ public class AdSalesEvt implements ActionListener, ItemListener{
 			
 			
 		}//end for
-		adSaleView.getTotalLabel().setText(String.valueOf( totalSalesAmount ));
+		DecimalFormat decimalFormat = new DecimalFormat("#,###"); 
+		adSaleView.getTotalLabel().setText(String.valueOf( decimalFormat.format(totalSalesAmount )));
 	}//addSalesDtm
 	
 	public void setProducType() {
@@ -196,18 +219,41 @@ public class AdSalesEvt implements ActionListener, ItemListener{
 		return list;
 	}//searchDailySales
 	
-	public List<SalesDetailVO> getMonthSalesDetail(int month){
+	public List<SalesDetailVO> getMonthSalesDetail(int month, int year){
 		SalesDAO dao = SalesDAO.getInstance();
 		List<SalesDetailVO> list = new ArrayList<SalesDetailVO>();
 		
 		try {
-			list = dao.selectMonthSalesDetail(month);
+			list = dao.selectMonthSalesDetail(month, year);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}//end catch
 		
 		return list;
 	}//getMonthlySalesDetail
+	
+	public String getSalesYear() {
+		StringBuilder years = new StringBuilder();
+		String result = "";
+		SalesDAO dao = SalesDAO.getInstance();
+		
+		try {
+			List<String> yearList = dao.selectSalesYear();
+			for( String year : yearList ) {
+				years
+				.append(year)
+				.append(" / ");
+				;
+			}//end for
+			
+			result = years.substring(0, (years.lastIndexOf("/")-1));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}//end catch
+		
+		return result;
+	}//getSalesYear
 	
 
 }//class

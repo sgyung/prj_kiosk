@@ -88,11 +88,13 @@ public class AdSalesView extends JPanel {
 		
 		//Button생성
 		checkBtn=new JButton("조회") ; 
+		checkBtn.setBackground(new Color(255,195,14));
 		monthCheckBtn=new JButton(
 				"<HTML>월별매출<br>&nbsp;&nbsp;조회</HTML>"); 
+		monthCheckBtn.setBackground(new Color(255,195,14));
 		dayCheckBtn=new JButton(
 				"<HTML>일일매출<br>&nbsp;&nbsp;조회</HTML>"); 
-		
+		dayCheckBtn.setBackground(new Color(255,195,14));
 		
 		salePeriodJp=new JPanel();
 		salesJp=new JPanel();
@@ -148,7 +150,7 @@ public class AdSalesView extends JPanel {
 		
 		//폰트 설정
 		Font labelFont = new Font("맑은고딕",Font.BOLD,20);
-		Font totalFont = new Font("맑은고딕",Font.BOLD,50);
+		Font totalFont = new Font("맑은고딕",Font.BOLD,30);
 		salesInfoJlb.setFont(labelFont);
 		totalJlb.setFont(labelFont);
 		totalLabel.setFont(totalFont);
@@ -190,7 +192,7 @@ public class AdSalesView extends JPanel {
 		
 		totalJlb.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		totalJlb.setBounds(480,640,150,30);
-		panel.setBounds(480,680,200,100);
+		panel.setBounds(480,680,200,50);
 		
 		//테이블 폰트설정
 		salesInfo.setFont(new Font("맑은고딕",Font.BOLD,12));

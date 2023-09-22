@@ -121,7 +121,7 @@ public class AdProductEvt extends MouseAdapter implements ActionListener {
 			
 			
 			String imgName = vo.getPdImageName();
-			ImageIcon img = new ImageIcon("src/images/products/"+imgName);
+			ImageIcon img = new ImageIcon("C:\\kiosk\\images\\products\\"+imgName);
 			adPdView.getPhotoJlb().setIcon(img);
 			adPdView.getCodeJtf().setText(productCode);
 			adPdView.getProductType().setSelectedItem(vo.getPdTypeCode());
@@ -235,7 +235,7 @@ public class AdProductEvt extends MouseAdapter implements ActionListener {
 				String imgPath = adPdView.getPhotoJlb().getIcon().toString();
 				String imgName =imgPath.substring(imgPath.lastIndexOf("\\")+1, imgPath.length()); 
 				
-				
+				System.out.println("imgpath : " + imgPath);
 				
 				vo.setPdCode(pdCode.toString());
 				vo.setPdTypeCode(pdTypeCode);
@@ -276,7 +276,7 @@ public class AdProductEvt extends MouseAdapter implements ActionListener {
 	}//resetData
 	
 	public void uploadImg( String imgPath ) throws IOException {
-		String ip = "192.168.10.133";
+		String ip = "192.168.10.132";
 		Socket client = null;
 		DataInputStream dis = null;
 		DataOutputStream dos = null;
@@ -287,7 +287,7 @@ public class AdProductEvt extends MouseAdapter implements ActionListener {
 		
 		try {
 			
-			client = new Socket(ip, 59000);
+			client = new Socket(ip, 65000);
 			System.out.println("서버접속");
 			
 			dis = new DataInputStream( client.getInputStream() );

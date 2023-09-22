@@ -1,28 +1,23 @@
 package evt;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import dao.ProductDAO;
-import oracle.sql.ConcreteProxyUtil;
 import view.MenuView;
 import view.OptionMenuView;
 import vo.MenuListVO;
 import vo.OptionVO;
 import vo.OrderDetailVO;
-import vo.UseInventoryVO;
 
 public class OptionMenuEvt extends WindowAdapter implements ActionListener {
-	public final static String imgPath = "C:/Users/USER/git/prj_kiosk/prj_kiosk/src/images/products/";
+	public final static String imgPath = "C:\\kiosk\\images\\products\\";
 	
 	private MenuView menuView;
 	private OptionMenuView optionMenuView;
@@ -122,24 +117,25 @@ public class OptionMenuEvt extends WindowAdapter implements ActionListener {
 		int quantity = Integer.parseInt(optionMenuView.getQuantityTextField().getText());
 		int tempSizePrice = 0;
 		
+		
 		if(optionMenuView.getExtraBtn().isSelected()) {
 			if(tempSizePrice == 0) {
-				tempSizePrice = 500;
+				tempSizePrice = quantity * 500;
 				sizePrice = tempSizePrice;
 			}
 		}else if(optionMenuView.getRegularBtn().isSelected()) {
-			if(tempSizePrice == 500 ) {
-				totalPrice -= 500; 
+			if(tempSizePrice == quantity * 500 ) {
+				totalPrice -= quantity * 500; 
 			}
 		}
 		if(optionMenuView.getAddShotBtn().isSelected()) {
-			optionPrice += 500;
+			optionPrice +=  quantity * 500;
 		}
 		if(optionMenuView.getAddWhippingBtn().isSelected()) {
-			optionPrice += 1000;
+			optionPrice += quantity * 1000;
 		}
 		if(optionMenuView.getAddSyrupBtn().isSelected()) {
-			optionPrice += 500;
+			optionPrice +=  quantity * 500;
 		}
 		
 		totalPrice = (menuPrice*quantity) + sizePrice + optionPrice;
@@ -203,9 +199,13 @@ public class OptionMenuEvt extends WindowAdapter implements ActionListener {
 					odVO.setPdCode(menuList.get(i).getPdCode());
 					odVO.setPdName(optionMenuView.getProductName().getText());
 					odVO.setoQuantity(Integer.parseInt(optionMenuView.getQuantityTextField().getText()));
-					if(optionMenuView.getIceBtn().isSelected()) {
+					if((("cof".equals(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase()) || 
+							("bev".equals(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase()))
+							&& optionMenuView.getIceBtn().isSelected()))) {
 						odVO.setoTempType("I");
-					}else if(optionMenuView.getHotBtn().isSelected()) {
+					}else if((("cof".equals(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase()) || 
+							("bev".equals(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase()))
+							&& optionMenuView.getHotBtn().isSelected()))) {
 						odVO.setoTempType("H");
 					}
 					
@@ -268,16 +268,21 @@ public class OptionMenuEvt extends WindowAdapter implements ActionListener {
 						odVO.setoOptionName(tempOptionName);
 					}
 					
-					if(optionMenuView.getRegularBtn().isSelected()) {
+					if((("cof".equals(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase()) || 
+							("bev".equals(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase()))
+							&& optionMenuView.getRegularBtn().isSelected()))) {
 						odVO.setoSizeName("R");
 						odVO.setoSizePrice(0);
-					}else if(optionMenuView.getExtraBtn().isSelected()) {
+					}else if((("cof".equals(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase()) || 
+							("bev".equals(menuView.getMenuJtp().getTitleAt(menuView.getMenuJtp().getSelectedIndex()).substring(0, 3).toLowerCase()))
+							&& optionMenuView.getExtraBtn().isSelected()))) {
 						odVO.setoSizeName("E");
 						odVO.setoSizePrice(500);
 					}
 					
 					odVO.setPdPrice(totalPrice);
 					
+					@SuppressWarnings("static-access")
 					List<OrderDetailVO> list = menuView.menuSelectedList;
 					
 					list.add(odVO);
@@ -291,6 +296,7 @@ public class OptionMenuEvt extends WindowAdapter implements ActionListener {
 	}
 	
 	public void setMenuTable() {
+		@SuppressWarnings("static-access")
 		List<OrderDetailVO> list = menuView.menuSelectedList;
 		int orderTotalPrice = 0;
 

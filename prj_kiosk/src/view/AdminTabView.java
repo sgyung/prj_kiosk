@@ -21,7 +21,7 @@ public class AdminTabView extends JFrame {
 	public AdminTabView() {
 	  
 	  //image
-	   ImageIcon adminSmallLogoImg = new ImageIcon("src/images/ad_logo_small.png");
+	   ImageIcon adminSmallLogoImg = new ImageIcon("C:\\kiosk\\images\\ad_logo_small.png");
 	   JLabel adminSmallLogo = new JLabel(adminSmallLogoImg);
 	   adminSmallLogoImg.setDescription("dfdf");
 	  
@@ -62,7 +62,7 @@ public class AdminTabView extends JFrame {
 	  //컴포넌트 위치설정, 추가
 	  setLayout(null);
 	  setVisible(true);
-	  setSize(900,1000);
+	  setBounds(500, 0, 900, 1000);
 	  
 	  backroundJp.setBounds(0,0,900,1000);
 	  adminSmallLogo.setBounds(15,550,150,150);
@@ -87,10 +87,5 @@ public class AdminTabView extends JFrame {
 	public JButton getHomeBtn() {
 		return homeBtn;
 	}
-
-	public static void main(String[] args) {
-	       new AdminTabView();
-		}//main
-
 	
 }//class

@@ -40,7 +40,7 @@ public class OrderStatusDAO {
 		selectAllOrderStatus
 		.append("	select  	order_num, order_status, order_time			")
 		.append("	from		order_menu									")
-		.append("   where       order_time = to_char(sysdate,'YYYY-MM-DD')  ")
+		.append("   where       to_char(order_time, 'YYYY-MM-DD') = to_char(sysdate,'YYYY-MM-DD')  ")
 		;
 		
 		

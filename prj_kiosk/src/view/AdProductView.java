@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -76,7 +77,7 @@ public class AdProductView extends JPanel {
 		//Label
 		 productInfoJlb=new JLabel("상품관리");
 			
-		 photoJlb=new JLabel("사진");
+		 photoJlb=new JLabel();
 			
 		 codeJlb= new JLabel("상품코드"); 
 		 typeJlb= new JLabel("상품종류"); 
@@ -113,6 +114,7 @@ public class AdProductView extends JPanel {
 		productInfoJlb.setBounds(45,35,200,35);
 		productInfoJsp.setBounds(10,80,450,850);
 		
+		photoBtn.setBackground(new Color(255,195,14));
 		photoBtn.setFont(new Font("맑은 고딕",Font.BOLD,15));
 		photoBtn.setBounds(490, 300, 200, 30);
 		
@@ -141,6 +143,7 @@ public class AdProductView extends JPanel {
 		priceJlb.setBounds(470, 500, 70, 30);
 		
 		photoJlb.setBorder(new LineBorder(Color.red));
+		photoJlb.setHorizontalAlignment(SwingConstants.CENTER);
 		photoJlb.setBounds(490, 100, 200, 200);
 		
 		codeJtf.setBounds(550, 350, 140, 30);

@@ -54,7 +54,7 @@ public class OptionMenuView extends JDialog{
 //		 this.menuView = menuView;
 		 
 		 //배경
-		 ImageIcon backImg = new ImageIcon("src/images/option_background.png");
+		 ImageIcon backImg = new ImageIcon("C:\\kiosk\\images\\option_background.png");
 		 JLabel background = new JLabel(backImg);
 
 		 //Button

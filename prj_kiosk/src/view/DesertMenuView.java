@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import evt.MenuEvt;
 
 @SuppressWarnings("serial")
 public class DesertMenuView extends JPanel {

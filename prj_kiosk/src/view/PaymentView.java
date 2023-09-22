@@ -47,11 +47,12 @@ public class PaymentView extends JFrame {
 	private JButton beforeBtn;
 	private JButton paymentBtn;
 	
+	@SuppressWarnings("unused")
 	private MenuView menuView;
 	
 	
 	public PaymentView(MenuView menuView) {
-		
+		super("결제");
 		this.menuView = menuView;
 		// currentPayVO
 		currentPayVO = new PaymentVO();
@@ -154,18 +155,19 @@ public class PaymentView extends JFrame {
 		
 		separator.setBounds(420, 50, 50, 750);
 		
-		orderDetailJsp.setBounds(440, 50, 425, 400);
+		orderDetailJsp.setBounds(440, 50, 418, 400);
 		orderPriceLabel.setBounds(440, 450, 100,100 );
-		PricePanel.setBounds(440, 520, 425, 50);
+		PricePanel.setBounds(440, 520, 418, 50);
 		discountLabel.setBounds(440, 550, 100, 100);
-		discountPanel.setBounds(440, 620, 425, 50);
+		discountPanel.setBounds(440, 620, 418, 50);
 		purchasePriceLabel.setBounds(440, 650, 100, 100);
-		purchasePricelPanel.setBounds(440, 730, 425, 70);
+		purchasePricelPanel.setBounds(440, 730, 418, 70);
 		
-		beforeBtn.setBounds(50, 830, 200, 100);
+		beforeBtn.setBounds(30, 830, 200, 100);
 		paymentBtn.setBounds(660, 830, 200, 100);
 		
 		setLayout(null);
+		
 		add(payMethodLabel);
 		add(cashBtn);
 		add(cardBtn);
@@ -191,6 +193,7 @@ public class PaymentView extends JFrame {
 		add(beforeBtn);
 		add(paymentBtn);
 		
+		add(MainView.background);
 		
 		setBounds(500, 0, 900, 1000);
 		setVisible(true);
